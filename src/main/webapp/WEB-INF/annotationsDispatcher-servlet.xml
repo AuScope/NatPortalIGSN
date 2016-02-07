@@ -23,7 +23,7 @@
            http://www.springframework.org/schema/mvc/spring-mvc.xsd"
            >
 
-    <context:component-scan base-package="org.csiro"/>
+    <context:component-scan base-package="org.csiro.igsn.nat.server"/>
     <mvc:annotation-driven />
     <mvc:default-servlet-handler/>
 

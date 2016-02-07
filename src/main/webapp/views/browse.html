@@ -1,133 +1,168 @@
-<section class="padding-top-bottom" ng-controller="browseCtrl">
-
-		<button ng-click="toggleFilter=true" ng-hide="toggleFilter" class="filter-expander">
-            <i class="fa fa-search fa-lg white"></i>&nbsp; Search
-         </button>
-         <div class="filter-panel" ng-show="toggleFilter">
-		    <div class="panel-heading row-heading">
-			    <div class="row mb">		    
-		            <div class="col-sm-12">
-		              <h3 class="title-sm text-uppercase hr-left"><i class="fa fa-search fa-lg white"></i>&nbsp; Search	             
-			              <i ng-click="toggleFilter=false" class="pull-right pointer-cursor fa fa-close fa-lg white pointer"></i>             	          
-			           </h3>	
-		            </div>
-			     </div>	
-			 </div>
-		
-	    	<div class="row mb">
-		        <div class="col-md-12">
-		          <div class="wrapper-form-box">
-		            <h3 class="title-sm">IGSN Search Form</h3>
-		            <form class="form-horizontal">
-		              <div class="form-group">			                
-		              	<label for="inputEmail" class="control-label col-sm-3">field1</label>
-		                  <div class="col-sm-9">
-							<input type="text" class="form-control" ng-model="form.project" placeholder="Project">						           					            						         
-		                  </div>			                  
-		              </div>
-		              <div class="form-group">			                
-		              	<label for="inputEmail" class="control-label col-sm-3">field2</label>
-		                  <div class="col-sm-9">
-							<select class="form-control" ng-model="form.staffIdFieldManager" ng-options="user.contactName as [user.contactName,user.organization].join(' - ') for user in users"></select>					           					            						         
-		                  </div>			                  
-		              </div>
-		              <div class="form-group">			                
-		              	<label for="inputEmail" class="control-label col-sm-3">field3</label>
-		                  <div class="col-sm-9">
-							<select class="form-control" ng-model="form.staffidResponsible" ng-options="staff.contactName as [staff.contactName,staff.organization].join(' - ') for staff in staffs"></select>						           					            						         
-		                  </div>			                  
-		              </div>
-		              <div class="form-group">			                
-		              	<label for="inputEmail" class="control-label col-sm-3">field4</label>
-		                  <div class="col-sm-9">
-							<input type="text"  class="form-control" placeholder="Project Publication" ng-model="form.projectPublication">													           					            						         
-		                  </div>			                  
-		              </div>
-		              <div class="form-group">	
-		              	<div class="col-sm-12">		                			              			                
-							<button type="submit" class="btn btn-primary text-theme-xs pull-right" ng-click="searchCollection(1)">Search</button>
-							<button class="btn btn-red text-theme-xs pull-left" ng-click="resetForm()">Reset Form</button>			
-						</div>		           					            						         			                		                 
-		              </div>			              	             			             
-		            </form>
-		          </div>
-		        </div>
-		      </div>
-		  
-		  </div>
-		  
-
-
+<!-- section class="padding-top-bottom" ng-controller="browseCtrl" >
 	<div class="container roundedCnrShadow">
 		<div class="section-header text-center">
 			<h2>IGSN Sample Collection</h2>
 			<p>Minted via CSIRO igsn registry service</p>
 			
-			<div class="panel panel-default">
-			  <div class="panel-heading">
-			    <h3 class="panel-title"><b>List of Samples</b></h3>
-			  </div>
-			  <div class="panel-body">
-			    	<table class="detailTbl">
-		                <thead>
-		                <tr>						                                
-		                    <th>Sample</th>
-		                    <th>&nbsp</th>						                                						                               
-		                </tr>
-		                </thead>
-		                <tbody>
-		                <tr>
-		                    <th>Collection Project</th>
-		                    <td>tersadfs1</td>						                               
-		                </tr> 
-		                 <tr>
-		                    <th>Collection Project</th>
-		                    <td>tersadfs1</td>						                               
-		                </tr>
-		                 <tr>
-		                    <th>Collection Project</th>
-		                    <td>tersadfs1</td>						                               
-		                </tr>
-		                 <tr>
-		                    <th>Collection Project</th>
-		                    <td><a ng-click="viewSample('test')">tersadfs1</a></td>						                               
-		                </tr>
-		                 <tr>
-		                    <th>Collection Project</th>
-		                    <td>tersadfs1</td>						                               
-		                </tr>
-		                 <tr>
-		                    <th>Collection Project</th>
-		                    <td>tersadfs1</td>						                               
-		                </tr>
-		                 <tr>
-		                    <th>Collection Project</th>
-		                    <td>tersadfs1</td>						                               
-		                </tr>
-		                 <tr>
-		                    <th>Collection Project</th>
-		                    <td>tersadfs1</td>						                               
-		                </tr>
-		                 <tr>
-		                    <th>Collection Project</th>
-		                    <td>tersadfs1</td>						                               
-		                </tr>                 
-		             </tbody>
-		          </table>
-		          
-		          <div class="row">
-		            <div class="col-sm-12">
-		              	<pagination ng-change="pageChanged()" total-items="totalItem" ng-model="currentPages" max-size="5" class="pagination-sm pull-left" boundary-links="true" rotate="false" num-pages="numPages"></pagination>		              
-		            </div>		            
-		          </div>
-		          <div class="row">
-		            <div class="col-sm-12">
-		              	<pre>Page: {{currentPages}} / {{numPages}}</pre>		              
-		            </div>		            
-		          </div>
-			  </div>
-			</div>
+			
 	
 		</div>				
 	</div>
-</section>
+</section!-->
+		
+		<script type="text/javascript" src="js/theme/custom-slider.js"></script>
+		
+		<section id="hero" class="light-typo">
+			<div class="container welcome-content">
+				<div class="row">
+					<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12 text-center wow fadeInUp">
+						<img id="logo" src="img/logo.png" class="img-responsive text-center" alt="shop logo" width="100">				
+						
+						<h2>Map Search</h2>
+						<h4>Map based on keywords filter and map bounding box selection</h4>
+						<div class="text-center">
+							<a class="btn btn-store color smooth-scroll" href="#products"><i class="fa fa-map fa-lg white"></i> Search via Map</a>
+						</div>						
+						
+						<hr class="gradientwhite">
+						
+						<h2>Search through National IGSN Repository</h2>
+						<div class="text-center">
+							<div class="input-group">
+							<input id="newsletter-mail" name="email" placeholder="Enter Search Text" class="form-control input-lg" type="text" >
+							<span class="input-group-btn">
+								<button name="submit" type="submit" class="btn btn-store"><i class="fa fa-search fa-lg white"></i> Search</button>
+							</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="overlay-bg"></div>
+			<div id="hero-slides">
+				<div class="slides-container">
+					<img src="img/rock1.jpg" alt="">
+					<img src="img/rock2.jpg" alt="">
+					<img src="img/rock3.jpg" alt="">
+				</div>
+			</div>
+		</section>
+
+		<section id="products" class=" padding-top-bottom" ng-controller="browseCtrl">
+			<div class="container">
+				<header class="section-header text-center wow fadeInUp">
+					<h2>Sample Type</h2>
+				</header>
+			</div>
+			<div class="container">
+				<div id="projects-container" class="row">
+					<div class="col-sm-12 col-md-6">
+						<div class="row">
+							<div class="col-sm-12">
+								<article class="design product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.2s">
+									<div class="img-box">
+										<div class="hover-mask2"></div>
+										<span class="product-icon icon-eye"></span>
+										<img class="img-responsive project-image" src="img/rock1.jpg" alt="">
+									</div>
+									<div class="product-info col-md-12">
+										<div>
+											<h4 class="project-title">Sample Type</h4>
+										</div>
+									</div>
+								</article>
+								<article class="mock-up product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.4s">
+									<div class="img-box">
+										<div class="hover-mask2"></div>
+										<span class="product-icon icon-eye"></span>
+										<img class="img-responsive project-image" src="img/rock2.jpg" alt="">
+									</div>
+									<div class="product-info col-md-12">
+										<div>
+											<h4 class="project-title">Sample Type</h4>
+										</div>	
+									</div>
+								</article>
+								<article class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.6s">
+									<div class="img-box">
+										<div class="hover-mask2"></div>
+										<span class="product-icon icon-eye"></span>
+										<img class="img-responsive project-image" src="img/rock3.jpg" alt="">
+									</div>
+									<div class="product-info col-md-12">
+										<div>
+											<h4 class="project-title">Sample Type</h4>
+										</div>	
+									</div>
+								</article>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+								<article class="design product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.2s">
+									<div class="img-box">
+										<div class="hover-mask2"></div>
+										<span class="product-icon icon-eye"></span>
+										<img class="img-responsive project-image" src="img/rock1.jpg" alt="">
+									</div>
+									<div class="product-info col-md-12">
+										<div>
+											<h4 class="project-title">Sample Type</h4>
+										</div>
+									</div>
+								</article>
+								<article class="mock-up product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.4s">
+									<div class="img-box">
+										<div class="hover-mask2"></div>
+										<span class="product-icon icon-eye"></span>
+										<img class="img-responsive project-image" src="img/rock2.jpg" alt="">
+									</div>
+									<div class="product-info col-md-12">
+										<div>
+											<h4 class="project-title">Sample Type</h4>
+										</div>	
+									</div>
+								</article>
+								<article class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.6s">
+									<div class="img-box">
+										<div class="hover-mask2"></div>
+										<span class="product-icon icon-eye"></span>
+										<img class="img-responsive project-image" src="img/rock3.jpg" alt="">
+									</div>
+									<div class="product-info col-md-12">
+										<div>
+											<h4 class="project-title">Sample Type</h4>
+										</div>	
+									</div>
+								</article>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-12 col-md-6">
+						<div class="panel panel-default">
+						  <div class="panel-heading">
+						    <h3 class="panel-title"><b>List of Samples</b></h3>
+						  </div>
+						  <div class="panel-body">
+						    	<table>
+					                <thead>
+					                <tr>						                                
+					                    <th>IGSN</th>
+					                    <th>Something else</th>						                                						                               
+					                </tr>
+					                </thead>
+					                <tbody>
+					                <tr ng-repeat="sample in samples">
+					                    <th><a ng-click="viewSample(sample.igsn)">{{sample.igsn}}</a></th>
+					                    <td>{{sample.igsn}}</td>						                               
+					                </tr> 
+					                                 
+					             </tbody>
+					          </table>
+						  </div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</section>

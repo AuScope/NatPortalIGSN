@@ -1,24 +1,23 @@
 <!doctype html>
 <html>
 	<head>
-		<title>IGSN</title>
+		<title>CSIRO NATIONAL IGSN</title>
 		<meta charset="utf-8">
-		<meta name="description" content="CSIRO IGSN">
-		<meta name="author" content="VT">
+		<meta name="description" content="MicroStore Responsive HTML5/CSS3 Template from angelostudio.net">
+		<meta name="author" content="ANGELOSTUDIO.NET">
 		<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-				
+		
 		<link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
 		<!-- Fonts -->
 		<link href="css/bootstrap.css" rel="stylesheet">
 		
 		<!-- replaced by cdn folder for offline working -->
 		<!-- link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600,700,800,300' rel='stylesheet' type='text/css'>		
-		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 		-->
 
 		<link rel='stylesheet' href='js/cdn/css/google_font.css' type='text/css'>
-		<link href="https://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-		<link rel='stylesheet' href='js/cdn/css/jquery-ui.css' type='text/css'>
+		<link href="https://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+		
 		
 		
 		
@@ -26,12 +25,22 @@
 		<link rel="stylesheet" type="text/css" href="css/theme.css">
 		<link rel="stylesheet" class="colors" href="css/blue.css">
 		
-		<!-- jquery -->
-		<!-- script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script-->
+		<link rel="stylesheet" href="css/superslides.css">
+		<link rel="stylesheet" href="css/icons.css">
 		
-		<script src="js/cdn/jquery.min.js"></script>
-		<script src="js/cdn/jquery-ui.js"></script>
+			
+		<link rel="shortcut icon" href="img/ico/32.png" sizes="32x32" type="image/png"/>
+		<link rel="apple-touch-icon-precomposed" href="img/ico/60.png" type="image/png"/>
+		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/ico/72.png" type="image/png"/>
+		<link rel="apple-touch-icon-precomposed" sizes="120x120" href="img/ico/120.png" type="image/png"/>
+		<link rel="apple-touch-icon-precomposed" sizes="152x152" href="img/ico/152.png" type="image/png"/>
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+		
+		<!-- jquery -->
+		<script type="text/javascript" src="js/cdn/jquery.min.js"></script>
 		
 		
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -49,8 +58,17 @@
 		<script src="js/cdn/angular-animate.min.js"></script>
 		<!-- script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-animate.min.js"></script-->
 		
-		<!-- MISC -->
+		<!-- theme -->
+		<script type="text/javascript" src="js/theme/jquery.superslides.min.js"></script>
+		<script type="text/javascript" src="js/theme/wow.min.js"></script>
+		<script type="text/javascript" src="js/theme/custom-general.js"></script>
 		
+		
+		
+		<!-- Map -->
+		<link rel="stylesheet" href="js/leaftlet/leaflet.css">
+		<script src="js/leaftlet/leaflet.js"></script>
+		<script src="js/leaftlet/angular-leaflet-directive.min.js"></script>
 		
 
 		   <!-- IGSN js -->
@@ -60,11 +78,8 @@
   		<script src="js/igsn/controllers/browseCtrl.js"></script>
   		<script src="js/igsn/controllers/registerUserCtrl.js"></script>
 		
-		
-		
 	</head>
 
-	<!-- Header here -->
 	<body id="home" ng-app="app">
 		<div id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 			<div class="container">
@@ -89,13 +104,9 @@
 
 		<!-- Content here -->
 		 <div ng-view></div>
-		
-
-	
-
-		
-
-		<footer id="main-footer" class="dark-bg light-typo">
+		 
+		 
+		 <footer id="main-footer" class="dark-bg light-typo">
 			<div class="container">
 				<div class="col-sm-1 col-xs-2"><img class="pull-left" src="img/igsn_logo.png" alt="igsn image" width="50" height="50"></div>				
 				<div class="col-sm-8 col-xs-7"><p class="pull-left copyright wow fadeInUp">http://www.igsn.org/ <br>Implemented by  <a href="http://csiro.au" target="_blank">CSIRO</a>.<br></p></div>
@@ -105,3 +116,5 @@
 				
 	</body>
 </html>
+
+		
