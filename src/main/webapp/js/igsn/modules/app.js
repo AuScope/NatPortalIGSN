@@ -11,7 +11,10 @@ app.config(['$routeProvider',
                   templateUrl: 'views/browse.html'
                
                 }).
-                
+                when('/search', {
+                    templateUrl: 'views/search.html'
+                 
+                 }).
                 otherwise({
                   redirectTo: '/'
                 });

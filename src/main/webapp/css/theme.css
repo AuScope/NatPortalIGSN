@@ -22,6 +22,10 @@ strong{
 	padding: 60px 0;
 }
 
+.padding-top {
+	padding: 60px 0 10px 0;
+}
+
 h3.center {
 	margin: 25px 0 20px 0;
 }
@@ -841,3 +845,252 @@ hr.gradientwhite{
 	width: 100%
 }
 
+/*Banner Header CSS*/
+
+/*.banner {
+  background: 
+    linear-gradient(
+      rgba(0, 0, 0, 0.6),
+      rgba(0, 0, 0, 0.6)
+    ),
+    url(../img/map.jpg);
+  background-size: cover;
+  width: 100%;
+  height: 200px;
+ 
+}*/
+.banner {
+  background: 
+    url(../img/map.jpg);
+  background-size: cover;
+  width: 100%;
+  height: 200px;
+  opacity: 0.8;
+
+   
+}
+
+.mid h1 {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 900;
+  color: white;
+  text-transform: uppercase;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 2rem;
+  transform: translate(-50%, -50%);
+}
+
+.search-background{
+  background: url(../img/background.jpg);
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+}
+
+/* panel header*/
+.panel > .blue {
+    background-image: none;
+    background-color: #2DAFF0;
+    color: white;
+
+}
+
+/*Map toolbar test*/
+.blackGradient{
+	background-color: #171916; /*fallback for non-CSS3 browsers*/ 
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#535353) to(#171916)); /*old webkit*/ 
+	background: -webkit-linear-gradient(#535353, #171916); /*new webkit*/ 
+	background: -moz-linear-gradient(#535353, #171916); /*gecko*/ 
+	background: -ms-linear-gradient(#535353, #171916); /*IE10*/ 
+	background: -o-linear-gradient(#535353, #171916); /*opera 11.10+*/ 
+	background: linear-gradient(#535353, #171916); /*future CSS3 browsers*/ 
+	-pie-background: linear-gradient(#535353, #171916); /*PIE*/ 
+	 behavior: url(/css/PIE.htc);  
+	color: #B7B7B7;
+	opacity:0.8;
+}
+	#map-toolbar{ height: 67px; }
+	#map-toolbar ul{ list-style: none; padding: 0px; }
+	#map-toolbar li{ float: left; background: url(../img/dividers/map-tools-divider.png) no-repeat right center; padding: 8px 10px 0px 10px; text-align: center; margin: 0px; }
+	#map-toolbar li.heading{ font-size: 16px !important; color: #fff !important; }
+	#map-toolbar li.first-child, #map-toolbar li.last-child /*#map-toolbar li:first-child, #map-toolbar li:last-child*/{ background: none; } 
+	#map-toolbar input{ margin: 0px; padding: 0px; }
+	
+	.panBtn,.panBtnActive,
+	.boxBtn,.boxBtnActive,
+        .polyBtn,.polyBtnActive,
+	.delBtn,.delBtnActive,
+	.mapGoBtn,
+	.helpBtn{ width: 38px; height: 37px; display: block; cursor:pointer; }
+	
+	#map-toolbar .panBtn{ background: url(../img/buttons/map-tools/map-tools-pan-normal-btn.png) no-repeat; }
+	#map-toolbar .panBtn:hover{ background: url(../img/buttons/map-tools/map-tools-pan-hover-btn.png) no-repeat; }
+	#map-toolbar .panBtnActive{ background: url(../img/buttons/map-tools/map-tools-pan-hover-btn.png) no-repeat; }
+	
+	#map-toolbar .latLongBtn{ color: #fff; margin-top: 10px; display: block; cursor: pointer; }
+	#map-toolbar #regionPanel{ height: 37px; }
+	#map-toolbar #regionPanel a{ display: inline-block;} 
+		#map-toolbar .boxBtn{ background: url(../img/buttons/map-tools/map-tools-box-normal-btn.png) no-repeat; }
+		#map-toolbar .boxBtnActive{ background: url(../img/buttons/map-tools/map-tools-box-hover-btn.png) no-repeat; }
+		#map-toolbar .boxBtn:hover{ background: url(../img/buttons/map-tools/map-tools-box-hover-btn.png) no-repeat; }
+		#map-toolbar .polyBtn{ background: url(../img/buttons/map-tools/map-tools-poly-normal-btn.png) no-repeat; }
+		#map-toolbar .polyBtnActive{ background: url(../img/buttons/map-tools/map-tools-poly-hover-btn.png) no-repeat; }
+		#map-toolbar .polyBtn:hover{ background: url(../img/buttons/map-tools/map-tools-poly-hover-btn.png) no-repeat; }
+		#map-toolbar .delBtn{ background: url(../img/buttons/map-tools/map-tools-delete-normal-btn.png) no-repeat; }
+		#map-toolbar .delBtnActive{ background: url(../img/buttons/map-tools/map-tools-delete-hover-btn.png) no-repeat; }
+		#map-toolbar .delBtn:hover{ background: url(../img/buttons/map-tools/map-tools-delete-hover-btn.png) no-repeat; }
+		.mapGoBtn{ background: url(../img/buttons/map-tools/map-tools-go-normal-btn.png) no-repeat; }
+		.mapGoBtn:hover{ background: url(../img/buttons/map-tools/map-tools-go-hover-btn.png) no-repeat; }
+		
+	#map-toolbar input#geocode{
+		margin: 7px 0px 0px 0px;
+		width: 120px; 
+		float: left; 
+	}
+
+	#map-toolbar #searchGeocodeBtn{ background: url(../img/buttons/map-tools/map-tools-search-normal-btn.png) no-repeat; width: 32px; height: 31px; float: left; margin: 3px 0px 0px 0px; }
+	#map-toolbar #searchGeocodeBtn:hover{ background: url(../img/buttons/map-tools/map-tools-search-hover-btn.png) no-repeat; }
+
+	#map-toolbar .mapViewSelector{
+		margin: 3px 0px 0px 0px;
+		height: 30px;
+		line-height: 30px;
+		/*-webkit-border-radius: 3px;*/ 
+		/*-moz-border-radius: 3px;*/ 
+		/*border-radius: 3px;	*/	 
+		/*background: #2B2B2B; *//*fallback for non-CSS3 browsers*/ 
+		/*background: -webkit-gradient(linear, 0 0, 0 100%, from(#646464) to(#2B2B2B));*/ /*old webkit*/ 
+		/*background: -webkit-linear-gradient(#646464, #2B2B2B); *//*new webkit*/ 
+		/*background: -moz-linear-gradient(#646464, #2B2B2B); *//*gecko*/ 
+		/*background: -ms-linear-gradient(#646464, #2B2B2B); *//*IE10*/ 
+		/*background: -o-linear-gradient(#646464, #2B2B2B); *//*opera 11.10+*/ 
+		/*background: linear-gradient(#646464, #2B2B2B); *//*future CSS3 browsers*/ 
+		/*-pie-background: linear-gradient(#646464, #2B2B2B);*/ /*PIE*/ 
+		/*behavior: url(/css/PIE.htc);  */
+                cursor: pointer;
+	}
+		#map-toolbar .mapViewSelector a{ color: #fff; padding: 5px; height: 20px; display: block; float: left; line-height: 20px; 
+			background: #2B2B2B; /*fallback for non-CSS3 browsers*/
+			position: relative; 
+			background: -webkit-gradient(linear, 0 0, 0 100%, from(#646464) to(#2B2B2B)); /*old webkit*/ 
+			background: -webkit-linear-gradient(#646464, #2B2B2B); /*new webkit*/ 
+			background: -moz-linear-gradient(#646464, #2B2B2B); /*gecko*/ 
+			background: -ms-linear-gradient(#646464, #2B2B2B); /*IE10*/ 
+			background: -o-linear-gradient(#646464, #2B2B2B); /*opera 11.10+*/ 
+			background: linear-gradient(#646464, #2B2B2B); /*future CSS3 browsers*/ 
+			-pie-background: linear-gradient(#646464, #2B2B2B); /*PIE*/ 
+			behavior: url(/css/PIE.htc);   
+		}
+		#map-toolbar .mapViewSelector a.current,
+		#map-toolbar .mapViewSelector a:hover{ 
+			text-decoration: none;
+			color: #000; 
+			position: relative; 
+			background: #8A8A8A; /*fallback for non-CSS3 browsers*/
+			background: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff) to(#8A8A8A)); /*old webkit*/
+			background: -webkit-linear-gradient(#ffffff, #8A8A8A); /*new webkit*/
+			background: -moz-linear-gradient(#ffffff, #8A8A8A); /*gecko*/
+			background: -ms-linear-gradient(#ffffff, #8A8A8A); /*IE10*/
+			background: -o-linear-gradient(#ffffff, #8A8A8A); /*opera 11.10+*/
+			background: linear-gradient(#ffffff, #8A8A8A); /*future CSS3 browsers*/
+			-pie-background: linear-gradient(#ffffff, #8A8A8A); /*PIE*/
+			 behavior: url(/css/PIE.htc);  
+		}
+		#map-toolbar .mapViewSelector #gmap{
+			position: relative; 
+			-webkit-border-radius: 5px 0px 0px 5px;
+			-moz-border-radius: 5px 0px 0px 5px;
+			border-radius: 5px 0px 0px 5px;
+			 behavior: url(/css/PIE.htc);  
+		}
+		#map-toolbar .mapViewSelector #gphy{
+			position: relative; 
+			-webkit-border-radius: 0px 5px 5px 0px;
+			-moz-border-radius: 0px 5px 5px 0px;
+			border-radius: 0px 5px 5px 0px;
+			 behavior: url(/css/PIE.htc);  
+		}
+	#map-toolbar .helpBtn{ background: url(../img/buttons/map-tools/map-tools-help-normal-btn.png) no-repeat; }
+	#map-toolbar .helpBtn:hover{ background: url(../img/buttons/map-tools/map-tools-help-hover-btn.png) no-repeat; }
+	#map-toolbar a.hide, #map-toolbar a.show{ margin: 2px 12px 0px 0px; padding: 0px 30px 0px 0px; color: #fff;  float: right; }
+	 
+        #facilities .helpBtn{float: right; margin-top: -3px; display:inline-block; background: url(../img/buttons/help-normal-btn.png) no-repeat; height: 29px; width: 29px;  } 
+	#facilities .helpBtn:hover{ float: right; background: url(../img/buttons/help-hover-btn.png) no-repeat; }
+        #spatialmap {
+            display: block;
+            height: 460px;
+            width: 1010px;
+        }
+        #facilities label img{ vertical-align: middle;}
+        #facilities input[type="checkbox"] { vertical-align: middle;}
+        div.olLayerGoogleCopyright,
+        div.olLayerGooglePoweredBy
+        {
+        display: none !important;
+        }
+        .popupContent { 
+            padding: 14px 0px 10px 5px;  
+            overflow: visible;
+        }
+        .popupContent a.title{
+            padding-right: 4px;
+        }
+
+         .popupContentScroll { 
+            padding: 5px 0px 10px 10px;    
+            overflow: auto; 
+            margin: 5px 0px 5px 0px;
+            max-height: 155px; 
+        } 
+        
+        .popupContent ul{
+            list-style-type: none;
+            margin: 5px 0;
+            overflow: auto;
+            max-height: 140px;
+            padding: 0;
+        }
+        .popupContent ul li{
+            padding: 0;
+            margin: 0 0 10px 0;
+        }
+        .popupContentScroll h4{
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+        .popupGroup{
+            border: 1px solid #FFF;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            box-shadow : 0 4px 10px 0 #666666;         
+            overflow: visible !important;
+            behavior: url(/css/PIE.htc);  
+            filter: none !important;
+            padding: 0px 10px 0 0 ;
+        } 
+        .popupContent h2{
+            margin-top:0px !important;
+        }
+        .popupContent a.smallRoundedCorners{ clear: both; width: 105px; height: 15px; line-height: 35px; text-align: center; color: #fff; padding: 5px; margin-bottom: 5px; }
+        
+
+        .logo_right{
+           float:right;
+           clear: both;
+        }
+       
+        .popupGroup #chicken_GroupDiv{
+            overflow: visible !important;
+
+        }
+        .mapArrow{
+            left: -10px;
+            position:absolute;
+            top: 30px;
+        }
+        
+ /*End test toolbar*/

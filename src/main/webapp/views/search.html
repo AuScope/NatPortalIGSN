@@ -1,0 +1,53 @@
+
+		
+	
+	<div ng-controller="searchCtrl" class="search-background">	
+		<section class="container">
+		
+		<div class="row padding-top">
+			<div class="col-md-10 col-md-offset-1 col-sm-12 text-center wow fadeInUp">
+				<div class="banner mid">
+				  <h1><img  src="img/igsn_logo.png" alt="shop logo" width="50">&nbsp; Add IGSN logo and text or design something better</h1>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		<div class="row">
+			<div class="col-md-2 col-md-offset-1 col-sm-4  wow fadeInUp">
+				<div class="panel panel-default">
+				  <div class="panel-heading blue">Panel Heading</div>
+				  <div class="panel-body">Panel Content</div>
+				</div>
+			</div>
+			<div class="col-md-8 col-sm-8 wow fadeInUp">
+			
+				<div class="blackGradient" id="map-toolbar" style="height: 70px;"> 
+		            <ul>
+	            	<li class="heading first-child">Map Tools</li>
+	                <li style="display: list-item;">Pan<br><a title="To Pan" id="drag" class="panBtnActive"></a></li>
+	            	<li style="display: list-item;">Coordinates<br><a id="latlong" class="latLongBtn">Longitude &amp; Latitude</a></li>
+	            	<li style="display: list-item;">Select region then 'GO'<br>
+	                  <div id="regionPanel">
+	                     <a title="To draw a region: click in the map and drag the mouse to get a rectangle. Release the mouse to finish." id="box" class="boxBtn"></a>
+	                     <a id="poly" class="polyBtn"></a>
+	                     <a class="mapGoBtn"></a>
+	                     <a title="Clear selected region" id="del" class="delBtn"></a>
+	                  </div>
+	            	</li>
+	               <li style="display: list-item;">Show locations on map<br><input type="text" placeholder="Place Name" size="20" id="geocode" autocomplete="off"><a id="searchGeocodeBtn"></a></li>
+	               <li style="display: list-item;">Help<br><a id="map-help" class="helpBtn last-child"></a></li>
+		            </ul>
+		            <a class="hide">Hide</a>
+		         </div>
+         
+         
+				<leaflet class="map" id="mapSearch" lf-center="center" tiles="tiles" markers="markers" defaults="defaults"></leaflet>
+			</div>
+		</div>
+		
+	</section>
+
+	
+</div>
