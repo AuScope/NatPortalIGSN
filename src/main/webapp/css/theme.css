@@ -22,8 +22,12 @@ strong{
 	padding: 60px 0;
 }
 
-.padding-top {
-	padding: 60px 0 10px 0;
+.padding-top-20{
+	padding: 20px 0 0 0;
+}
+
+.padding-top-10{
+	padding-top: 10px;
 }
 
 h3.center {
@@ -910,11 +914,11 @@ hr.gradientwhite{
 	-pie-background: linear-gradient(#535353, #171916); /*PIE*/ 
 	 behavior: url(/css/PIE.htc);  
 	color: #B7B7B7;
-	opacity:0.8;
+	opacity:0.9;
 }
 	#map-toolbar{ height: 67px; }
 	#map-toolbar ul{ list-style: none; padding: 0px; }
-	#map-toolbar li{ float: left; background: url(../img/dividers/map-tools-divider.png) no-repeat right center; padding: 8px 10px 0px 10px; text-align: center; margin: 0px; }
+	#map-toolbar li{ float: left; background: url(../img/toolbar/map-tools-divider.png) no-repeat right center; padding: 8px 10px 0px 10px; text-align: center; margin: 0px; }
 	#map-toolbar li.heading{ font-size: 16px !important; color: #fff !important; }
 	#map-toolbar li.first-child, #map-toolbar li.last-child /*#map-toolbar li:first-child, #map-toolbar li:last-child*/{ background: none; } 
 	#map-toolbar input{ margin: 0px; padding: 0px; }
@@ -926,24 +930,24 @@ hr.gradientwhite{
 	.mapGoBtn,
 	.helpBtn{ width: 38px; height: 37px; display: block; cursor:pointer; }
 	
-	#map-toolbar .panBtn{ background: url(../img/buttons/map-tools/map-tools-pan-normal-btn.png) no-repeat; }
-	#map-toolbar .panBtn:hover{ background: url(../img/buttons/map-tools/map-tools-pan-hover-btn.png) no-repeat; }
-	#map-toolbar .panBtnActive{ background: url(../img/buttons/map-tools/map-tools-pan-hover-btn.png) no-repeat; }
+	#map-toolbar .panBtn{ background: url(../img/toolbar/map-tools-pan-normal-btn.png) no-repeat; }
+	#map-toolbar .panBtn:hover{ background: url(../img/toolbar/map-tools-pan-hover-btn.png) no-repeat; }
+	#map-toolbar .panBtnActive{ background: url(../img/toolbar/map-tools-pan-hover-btn.png) no-repeat; }
 	
 	#map-toolbar .latLongBtn{ color: #fff; margin-top: 10px; display: block; cursor: pointer; }
 	#map-toolbar #regionPanel{ height: 37px; }
 	#map-toolbar #regionPanel a{ display: inline-block;} 
-		#map-toolbar .boxBtn{ background: url(../img/buttons/map-tools/map-tools-box-normal-btn.png) no-repeat; }
-		#map-toolbar .boxBtnActive{ background: url(../img/buttons/map-tools/map-tools-box-hover-btn.png) no-repeat; }
-		#map-toolbar .boxBtn:hover{ background: url(../img/buttons/map-tools/map-tools-box-hover-btn.png) no-repeat; }
-		#map-toolbar .polyBtn{ background: url(../img/buttons/map-tools/map-tools-poly-normal-btn.png) no-repeat; }
-		#map-toolbar .polyBtnActive{ background: url(../img/buttons/map-tools/map-tools-poly-hover-btn.png) no-repeat; }
-		#map-toolbar .polyBtn:hover{ background: url(../img/buttons/map-tools/map-tools-poly-hover-btn.png) no-repeat; }
-		#map-toolbar .delBtn{ background: url(../img/buttons/map-tools/map-tools-delete-normal-btn.png) no-repeat; }
-		#map-toolbar .delBtnActive{ background: url(../img/buttons/map-tools/map-tools-delete-hover-btn.png) no-repeat; }
-		#map-toolbar .delBtn:hover{ background: url(../img/buttons/map-tools/map-tools-delete-hover-btn.png) no-repeat; }
-		.mapGoBtn{ background: url(../img/buttons/map-tools/map-tools-go-normal-btn.png) no-repeat; }
-		.mapGoBtn:hover{ background: url(../img/buttons/map-tools/map-tools-go-hover-btn.png) no-repeat; }
+		#map-toolbar .boxBtn{ background: url(../img/toolbar/map-tools-box-normal-btn.png) no-repeat; }
+		#map-toolbar .boxBtnActive{ background: url(../img/toolbar/map-tools-box-hover-btn.png) no-repeat; }
+		#map-toolbar .boxBtn:hover{ background: url(../img/toolbar/map-tools-box-hover-btn.png) no-repeat; }
+		#map-toolbar .polyBtn{ background: url(../img/toolbar/map-tools-poly-normal-btn.png) no-repeat; }
+		#map-toolbar .polyBtnActive{ background: url(../img/toolbar/map-tools-poly-hover-btn.png) no-repeat; }
+		#map-toolbar .polyBtn:hover{ background: url(../img/toolbar/map-tools-poly-hover-btn.png) no-repeat; }
+		#map-toolbar .delBtn{ background: url(../img/toolbar/map-tools-delete-normal-btn.png) no-repeat; }
+		#map-toolbar .delBtnActive{ background: url(../img/toolbar/map-tools-delete-hover-btn.png) no-repeat; }
+		#map-toolbar .delBtn:hover{ background: url(../img/toolbar/map-tools-delete-hover-btn.png) no-repeat; }
+		.mapGoBtn{ background: url(../img/toolbar/map-tools-go-normal-btn.png) no-repeat; }
+		.mapGoBtn:hover{ background: url(../img/toolbar/map-tools-go-hover-btn.png) no-repeat; }
 		
 	#map-toolbar input#geocode{
 		margin: 7px 0px 0px 0px;
@@ -951,8 +955,8 @@ hr.gradientwhite{
 		float: left; 
 	}
 
-	#map-toolbar #searchGeocodeBtn{ background: url(../img/buttons/map-tools/map-tools-search-normal-btn.png) no-repeat; width: 32px; height: 31px; float: left; margin: 3px 0px 0px 0px; }
-	#map-toolbar #searchGeocodeBtn:hover{ background: url(../img/buttons/map-tools/map-tools-search-hover-btn.png) no-repeat; }
+	#map-toolbar #searchGeocodeBtn{ background: url(../img/toolbar/map-tools-search-normal-btn.png) no-repeat; width: 32px; height: 31px; float: left; margin: 3px 0px 0px 0px; }
+	#map-toolbar #searchGeocodeBtn:hover{ background: url(../img/toolbar/map-tools-search-hover-btn.png) no-repeat; }
 
 	#map-toolbar .mapViewSelector{
 		margin: 3px 0px 0px 0px;
@@ -1013,12 +1017,12 @@ hr.gradientwhite{
 			border-radius: 0px 5px 5px 0px;
 			 behavior: url(/css/PIE.htc);  
 		}
-	#map-toolbar .helpBtn{ background: url(../img/buttons/map-tools/map-tools-help-normal-btn.png) no-repeat; }
-	#map-toolbar .helpBtn:hover{ background: url(../img/buttons/map-tools/map-tools-help-hover-btn.png) no-repeat; }
+	#map-toolbar .helpBtn{ background: url(../img/toolbar/map-tools-help-normal-btn.png) no-repeat; }
+	#map-toolbar .helpBtn:hover{ background: url(../img/toolbar/map-tools-help-hover-btn.png) no-repeat; }
 	#map-toolbar a.hide, #map-toolbar a.show{ margin: 2px 12px 0px 0px; padding: 0px 30px 0px 0px; color: #fff;  float: right; }
 	 
-        #facilities .helpBtn{float: right; margin-top: -3px; display:inline-block; background: url(../img/buttons/help-normal-btn.png) no-repeat; height: 29px; width: 29px;  } 
-	#facilities .helpBtn:hover{ float: right; background: url(../img/buttons/help-hover-btn.png) no-repeat; }
+        #facilities .helpBtn{float: right; margin-top: -3px; display:inline-block; background: url(../img/toolbar/help-normal-btn.png) no-repeat; height: 29px; width: 29px;  } 
+	#facilities .helpBtn:hover{ float: right; background: url(../img/toolbar/help-hover-btn.png) no-repeat; }
         #spatialmap {
             display: block;
             height: 460px;
@@ -1094,3 +1098,59 @@ hr.gradientwhite{
         }
         
  /*End test toolbar*/
+ 
+ /*Tabular css table*/
+ .datagrid table { 
+	 border-collapse: collapse; 
+	 text-align: left; 
+	 width: 100%; 
+ } 
+ .datagrid {
+ 	font: normal 12px/150% Arial, Helvetica, sans-serif; 
+ 	background: #fff; 
+ 	overflow: hidden; 
+ 	border: 1px solid #006699; 
+ 	-webkit-border-radius: 3px; 
+ 	-moz-border-radius: 3px; 
+ 	border-radius: 3px; }
+ 	
+.datagrid table td, .datagrid table th { 
+	padding: 20px 10px; 
+}
+
+.datagrid table thead th {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #006699), color-stop(1, #00557F) );
+	background:-moz-linear-gradient( center top, #006699 5%, #00557F 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#006699', endColorstr='#00557F');
+	background-color:#006699; 
+	color:#FFFFFF; 
+	font-size: 15px; 
+	font-weight: bold; 
+	border-left: 1px solid #0070A8; 
+} 
+.datagrid table thead th:first-child { 
+	border: none; 
+}
+.datagrid table tbody td { 
+	color: #00496B; 
+	border-left: 1px solid #E1EEF4;
+	font-size: 12px;
+	font-weight: normal; 
+}
+.datagrid table tbody .alt td { 
+	background: #E1EEF4; 
+	color: #00496B; 
+}.datagrid table tbody td:first-child { border-left: none; }
+.datagrid table tbody tr:last-child td { border-bottom: none; }
+.datagrid table tfoot td div { border-top: 1px solid #006699;background: #E1EEF4;} 
+.datagrid table tfoot td { padding: 0; font-size: 12px } 
+.datagrid table tfoot td div{ padding: 2px; }
+.datagrid table tfoot td ul { margin: 0; padding:0; list-style: none; text-align: right; }.datagrid table tfoot  li { display: inline; }
+.datagrid table tfoot li a { text-decoration: none; display: inline-block;  padding: 2px 8px; margin: 1px;color: #FFFFFF;border: 1px solid #006699;
+	-webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; 
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #006699), color-stop(1, #00557F) );
+	background:-moz-linear-gradient( center top, #006699 5%, #00557F 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#006699', endColorstr='#00557F');
+	background-color:#006699; }
+.datagrid table tfoot ul.active, .datagrid table tfoot ul a:hover { text-decoration: none;border-color: #006699; color: #FFFFFF; background: none; background-color:#00557F;}
+div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
