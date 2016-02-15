@@ -57,8 +57,16 @@ public class TESTME {
 //			System.out.println(termEnum.term());
 //			System.out.println(termEnum.docFreq());
 //		}
+		//Term term = new Term("curators","curator text 1");
+				//System.out.println(ir.docFreq(term));
+				
+//				TermEnum termEnum=ir.terms();
+//				while(termEnum.next()){
+//					System.out.println(termEnum.term());
+//					System.out.println(termEnum.docFreq());
+//				}
 		
-		TermEnum termEnum=ir.terms(new Term("curators"));
+		TermEnum termEnum=ir.terms();
 		System.out.println(termEnum.term());
 		System.out.println(termEnum.docFreq());
 		termEnum.next();

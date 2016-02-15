@@ -7,8 +7,8 @@ allControllers.controller('browseCtrl', ['$scope','$rootScope','$http','ViewSamp
 	
 	
     
-    $scope.viewSample = function(name){
-    	ViewSampleSummaryService.viewSample(name);
+    $scope.viewSample = function(igsn){
+    	ViewSampleSummaryService.viewSample(igsn);
     }
     
     

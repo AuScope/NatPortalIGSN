@@ -35,10 +35,31 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
     $scope.viewSample = function(name){
     	ViewSampleSummaryService.viewSample(name);
     }
+    //load stats
+    $scope.stats ={};
+    $scope.checkbox=[];
     
+    var getStats = function(){
+		
+		
+		//VT: Actual results
+		$http.get('getStats.do')     
+	     .success(function(data) {
+	    	 $scope.stats = data; 
+	    	 $scope.checkbox=setupCheckbox(data);
+	     })
+	     .error(function(data, status) {    	
+	    	 modalService.showModal({}, {    	            	           
+		           headerText: "Error loading stats:" + status ,
+		           bodyText: "Please contact cg-admin@csiro.au if this persist"
+	    	 });
+	       
+	     })
+   
+	}
     
-    
-    
+    getStats();
+    //end load stats
     
     var searchSample = function(page){
 		$scope.currentPages = page;//VT page is reset to 1 on new search
@@ -65,6 +86,17 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 	    
 	     
 	}
+    
+    var setupCheckbox=function(stats){
+    	var results = [];
+    	for(var i=0;i< stats.length;i++){
+    		results[stats[i].statsGroup] = angular.copy(stats[i].statsTable);
+    		for(key in results[stats[i].statsGroup]){
+    			results[stats[i].statsGroup][key]=true;
+    		}
+    	}
+    	return results;
+    }
 	  
 	  //searchSample(1);
 	  

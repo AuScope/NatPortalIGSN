@@ -3,8 +3,28 @@ var allControllers = angular.module('allControllers', []);
 //SERVICE LEVEL CONTROLLERS
 allControllers.controller('sampleDetailsCtrl', function ($scope, $modalInstance, params, modalService,$http,leafletData,$timeout) {
 	
-	$scope.form={};
-	$scope.title = params.name;
+	$scope.details={};
+	$scope.title = params.igsn;
+	
+	var getDetails = function(collectionId){
+		$http.get('getDetailed.do',{
+			params:{	
+				igsn: params.igsn		
+				}
+		 })     
+	     .success(function(data) {
+	       $scope.details = data;       
+	        
+	     })
+	     .error(function(data, status) {    	
+	    	 modalService.showModal({}, {    	            	           
+		           headerText: "Error loading data:" + status ,
+		           bodyText: "Please contact cg-admin@csiro.au if this persist"
+	    	 });
+	       
+	     })
+	}
+	getDetails();
 	
 	angular.extend($scope, {
 	    center: {

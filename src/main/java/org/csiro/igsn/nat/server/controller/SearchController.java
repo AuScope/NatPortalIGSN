@@ -53,5 +53,33 @@ public class SearchController {
     		return new  ResponseEntity<Object>(new ExceptionWrapper("Error updating",e.getMessage()),HttpStatus.BAD_REQUEST);
     	}
     }
+	
+	@RequestMapping(value = "getDetailed.do")
+    public ResponseEntity<Object> getDetailed(            
+            @RequestParam(required = true, value ="igsn") String igsn,
+            Principal user,
+            HttpServletResponse response) {
+    	
+    	try{
+    		Samples samples = panFMPSearchService.search(igsn);
+    		
+		    return  new ResponseEntity<Object>(samples,HttpStatus.OK);    		
+	    	
+    	}catch(Exception e){
+    		return new  ResponseEntity<Object>(new ExceptionWrapper("Error updating",e.getMessage()),HttpStatus.BAD_REQUEST);
+    	}
+    }
+	
+	@RequestMapping(value = "getStats.do")
+    public ResponseEntity<Object> getStats(            
+            Principal user,
+            HttpServletResponse response) {
+		
+    	try{
+		    return  new ResponseEntity<Object>(panFMPSearchService.getAllStats(),HttpStatus.OK);    		
+    	}catch(Exception e){
+    		return new  ResponseEntity<Object>(new ExceptionWrapper("Error getting stats",e.getMessage()),HttpStatus.BAD_REQUEST);
+    	}
+    }
 
 }

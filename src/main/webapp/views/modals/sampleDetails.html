@@ -1,5 +1,5 @@
  <div class="modal-header">
-     <h3 class="modal-title">Sample Summaryhhh</h3>
+     <h3 class="modal-title">Sample Summary</h3>
  </div>
  <div class="modal-body">
  
@@ -7,12 +7,10 @@
 		
 		<div class="row summary-panel">
 			<div class="col-md-6">
-			 <h2>{{title}}</h2>
-			 <p>Bird surveys were undertaken within the 1 hectare core plot at the Karawatha Forest node of the South-East Queensland Peri-Urban Supersite (-27.63°, 153.08°). One survey was conducted in early February and the second was conducted in early May, 2015. Each general-search survey lasted 20 minutes with the single observer detecting bird species by call and sight within the 100 x 100 m plot. Surveys commenced within 1.5 hours after dawn.
-			 </p>
-			 <h2>test</h2>
-			 <p>Bird surveys were undertaken within the 1 hectare core plot at the Karawatha Forest node of the South-East Queensland Peri-Urban Supersite (-27.63°, 153.08°). One survey was conducted in early February and the second was conducted in early May, 2015. Each general-search survey lasted 20 minutes with the single observer detecting bird species by call and sight within the 100 x 100 m plot. Surveys commenced within 1.5 hours after dawn.
-			 </p>
+			 <h2>Sample Number</h2>
+			 <p>{{details.sample[0].sampleNumber.identifierType}}:{{details.sample[0].sampleNumber.value}}</p>
+			 <h2>Description</h2>
+			 <p>{{details.sample[0].comments}}</p>
 			</div>
 			<div class="col-md-6">
 			 <h2>test</h2>

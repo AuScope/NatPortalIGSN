@@ -16,9 +16,10 @@
 		
 		<div class="row">
 			<div class="col-md-2 col-md-offset-1 col-sm-4  wow fadeInUp padding-top-10">
-				<div class="panel panel-default">
-				  <div class="panel-heading blue">Panel Heading</div>
-				  <div class="panel-body">Panel Content</div>
+				<div class="panel panel-default" ng-repeat="stat in stats">
+				  <div class="panel-heading blue">{{stat.statsGroup}}</div>
+				  <div class="panel-body" ng-repeat="(key, value) in stat.statsTable">{{key}}({{value}}) <input class="pull-right" type="checkbox" ng-model="checkbox[stat.statsGroup][key]"></div>
+				  
 				</div>
 			</div>
 			<div class="col-md-8 col-sm-8 wow fadeInUp">
@@ -47,18 +48,35 @@
 				
 				<div class="padding-top-20">
 					<div class="datagrid"><table>
-					<thead><tr><th>header</th><th>header</th><th>header</th><th>header</th></tr></thead>
-					<tfoot><tr><td colspan="4"><div id="paging"><ul><li><a href="#"><span>Previous</span></a></li><li><a href="#" class="active"><span>1</span></a></li><li><a href="#"><span>2</span></a></li><li><a href="#"><span>3</span></a></li><li><a href="#"><span>4</span></a></li><li><a href="#"><span>5</span></a></li><li><a href="#"><span>Next</span></a></li></ul></div></tr></tfoot>
-					<tbody><tr><td>data</td><td>data</td><td>data</td><td>data</td></tr>
-					<tr class="alt"><td>data</td><td>data</td><td>data</td><td>data</td></tr>
-					<tr><td>data</td><td>data</td><td>data</td><td>data</td></tr>
-					<tr class="alt"><td>data</td><td>data</td><td>data</td><td>data</td></tr>
-					<tr><td>data</td><td>data</td><td>data</td><td>data</td></tr>
+					<thead>
+						<tr>
+						<th>header</th>
+						<th>header</th>
+						<th>header</th>
+						<th>header</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+						<td>data</td>
+						<td>data</td>
+						<td>data</td>
+						<td>data</td>
+						</tr>
+						<tr class="alt">
+						<td>data</td>
+						<td>data</td>
+						<td>data</td>
+						<td>data</td>
+						</tr>
 					</tbody>
 					</table></div>
 				</div>
-				
-				
+				<div class="row">
+		            <div class="col-sm-12">
+		              	<pagination ng-change="pageChanged()" total-items="totalItem" ng-model="currentPages" max-size="5" class="pagination-sm pull-left" boundary-links="true" rotate="false" num-pages="numPages"></pagination>		              
+		            </div>		            
+		         </div>
 			</div>
 		</div>
 		
