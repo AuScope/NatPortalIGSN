@@ -8,17 +8,31 @@
 		<div class="row summary-panel">
 			<div class="col-md-6">
 			 <h2>Sample Number</h2>
-			 <p>{{details.sample[0].sampleNumber.identifierType}}:{{details.sample[0].sampleNumber.value}}</p>
+			 <p><b>{{details.sample[0].sampleNumber.identifierType}}:</b>{{details.sample[0].sampleNumber.value}}</p>
+			 <h2>Sample Name</h2>
+			 <p>{{details.sample[0].sampleName}}</p>
 			 <h2>Description</h2>
 			 <p>{{details.sample[0].comments}}</p>
+			 <h2>Classification</h2>
+			 <p>{{details.sample[0].classification.classificationIdentifier}}:{{details.sample[0].classification.value}}</p>
+			 <h2>Other Names</h2>
+			 <ul>
+	      		<li ng-repeat="otherName in details.sample[0].otherNames.otherName">{{otherName}}</li>
+	      	 </ul>
 			</div>
 			<div class="col-md-6">
-			 <h2>test</h2>
-			 <p>Bird surveys were undertaken within the 1 hectare core plot at the Karawatha Forest node of the South-East Queensland Peri-Urban Supersite (-27.63°, 153.08°). One survey was conducted in early February and the second was conducted in early May, 2015. Each general-search survey lasted 20 minutes with the single observer detecting bird species by call and sight within the 100 x 100 m plot. Surveys commenced within 1.5 hours after dawn.
-			 </p>
-			 <h2>test</h2>
-			 <p>Bird surveys were undertaken within the 1 hectare core plot at the Karawatha Forest node of the South-East Queensland Peri-Urban Supersite (-27.63°, 153.08°). One survey was conducted in early February and the second was conducted in early May, 2015. Each general-search survey lasted 20 minutes with the single observer detecting bird species by call and sight within the 100 x 100 m plot. Surveys commenced within 1.5 hours after dawn.
-			 </p>
+			 <h2>Landing Page</h2>
+			 <p>{{details.sample[0].landingPage}}</p>
+			 <h2>Purpose</h2>
+			 <p>{{details.sample[0].purpose}}</p>
+			 <h2>Sampling Campaign</h2>
+			 <p>{{details.sample[0].samplingCampaign}}</p>
+			 <h2>Log</h2>
+			 <ul>
+			 	<li>Event: {{details.sample[0].logElement.event}}</li>
+			 	<li>Time Stamp: {{details.sample[0].logElement.timeStamp}}</li>
+			 	<li>{{details.sample[0].logElement.value}}</li>
+			 </ul>
 			</div>
 		</div>
 	
@@ -35,47 +49,137 @@
 			  <div class="panel panel-default">
 			    <div class="panel-heading">
 			      <h4 class="panel-title">
-			        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-			        <span class="fa fa-camera-retro"></span> Collapsible Group 1</a>
+			        <a data-toggle="collapse" data-parent="#accordion" href="#materialType">
+			        <span class="fa fa-camera-retro"></span> Material Type</a>
 			      </h4>
 			    </div>
-			    <div id="collapse1" class="panel-collapse collapse in">
-			      <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-			      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-			      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-			      commodo consequat.</div>
+			    <div id="materialType" class="panel-collapse collapse in">
+			      <div class="panel-body">
+			      	<ul>
+			      		<li ng-repeat="material in details.sample[0].materialTypes.value.materialType">{{material}}</li>
+			      	</ul>
+			      </div>
 			    </div>
 			  </div>
 			  <div class="panel panel-default">
 			    <div class="panel-heading">
 			      <h4 class="panel-title">
-			        <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-			        Collapsible Group 2</a>
+			        <a data-toggle="collapse" data-parent="#accordion" href="#relatedResource">
+			        Related Resources</a>
 			      </h4>
 			    </div>
-			    <div id="collapse2" class="panel-collapse collapse">
-			      <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-			      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-			      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-			      commodo consequat.</div>
+			    <div id="relatedResource" class="panel-collapse collapse">
+			      <div class="panel-body">
+			      	<ul>
+			      		<li ng-repeat="relatedResource in details.sample[0].relatedResources.relatedResourceIdentifier">{{relatedResource.relatedIdentifierType}} {{relatedResource.relationType}} {{relatedResource.value}}</li>
+			      	</ul>
+			       </div>
+			     </div>
+			  </div>
+			  <div class="panel panel-default">
+			    <div class="panel-heading">
+			      <h4 class="panel-title">
+			        <a data-toggle="collapse" data-parent="#accordion" href="#sampleCollector">
+			        Sample Collector</a>
+			      </h4>
+			    </div>
+			    <div id="sampleCollector" class="panel-collapse collapse">
+			      <div class="panel-body">
+			      	<ul>
+			      		<li ng-repeat="sampleCollector in details.sample[0].sampleCollectors.value.collector">{{sampleCollector.collectorIdentifier}} : {{sampleCollector.value}}</li>
+			      	</ul>
+			      </div>
 			    </div>
 			  </div>
 			  <div class="panel panel-default">
 			    <div class="panel-heading">
 			      <h4 class="panel-title">
-			        <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
-			        Collapsible Group 3</a>
+			        <a data-toggle="collapse" data-parent="#accordion" href="#sampleCuration">
+			        Sample Curation</a>
 			      </h4>
 			    </div>
-			    <div id="collapse3" class="panel-collapse collapse">
-			      <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-			      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-			      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-			      commodo consequat.</div>
+			    <div id="sampleCuration" class="panel-collapse collapse">
+			      <div class="panel-body">
+			      	<div ng-repeat="sampleCurator in details.sample[0].sampleCuration.curation">
+				        <h4>{{sampleCurator.curator}}</h4>
+				      	<ul>
+				      		<li>Curation Location: {{sampleCurator.curationLocation}}</li>
+				      		<li ng-if="sampleCurator.curationTime.timeInstant == null">Curation Time: {{sampleCurator.curationTime.timePeriod.start}} - {{sampleCurator.curationTime.timePeriod.end}}</li>
+				      		<li ng-if="sampleCurator.curationTime.timeInstant != null">Curation Time: {{sampleCurator.curationTime.timeInstant}}</li>
+				      	</ul>
+			      	</div>
+			      </div>
+			    </div>
+			  </div>
+			  <div class="panel panel-default">
+			    <div class="panel-heading">
+			      <h4 class="panel-title">
+			        <a data-toggle="collapse" data-parent="#accordion" href="#sampleType">
+			        SampleType</a>
+			      </h4>
+			    </div>
+			    <div id="sampleType" class="panel-collapse collapse">
+			      <div class="panel-body">
+			      	<ul>
+			      		<li ng-repeat="sampleType in details.sample[0].sampleTypes.value.sampleType">{{sampleType}}</li>
+			      	</ul>
+			      </div>
+			    </div>
+			  </div>
+			  <div class="panel panel-default">
+			    <div class="panel-heading">
+			      <h4 class="panel-title">
+			        <a data-toggle="collapse" data-parent="#accordion" href="#samplingMethod">
+			        Sampling Method</a>
+			      </h4>
+			    </div>
+			    <div id="samplingMethod" class="panel-collapse collapse">
+			      <div class="panel-body">
+			      	<ul>
+			      		<li ng-if="details.sample[0].samplingMethod.nil==true">{{details.sample[0].samplingMethod.value.nilReason}}</li>
+			      	</ul>
+			      </div>
+			    </div>
+			  </div>
+			  <div class="panel panel-default">
+			    <div class="panel-heading">
+			      <h4 class="panel-title">
+			        <a data-toggle="collapse" data-parent="#accordion" href="#samplingFeature">
+			        Sampling Features</a>
+			      </h4>
+			    </div>
+			    <div id="samplingFeature" class="panel-collapse collapse">
+			      <div class="panel-body">
+			      	<div ng-repeat="samplingFeature in details.sample[0].samplingFeatures.samplingFeature">
+				        <h4>{{samplingFeature.samplingFeatureName.value}}</h4>
+				        <p>{{samplingFeature.samplingFeatureName.samplingFeatureType}}</p>
+				      	<ul>
+				      		<li>Locality: {{samplingFeature.samplingFeatureLocation.locality}}</li>
+				      		<li>Datum: {{samplingFeature.samplingFeatureLocation.elevation.datum}}</li>
+				      		<li>Units: {{samplingFeature.samplingFeatureLocation.elevation.units}}</li>
+				      		<li>Elevation: {{samplingFeature.samplingFeatureLocation.elevation.value}}</li>
+				      	</ul>
+			      	</div>
+			      </div>
+			    </div>
+			  </div>
+			  <div class="panel panel-default">
+			    <div class="panel-heading">
+			      <h4 class="panel-title">
+			        <a data-toggle="collapse" data-parent="#accordion" href="#samplingTime">
+			        Sampling Time</a>
+			      </h4>
+			    </div>
+			    <div id="samplingTime" class="panel-collapse collapse">
+			      <div class="panel-body">
+			      	<ul>
+			      		<li ng-if="details.sample[0].samplingTime.value.timeInstant == null">Time Period: {{details.sample[0].samplingTime.value.timePeriod.start}} - {{details.sample[0].samplingTime.value.timePeriod.end}}</li>
+			      		<li ng-if="details.sample[0].samplingTime.value.timeInstant != null">Time Instant: {{details.sample[0].samplingTime.value.timeInstant}}</li>
+			      	</ul>
+			      </div>
 			    </div>
 			  </div>
 			</div>
-
 		</div>
 		
 		

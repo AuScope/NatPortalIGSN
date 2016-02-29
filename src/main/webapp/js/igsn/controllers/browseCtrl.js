@@ -14,7 +14,7 @@ allControllers.controller('browseCtrl', ['$scope','$rootScope','$http','ViewSamp
     
     
     
-    
+    //Something in the angular route is trigger a refresh on a.href 
     var searchSample = function(page){
 		$scope.currentPages = page;//VT page is reset to 1 on new search
 		var params ={	
