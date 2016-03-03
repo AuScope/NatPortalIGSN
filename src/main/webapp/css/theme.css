@@ -351,72 +351,7 @@ footer {
 	float: right;
 	margin-right: 0;
 }
-/* ------------------------ Call to action ----------------------*/
-.cta {
-	padding: 50px 0 30px;
-}
-.cta .cta-message p {
-	padding: 15px 0 20px;
-	font-size:22px;
-	line-height:32px;
-}
-.cta .cta-message strong {
-	font-size: 24px;
-	letter-spacing:0.02em;
-}
-.cta-button {
-	margin:15px 0 15px 0;
-}
 
-/* ------------------------ table ----------------------*/
-table {
-	font-size: 18px;
-}
-
-/* ------------------------------ clients -------------------------- */
-#clients a {
-	display: block;
-	text-align: center;
-	margin-bottom: 30px;
-}
-
-/* ------------------------------ testimonial -------------------------- */
-#testimonial {
-	text-align: center;
-}
-.carousel ,
-.testimonial{
-	z-index: 20;
-}
-.carousel-indicators {
-	position: absolute;
-	bottom: -15px;
-	left: 50%;
-	z-index: 15;
-	width: 60%;
-	padding-left: 0;
-	margin-left: -30%;
-	text-align: center;
-	list-style: none;
-}
-.carousel-indicators li {
-	width: 13px;
-	height: 13px;
-	margin: 0 5px;
-	text-indent: -999px;
-	cursor: pointer;
-	border: 0;
-	border-radius: 20px;
-	background-color: #FFF;
-	opacity: 0.7;
-}
-.carousel-indicators li.active {
-	width: 13px;
-	height: 13px;
-	 margin: 0 5px;
-	background-color: #23A657;
-	opacity: 1;
-}
 
 /* ------------------------------ products -------------------------- */
 .project-price {
@@ -515,185 +450,7 @@ table {
 
 
 
-
-/* ------------------------------ Contact -------------------------- */
-.contact-info h2{
-	margin-top: 0; 
-}
-address {
-	font-size: 18px;
-}
-
-.colorWhite, .colorWhite i {
-	color: #fff !important;
-}
-.contact-item h2{
-	font-size:18px;
-	font-weight:600;
-	margin-bottom:10px;
-}
-.contact-item .icon{
-	display:block;
-	font-size:48px;
-	color:#5cc9df;
-	text-shadow:-2px 2px 0 rgba(0,0,0,0.1);
-	-webkit-transition:all .3s ease-out;
-	transition:all .3s ease-out;
-}
-.contact-item .icon:hover{
-	color:#5cc9df;
-	-webkit-transform:scale(1.3) translateY(-10px);
-	transform:scale(1.3) translateY(-10px);
-}
-.bl_form {
-	margin: 30px 0 0;
-}
-.bl_form input {
-	padding-top: 15px;
-	background: rgba(255,255,255,0.10);
-	box-shadow: 0 4px 0px rgba(0,0,0,0.2);
-	border: none;
-	color: white;
-	padding: 10px 15px;
-	border-radius: 5px;
-	font-size: 16px;
-	outline: none;
-}
-.lb_wrap .lb_label.top, 
-.lb_wrap .lb_label.bottom {
-	left: 66px !important;
-}
-.lb_wrap .lb_label.left {
-	left: 0;
-}
-.lb_label {
-	font-size:17px;
-	line-height:32px;
-	font-weight: 400;
-	color: #ccc;
-}
-.no-placeholder .lb_label {
-	display:none;
-}
-.lb_label.active {
-	color: #aaa;
-}
-#order-form .form-group label,
-#contact-form .form-group label{
-	display:none;
-	font-size:18px;
-	line-height:24px;
-	font-weight:100;
-	text-align: center;
-	/* text-transform:uppercase; */
-}
-#order-form .no-placeholder .form-group label,
-#contact-form .no-placeholder .form-group label{
-	display:block;
-}
-#order-form.controls {
-	/* padding:0; */
-}
-#order-form.no-placeholder .controls,
-#contact-form.no-placeholder .controls {
-	margin-top:0;
-}
-#order-form .form-control,
-#contact-form .form-control,
-.input-group .form-control {
-	display:inline;
-	background:#fff;
-	border:none;
-	/* border-radius:5px; */
-	outline:none;
-	height: 44px;
-	font-size:18px;
-	line-height:32px;
-	color:#aaa;
-	font-weight:400;
-	vertical-align:top;
-	border:2px solid #FFF;
-	box-shadow:none;
-}
-
-.special {
-	border-bottom-right-radius: 0;
-	border-top-right-radius: 0;
-}
-
-#order-form.form-group.half-width{
-	width:40%;
-	float:left;
-}
-#order-form.btn-store{
-	margin: 0;
-}
-#order-form.form-group{
-	/* position:relative; */
-}
-#order-form.form-group [class*=fa] {
-	display:block;
-	width:64px;
-	position:absolute;
-	top:0;
-	left:5px;
-	color:#eee;
-	font-size:24px;
-	line-height:52px;
-	text-align:center;
-	font-weight:300;
-	-webkit-transition:color .3s ease-out;
-	transition:color .3s ease-out;
-}
-#order-form.form-group [class*=fa].active{
-	color:#ccc;
-}
-#order-form.no-placeholder .form-group [class*=fa]{
-	top:30px;
-}
-#order-form textarea.form-control,
-#contact-form textarea.form-control {
-	height:auto;
-	max-width:100%;
-	min-width:100%;
-	font-size:18px;
-	font-weight:400;
-	line-height:24px;
-	padding-top:14px;
-	vertical-align:top;
-	border:2px solid #FFF;
-}
-#contact-form .form-control:focus,
-#order-form .form-control:focus, 
-.input-group .form-control:focus {
-	outline:none;
-	border: 2px solid #23A657;
-}
-#order-form .inputError,
-#order-form textarea.form-control.inputError,
-#newsletter-form .inputError {
-	outline:none;
-	border:2px solid #F05557;
-}
-
-#order-form.error-message {
-	position:absolute;
-	top:15px;
-	right:12px;
-	font-size:15px;
-	line-height:24px;
-	font-weight:400;
-	color:#F05557;
-	z-index:10;
-}
-#order-form.no-placeholder .error-message {
-	top:0;
-}
-.input-group-btn .btn-king {
-	margin: 0;
-}
-#main-footer,
-#social {
+#main-footer {
 	padding: 40px 0 20px;
 }
 .checkbox, .radio {
@@ -721,9 +478,6 @@ input[type=radio],input[type=checkbox] {
 form p {
 	margin-top: 16px;
 }
-#total {
-	font-weight: 600;
-}
 
 .input-group .input-group-btn .btn{
 	margin: 0;
@@ -735,60 +489,10 @@ form p {
     display: inline!important;
 }
 
-.table tbody>tr>td.vert-align {
-    vertical-align: middle;
-}
 
-/* 320px order-form fix */
-#order-form table td:first-child, 
-#order-form table th:first-child {
-    padding-left: 0;
-}
-#order-form table td:last-child, 
-#order-form table th:last-child {
-    padding-right: 0;
-}
 
-/* ------------------------------ social links -------------------------- */
-.social-links,
-.social-profiles {
-	list-style:none;
-	margin:0;
-	padding:0;
-	margin-bottom: 29px;
-}
-.social-links li,
-.social-profiles li{
-	display:inline-block;
-	margin: 9px 9px 0 9px;
-	border-radius:3px;
-	box-shadow:0 4px 0 transparent;
-	-webkit-transition:all .3s ease-out;
-	transition:all .3s ease-out;
-}
-.social-links li a {
-	background: transparent;
-	border: 2px solid #fff;
-	display:block;
-	color:#FFF;
-	font-size: 18px;
-	width: 48px;
-	height: 48px;
-	line-height: 48px;
-	text-align:center;
-	border-radius:50%;
-	-webkit-transition:all .3s ease-out;
-	transition:all .3s ease-out;
-}
-.social-links li a i{
-	
-}
-.social-links li a:hover {
-	color:#FFF;
-	background:#23A657;
-	text-decoration: none;
-	border-color: #23A657;
-}
+
+
 
 /* ------------------------------ Media -------------------------- */
 @media (max-width: 480px) { 
@@ -1154,3 +858,40 @@ hr.gradientwhite{
 	background-color:#006699; }
 .datagrid table tfoot ul.active, .datagrid table tfoot ul a:hover { text-decoration: none;border-color: #006699; color: #FFFFFF; background: none; background-color:#00557F;}
 div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
+
+/*List css*/
+
+
+ 
+.tableList ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+ 
+.tableList li {
+  font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+  border-bottom: 1px solid #ccc;
+}
+ 
+.tableList li:last-child {
+  border: none;
+}
+ 
+.tableList li a {
+  text-decoration: none;
+  color: #808040;	
+  display: block;
+
+ 
+  -webkit-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -moz-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -o-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -ms-transition: font-size 0.3s ease, background-color 0.3s ease;
+  transition: font-size 0.3s ease, background-color 0.3s ease;
+}
+ 
+.tableList li a:hover {
+  font-size: 25px;
+  background: #f6f6f6;
+}

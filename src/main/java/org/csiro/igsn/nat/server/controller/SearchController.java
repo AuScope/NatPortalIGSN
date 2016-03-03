@@ -45,6 +45,8 @@ public class SearchController {
     			Sample sample=s.getSample().get(0);
     			summaryResponse.setIgsn(sample.getSampleNumber().getValue());
     			summaryResponse.setName(sample.getSampleName());
+    			summaryResponse.setLogTimeStamp(sample.getLogElement().getTimeStamp());
+    			summaryResponse.setLandingPage(sample.getLandingPage());    		
     			responses.add(summaryResponse);
     		}
 		    return  new ResponseEntity<Object>(responses,HttpStatus.OK);    		

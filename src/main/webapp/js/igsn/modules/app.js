@@ -86,25 +86,11 @@ app.service('DropDownValueService', ['$q','$http',function($q,$http) {
    	 	},1000);
     };
     	    	    
-        
-   
-     
- 
-//    this.getBoolean = function() {
-//            return [{
-//            	value:true, 
-//            	YesNo:'Yes'            	
-//            },{
-//            	value:false, 
-//            	YesNo:'No'           	
-//            }];
-//        };
-        
   
         
 }]);
 
-app.service('ViewSampleSummaryService',['$modal','$q','modalService',function ($modal,$q,modalService) {
+app.service('ViewSampleSummaryService',['$modal','$q',function ($modal,$q) {
 	     
      this.viewSample = function(igsn){
     	

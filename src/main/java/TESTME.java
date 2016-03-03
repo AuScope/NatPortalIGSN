@@ -47,7 +47,7 @@ public class TESTME {
 //			   }
 //		}, bq);
 		//Maintain static summary in memory + check last harvest vs last update to update if required.
-		Directory dir = new MMapDirectory(new File("/Users/VictorTey/Documents/Projects/panFMP-1.1.0/repository/lucene-store/igsn"));
+		Directory dir = new MMapDirectory(new File("C:\\vtest\\panFMP-1.1.0-bin\\panFMP-1.1.0\\repository\\lucene-store\\igsn"));
 		IndexReader ir = IndexReader.open(dir);
 		Term term = new Term("curators","curator text 1");
 		//System.out.println(ir.docFreq(term));
