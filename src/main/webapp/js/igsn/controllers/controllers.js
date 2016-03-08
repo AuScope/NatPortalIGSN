@@ -35,6 +35,12 @@ allControllers.controller('sampleDetailsCtrl', function ($scope, $modalInstance,
 	    defaults: {
             scrollWheelZoom: false
         },
+        tiles:{
+            url: "http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png",
+            options: {
+                attribution: 'All maps &copy; <a href="http://www.opencyclemap.org">OpenCycleMap</a>, map data &copy; <a href="http://www.openstreetmap.org">OpenStreetMap</a> (<a href="http://www.openstreetmap.org/copyright">ODbL</a>'
+            }
+        },
 	    markers: {
             osloMarker: {
             	lat: -25.2726333,

@@ -547,6 +547,31 @@ hr.gradientwhite{
     background-color:white;
 }
 
+/*Summary detail*/
+.summary-banner {
+  background: 
+    url(../img/summary-banner.jpg);
+  background-size: cover;
+  width: 100%;
+  height: 200px;
+  opacity: 0.8;
+
+   
+}
+
+.summary-banner h1 {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 900;
+  color: white;
+  text-transform: uppercase;
+  margin: 0;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  font-size: 2rem;
+  transform: translate(-50%, -50%);
+}
+
 /*IGSN*/
 .map {
 	height:400px;
@@ -572,7 +597,7 @@ hr.gradientwhite{
     url(../img/map.jpg);
   background-size: cover;
   width: 100%;
-  height: 200px;
+  height: 250px;
   opacity: 0.8;
 
    
@@ -803,66 +828,55 @@ hr.gradientwhite{
         
  /*End test toolbar*/
  
- /*Tabular css table*/
- .datagrid table { 
-	 border-collapse: collapse; 
-	 text-align: left; 
-	 width: 100%; 
- } 
- .datagrid {
- 	font: normal 12px/150% Arial, Helvetica, sans-serif; 
- 	background: #fff; 
- 	overflow: hidden; 
- 	border: 1px solid #006699; 
- 	-webkit-border-radius: 3px; 
- 	-moz-border-radius: 3px; 
- 	border-radius: 3px; }
- 	
-.datagrid table td, .datagrid table th { 
-	padding: 20px 10px; 
+ 
+/*Thumbnail list*/
+
+
+.thumbNailList * {
+  margin: 0;
+  padding: 0;
 }
 
-.datagrid table thead th {
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #006699), color-stop(1, #00557F) );
-	background:-moz-linear-gradient( center top, #006699 5%, #00557F 100% );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#006699', endColorstr='#00557F');
-	background-color:#006699; 
-	color:#FFFFFF; 
-	font-size: 15px; 
-	font-weight: bold; 
-	border-left: 1px solid #0070A8; 
-} 
-.datagrid table thead th:first-child { 
-	border: none; 
+.thumbNailList > ul {
+  list-style-type: none;
+  width: 100%;
 }
-.datagrid table tbody td { 
-	color: #00496B; 
-	border-left: 1px solid #E1EEF4;
-	font-size: 12px;
-	font-weight: normal; 
+
+.thumbNailList h3 {
+  font: bold 20px/1.5 Helvetica, Verdana, sans-serif;
 }
-.datagrid table tbody .alt td { 
-	background: #E1EEF4; 
-	color: #00496B; 
-}.datagrid table tbody td:first-child { border-left: none; }
-.datagrid table tbody tr:last-child td { border-bottom: none; }
-.datagrid table tfoot td div { border-top: 1px solid #006699;background: #E1EEF4;} 
-.datagrid table tfoot td { padding: 0; font-size: 12px } 
-.datagrid table tfoot td div{ padding: 2px; }
-.datagrid table tfoot td ul { margin: 0; padding:0; list-style: none; text-align: right; }.datagrid table tfoot  li { display: inline; }
-.datagrid table tfoot li a { text-decoration: none; display: inline-block;  padding: 2px 8px; margin: 1px;color: #FFFFFF;border: 1px solid #006699;
-	-webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; 
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #006699), color-stop(1, #00557F) );
-	background:-moz-linear-gradient( center top, #006699 5%, #00557F 100% );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#006699', endColorstr='#00557F');
-	background-color:#006699; }
-.datagrid table tfoot ul.active, .datagrid table tfoot ul a:hover { text-decoration: none;border-color: #006699; color: #FFFFFF; background: none; background-color:#00557F;}
-div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
+
+.thumbNailList > ul > li {
+  background: #ffffff;
+}
+
+.thumbNailList > ul > li img {
+  float: left;
+  margin: 0 15px 0 0;
+  padding : 15px;
+}
+
+.thumbNailList > ul > li ul {
+  list-style-position: inside;
+}
+
+.thumbNailList > ul > li p,
+.thumbNailList > ul > li li {
+  font: 200 12px/1.5 Georgia, Times New Roman, serif;
+}
+
+
+.thumbNailList > ul > li {
+  padding: 10px;
+  overflow: auto;
+}
+
+.thumbNailList > ul > li:hover {
+  background: #eee;
+  cursor: pointer;
+}
 
 /*List css*/
-
-
- 
 .tableList ul {
   list-style-type: none;
   margin: 0;
@@ -894,4 +908,36 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
 .tableList li a:hover {
   font-size: 25px;
   background: #f6f6f6;
+}
+
+/*Extend bootstrap panel color and design*/
+.panel-info-gradient {
+  border-color: #bce8f1;
+}
+.panel-info-gradient > .panel-heading {
+  color: #0080c0;
+  border-color: #bce8f1;
+  background: -webkit-linear-gradient(#ecf9fb, #ffffff); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#ecf9fb, #ffffff); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#ecf9fb, #ffffff); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(#ecf9fb, #ffffff); /* Standard syntax */
+}
+.panel-info-gradient > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: #bce8f1;
+}
+.panel-info-gradient > .panel-heading .badge {
+  color: #d9edf7;
+  background-color: #31708f;
+}
+.panel-info-gradient > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: #bce8f1;
+}
+
+/*Summary panel*/
+.summary-panel h2{
+	color: #0080c0
+}
+
+.text-blue {
+	color: #0080c0
 }
