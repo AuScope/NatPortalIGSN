@@ -15,11 +15,19 @@ app.config(['$routeProvider',
                     templateUrl: 'views/search.html'
                  
                  }).
+                 when('/search/:materialIdentifier', {
+                     templateUrl: 'views/search.html'
+                  
+                  }).
                 otherwise({
                   redirectTo: '/'
                 });
               
 }]);
+
+app.filter('escape', function() {
+	  return window.encodeURIComponent;
+});
 
 app.service('modalService', ['$modal',function ($modal) {
 

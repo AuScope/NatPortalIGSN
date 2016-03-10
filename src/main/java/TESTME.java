@@ -67,11 +67,11 @@ public class TESTME {
 //				}
 		
 		TermEnum termEnum=ir.terms();
-		System.out.println(termEnum.term());
-		System.out.println(termEnum.docFreq());
-		termEnum.next();
-		System.out.println(termEnum.term());
-		System.out.println(termEnum.docFreq());
+		while(termEnum.next()){
+			System.out.println(termEnum.term());
+			System.out.println(termEnum.docFreq());
+		}
+		
 	}
 
 }

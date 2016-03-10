@@ -49,55 +49,31 @@
 				
 				<div class="thumbNailList">
 				  <ul>
-				    <li>
-				      <img src="http://maps.google.com/mapfiles/kml/paddle/pink-blank.png" />
-				      <h3>CSWA00123</h3>				     
+				    <li ng-click="viewSample(sample.igsn)" ng-repeat="sample in samples">
+				      <img src="http://maps.google.com/mapfiles/kml/paddle/{{$index + 1 || 0}}.png" />
+				      <h3>{{sample.igsn}}</h3>				     
 			      	  <ul>
-			    		<li>2016</li>
-			    		<li>Sample Name</li>
-			    		<li>http://csiro.au/CSWA00123</li>
+			    		<li>{{sample.logTimeStamp}}</li>
+			    		<li>{{sample.name}}</li>
+			    		<li>{{sample.landingPage}}</li>
 			    	   </ul>				     
 				    </li>
 				      
-				    <li>
-				      <img src="http://maps.google.com/mapfiles/kml/paddle/blu-blank.png" />
-				      <h3>Headline</h3>
-				      <ul>
-			    		<li>2016</li>
-			    		<li>Sample Name</li>
-			    		<li>http://csiro.au/CSWA00123</li>
-			    	   </ul>
-				    </li>
-				 
-				    <li>
-				      <img src="http://maps.google.com/mapfiles/kml/paddle/ylw-blank.png" />
-				      <h3>Headline</h3>
-				      <ul>
-			    		<li>2016</li>
-			    		<li>Sample Name</li>
-			    		<li>http://csiro.au/CSWA00123</li>
-			    	   </ul>
-				    </li>
-				 
-				    <li>
-				      <img src="http://maps.google.com/mapfiles/kml/paddle/grn-blank.png" />
-				      <h3>Headline</h3>
-				      <ul>
-			    		<li>2016</li>
-			    		<li>Sample Name</li>
-			    		<li>http://csiro.au/CSWA00123</li>
-			    	   </ul>
-				    </li>
+				   
 				  </ul>
 				</div>
 				
 				
 				
 				<div class="row">
-		            <div class="col-sm-12">
-		              	<pagination ng-change="pageChanged()" total-items="totalItem" ng-model="currentPages" max-size="5" class="pagination-sm pull-left" boundary-links="true" rotate="false" num-pages="numPages"></pagination>		              
-		            </div>		            
+		            <div class="col-sm-8">
+		              	<pagination ng-change="pageChanged()" total-items="totalItem" ng-model="currentPages" max-size="10" class="pagination-sm pull-left" boundary-links="true" rotate="false" num-pages="numPages"></pagination>		              
+		            </div>
+		            <div class="col-sm-4 padding-top-20 light-typo">
+		              	<p>Page: {{currentPages}} / {{numPages}}</p>			              
+		            </div>		            	            
 		         </div>
+		        
 			</div>
 		</div>
 		

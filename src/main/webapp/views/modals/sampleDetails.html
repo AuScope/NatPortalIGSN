@@ -17,14 +17,14 @@
 			 <p>{{details.sample[0].comments}}</p>
 			 <h2>Classification</h2>
 			 <p>{{details.sample[0].classification.classificationIdentifier}}:{{details.sample[0].classification.value}}</p>
-			 <h2>Other Names</h2>
-			 <ul>
-	      		<li ng-repeat="otherName in details.sample[0].otherNames.otherName">{{otherName}}</li>
-	      	 </ul>
+			  <h2>Landing Page</h2>
+			 <p>{{details.sample[0].landingPage}}</p>
 			</div>
 			<div class="col-md-6">
-			 <h2>Landing Page</h2>
-			 <p>{{details.sample[0].landingPage}}</p>
+			  <h2>Other Names</h2>
+			  <ul>
+		      	<li ng-repeat="otherName in details.sample[0].otherNames.otherName">{{otherName}}</li>
+		      </ul>			
 			 <h2>Purpose</h2>
 			 <p>{{details.sample[0].purpose}}</p>
 			 <h2>Sampling Campaign</h2>

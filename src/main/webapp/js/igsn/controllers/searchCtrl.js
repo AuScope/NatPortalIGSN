@@ -1,6 +1,8 @@
-allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSampleSummaryService','modalService','DropDownValueService','leafletData',
-                                  function ($scope,$rootScope,$http,ViewSampleSummaryService,modalService,DropDownValueService,leafletData) {
+allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSampleSummaryService','modalService','DropDownValueService','leafletData','$routeParams',
+                                  function ($scope,$rootScope,$http,ViewSampleSummaryService,modalService,DropDownValueService,leafletData,$routeParams) {
 
+	$scope.totalItem = 0;
+	$scope.currentPages = 1;
 	
 	angular.extend($scope, {
 	    center: {
@@ -61,12 +63,20 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
     getStats();
     //end load stats
     
+    $scope.pageChanged = function() {
+    	searchSample($scope.currentPages);
+	  };
+    
     var searchSample = function(page){
 		$scope.currentPages = page;//VT page is reset to 1 on new search
 		var params ={	
 				pageNumber:page,
 				pageSize:10
-				}
+		}
+		
+		if($routeParams.materialIdentifier){
+			params.materialType=$routeParams.materialIdentifier;
+		}
 		
 		//VT: Actual results
 		$http.get('search.do',{
@@ -75,6 +85,8 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 	     .success(function(data) {
 	       $scope.samples = data;       
 	       $scope.toggleFilter=false;
+	   	   $scope.totalItem = data[0].searchResultCount;
+		
 	     })
 	     .error(function(data, status) {    	
 	    	 modalService.showModal({}, {    	            	           
@@ -83,9 +95,10 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 	    	 });
 	       
 	     })
-	    
 	     
 	}
+    
+    searchSample($scope.currentPages);
     
     var setupCheckbox=function(stats){
     	var results = [];
@@ -98,6 +111,10 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
     	return results;
     }
 	  
-	  //searchSample(1);
+	  
+	  
+	  
+	  
+	  
 	  
 }]);

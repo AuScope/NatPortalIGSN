@@ -10,10 +10,12 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.index.TermEnum;
 import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.Sort;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.MMapDirectory;
 import org.csiro.igsn.bindings.allocation2_0.Samples;
@@ -23,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 import de.pangaea.metadataportal.search.SearchResultCollector;
 import de.pangaea.metadataportal.search.SearchResultItem;
+import de.pangaea.metadataportal.search.SearchResultList;
 import de.pangaea.metadataportal.search.SearchService;
 
 @Service
@@ -37,31 +40,84 @@ public class PanFMPSearchService {
 	@Value("#{configProperties['PANFMP_CONFIG_LUCENCE_DIR']}")
 	private String PANFMP_CONFIG_LUCENCE_DIR;
 	
-	private static final String [] filterKeys = {"curators"};
+	private static final String [] filterKeys = {"curators","materialType","sampleType","samplingFeature"};
 	
 	
 
-	public List<Samples> search(String igsn, String sampleType, Integer pageNumber, Integer pageSize) throws Exception {
+	public List<Samples> search(String igsn, String sampleName,String materialType,String sampleCollector, String sampleType,String samplingFeatureType, Integer pageNumber, Integer pageSize,MutableInt resultCount) throws Exception {
 		
-		SearchService service=new SearchService(PANFMP_CONFIG_FILE_LOCATION, PANFMP_CONFIG_FILE_INDEX);
-		BooleanQuery bq=service.newBooleanQuery();
-		bq.add(service.newTextQuery("sampleName2","sample name"), org.apache.lucene.search.BooleanClause.Occur.MUST);
+		SearchService service = new SearchService(PANFMP_CONFIG_FILE_LOCATION, PANFMP_CONFIG_FILE_INDEX);
+		BooleanQuery bq = service.newBooleanQuery();
 		
+		if(sampleName != null){
+			bq.add(service.newTextQuery("sampleName", sampleName), org.apache.lucene.search.BooleanClause.Occur.MUST);
+		}
+		if(igsn != null){
+			bq.add(service.newTextQuery("sampleNumber", igsn), org.apache.lucene.search.BooleanClause.Occur.MUST);
+		}
 		
-		SearchResultCollectorImpl searchResultCollectorImpl = new SearchResultCollectorImpl();
+		if(materialType != null){
+			bq.add(service.newTextQuery("materialType", materialType), org.apache.lucene.search.BooleanClause.Occur.MUST);
+		}
 		
-		service.search(searchResultCollectorImpl, bq);
-		return searchResultCollectorImpl.getSamples();
+		if(sampleCollector != null){
+			bq.add(service.newTextQuery("sampleCollector", sampleCollector), org.apache.lucene.search.BooleanClause.Occur.MUST);
+		}
+		
+		if(sampleType != null){
+			bq.add(service.newTextQuery("sampleType", sampleType), org.apache.lucene.search.BooleanClause.Occur.MUST);
+		}
+		
+		if(samplingFeatureType != null){
+			bq.add(service.newTextQuery("samplingFeature", samplingFeatureType), org.apache.lucene.search.BooleanClause.Occur.MUST);
+		}
+		
+	
+		
+
+		// create a Sort, if you want standard sorting by relevance use
+		// sort=null
+		Sort sort = service.newSort(service.newFieldBasedSort("timestamp", true));
+		// start search
+		SearchResultList list = null;
+		if(bq.getClauses().length==0){
+			list = service.search(service.newMatchAllDocsQuery(), sort);
+		}else{
+			list = service.search(bq, sort);
+		}
+		//VT:We can tranverse through the list and collect stats via item.getFields().get("curators") however it won't be efficient if we dealing with 20k results
+		// print search results (start is item to start with, count is number of
+		// results)
+		int start = (pageNumber-1) * pageSize, count = pageSize;
+
+		List<SearchResultItem> page = list.subList(Math.min(start, list.size()), Math.min(start + count, list.size()));
+		resultCount.setValue(list.size());
+
+		ArrayList<Samples> samples = new ArrayList<Samples>();
+
+		for (SearchResultItem item : page) {
+			JAXBContext jaxbContext;
+			try {
+				jaxbContext = JAXBContext.newInstance(Samples.class);
+				Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+				Samples sample = (Samples) jaxbUnmarshaller.unmarshal(new StringReader(item.getXml()));
+				samples.add(sample);
+			} catch (JAXBException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return samples;
+
 	}
 	
 	public Samples search(String igsn) throws Exception {
 		SearchService service=new SearchService(PANFMP_CONFIG_FILE_LOCATION, PANFMP_CONFIG_FILE_INDEX);
 		BooleanQuery bq=service.newBooleanQuery();
-		bq.add(service.newTextQuery("sampleName2","sample name"), org.apache.lucene.search.BooleanClause.Occur.MUST);
-		
-		
-		SearchResultCollectorImpl searchResultCollectorImpl = new SearchResultCollectorImpl();
-		
+		bq.add(service.newTextQuery("sampleNumber",igsn), org.apache.lucene.search.BooleanClause.Occur.MUST);
+
+		SearchResultCollectorImpl searchResultCollectorImpl = new SearchResultCollectorImpl();		
 		service.search(searchResultCollectorImpl, bq);
 		//VT:There will always ever only  be one since we are searching by igsn
 		return searchResultCollectorImpl.getSamples().get(0);
@@ -91,14 +147,19 @@ public class PanFMPSearchService {
 	private void extractStats(TermEnum termEnum,LuceneStats luceneStats) throws IOException{
 		
 		if(termEnum.term().field().equalsIgnoreCase(luceneStats.getStatsGroup())){
-			luceneStats.put(termEnum.term().text(), termEnum.docFreq());
+			luceneStats.put(extractSummaryFromIdentifier(termEnum.term().text()), termEnum.docFreq());
 		}
 		
 		while(termEnum.next() && termEnum.term().field().equalsIgnoreCase(luceneStats.getStatsGroup())){
-			luceneStats.put(termEnum.term().text(), termEnum.docFreq());
+			luceneStats.put(extractSummaryFromIdentifier(termEnum.term().text()), termEnum.docFreq());
 		}
 
 		
+	}
+	
+	private String extractSummaryFromIdentifier(String identifer){
+		String [] tokens = identifer.split("/");
+		return tokens[tokens.length-1];
 	}
 	
 	public static void main(String [] args) throws IOException{
@@ -106,6 +167,10 @@ public class PanFMPSearchService {
 		System.out.println(s.getStats("curators"));
 		
 	}
+	
+	
+	
+	
 	
 	private class SearchResultCollectorImpl implements SearchResultCollector{
 		

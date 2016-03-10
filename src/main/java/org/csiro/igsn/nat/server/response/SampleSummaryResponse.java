@@ -6,6 +6,7 @@ public class SampleSummaryResponse {
 	private String igsn;
 	private String logTimeStamp;
 	private String landingPage;
+	private Integer searchResultCount;
 	
 	
 	
@@ -32,6 +33,12 @@ public class SampleSummaryResponse {
 	}
 	public void setLandingPage(String landingPage) {
 		this.landingPage = landingPage;
+	}
+	public Integer getSearchResultCount() {
+		return searchResultCount;
+	}
+	public void setSearchResultCount(Integer searchResultCount) {
+		this.searchResultCount = searchResultCount;
 	}
 
 	
