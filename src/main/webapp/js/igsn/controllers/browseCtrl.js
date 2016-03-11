@@ -22,8 +22,7 @@ allControllers.controller('browseCtrl', ['$scope','$rootScope','$http','ViewSamp
 			params:params
 		 })     
 	     .success(function(data) {
-	       $scope.samples = data;       
-	       $scope.toggleFilter=false;
+	       $scope.samples = data;       	       
 	     })
 	     .error(function(data, status) {    	
 	    	 modalService.showModal({}, {    	            	           

@@ -18,15 +18,6 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
         },
 	    defaults: {
             scrollWheelZoom: false
-        },
-	    markers: {
-            osloMarker: {
-            	lat: -25.2726333,
-    	        lng: 114.9839476,
-                message: "I want to travel here!",
-                focus: true,
-                draggable: false
-            }
         }
 	});
 	
@@ -83,9 +74,20 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 			params:params
 		 })     
 	     .success(function(data) {
-	       $scope.samples = data;       
-	       $scope.toggleFilter=false;
+	       $scope.samples = data;	       
 	   	   $scope.totalItem = data[0].searchResultCount;
+	   	   $scope.markers={};
+	   	   data.forEach(function(current,index,arr){
+	   		   
+
+	   		   this.markers[index+'wtf'] =   {
+	            	lat: current.latitude,
+	    	        lng: current.longitude,		    	     
+	                icon:{
+	                	iconUrl:'http://maps.google.com/mapfiles/kml/paddle/'+ (index+1) +'.png'
+	                }
+	            }
+	   	   },$scope);
 		
 	     })
 	     .error(function(data, status) {    	

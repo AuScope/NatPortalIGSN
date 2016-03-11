@@ -12,17 +12,22 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
+
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.csiro.igsn.bindings.allocation2_0.Samples;
 import org.csiro.igsn.bindings.allocation2_0.Samples.Sample;
 import org.csiro.igsn.nat.server.response.SampleSummaryResponse;
 import org.csiro.igsn.nat.server.service.PanFMPSearchService;
+import org.csiro.igsn.utilities.SpatialUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.vividsolutions.jts.geom.Point;
 
 @Controller
 public class SearchController {
@@ -53,13 +58,22 @@ public class SearchController {
     						materialType==null?null:URLDecoder.decode(materialType, "UTF-8"), 
     						sampleCollector,  sampleType, samplingFeatureType, pageNumber,pageSize,resultCount);
     		List<SampleSummaryResponse> responses= new ArrayList<SampleSummaryResponse>();
+    		
     		for(Samples s: samples){
+    			
     			SampleSummaryResponse summaryResponse= new SampleSummaryResponse();
     			Sample sample=s.getSample().get(0);
+    			
+    			if(sample.getSamplingLocation().isNil()==false && sample.getSamplingLocation().getValue().getWkt()!=null){
+	    			Point point =(Point)SpatialUtilities.wktToGeometry(sample.getSamplingLocation().getValue().getWkt().getValue());
+	    			summaryResponse.setLongitude(point.getCoordinate().x);
+	    			summaryResponse.setLatitude(point.getCoordinate().y);
+    			}
+    			
     			summaryResponse.setIgsn(sample.getSampleNumber().getValue());
     			summaryResponse.setName(sample.getSampleName());
     			summaryResponse.setLogTimeStamp(sample.getLogElement().getTimeStamp());
-    			summaryResponse.setLandingPage(sample.getLandingPage()); 
+    			summaryResponse.setLandingPage(sample.getLandingPage());     			
     			summaryResponse.setSearchResultCount(resultCount.getValue());
     			responses.add(summaryResponse);
     		}
