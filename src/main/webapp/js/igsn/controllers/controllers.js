@@ -40,17 +40,20 @@ allControllers.controller('sampleDetailsCtrl', function ($scope, $modalInstance,
             options: {
                 attribution: 'All maps &copy; <a href="http://www.opencyclemap.org">OpenCycleMap</a>, map data &copy; <a href="http://www.openstreetmap.org">OpenStreetMap</a> (<a href="http://www.openstreetmap.org/copyright">ODbL</a>'
             }
-        },
-	    markers: {
-            osloMarker: {
-            	lat: -25.2726333,
-    	        lng: 114.9839476,
-                message: "I want to travel here!",
+        }
+	});
+	
+	if(params.lat && params.lon){
+		$scope.markers = {
+            singleMarker: {
+            	lat: params.lat,
+    	        lng: params.lon,
+                message: params.igsn,
                 focus: true,
                 draggable: false
             }
         }
-	});
+	}
 	
 	leafletData.getMap("map").then(function (map) {
 		

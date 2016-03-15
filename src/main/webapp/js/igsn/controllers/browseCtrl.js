@@ -1,8 +1,8 @@
 allControllers.controller('browseCtrl', ['$scope','$rootScope','$http','ViewSampleSummaryService','modalService','DropDownValueService','$location','$filter',
                                   function ($scope,$rootScope,$http,ViewSampleSummaryService,modalService,DropDownValueService,$location,$filter) {
 
-    $scope.viewSample = function(igsn){
-    	ViewSampleSummaryService.viewSample(igsn);
+    $scope.viewSample = function(igsn,lat,lon){
+    	ViewSampleSummaryService.viewSample(igsn,lat,lon);
     }
     
     $scope.filterMaterialType = function(materialIdentifier){
@@ -44,7 +44,8 @@ allControllers.controller('browseCtrl', ['$scope','$rootScope','$http','ViewSamp
 			//VT: Actual results
 	  $http.get('getStats.do',{
 		  params:{
-			  statsGroup:"materialType"
+			  statsGroup:"materialType",
+			  displayName : "Material Type"
 		  }
 	  })     
 	  .success(function(data) {

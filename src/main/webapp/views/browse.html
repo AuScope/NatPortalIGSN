@@ -6,7 +6,7 @@
 			<div class="container welcome-content">
 				<div class="row">
 					<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12 text-center wow fadeInUp">
-						<img id="logo" src="img/logo.png" class="img-responsive text-center" alt="shop logo" width="100">				
+						<img id="logo" src="img/igsn_logo.png" class="img-responsive text-center" alt="shop logo" width="100">				
 						
 						<h2>Map Search</h2>
 						<h4>Map based on keywords filter and map bounding box selection</h4>
@@ -50,7 +50,7 @@
 					<div class="col-sm-12 col-md-6">									
 						<div class="row">							
 							<div class="col-sm-12">
-								<article ng-click="filterMaterialType('http://vocabulary.odm2.org/medium/air')" class="design product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.2s">
+								<article ng-click="filterMaterialType('air')" class="design product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.2s">
 									<div class="img-box">
 										<div class="hover-mask2"></div>
 										<span class="product-icon icon-eye"></span>
@@ -58,11 +58,11 @@
 									</div>
 									<div class="product-info col-md-12">
 										<div>
-											<h4 class="project-title">Air({{stats.statsTable['air'] || 0}})</h4>
+											<h4 class="project-title">Air({{stats.statsTable['air'].count || 0}})</h4>
 										</div>
 									</div>
 								</article>
-								<article ng-click="filterMaterialType('http://vocabulary.odm2.org/medium/gas')" class="mock-up product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.4s">
+								<article ng-click="filterMaterialType('gas')" class="mock-up product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.4s">
 									<div class="img-box">
 										<div class="hover-mask2"></div>
 										<span class="product-icon icon-eye"></span>
@@ -70,11 +70,11 @@
 									</div>
 									<div class="product-info col-md-12">
 										<div>
-											<h4 class="project-title">Gas({{stats.statsTable['gas'] || 0}})</h4>
+											<h4 class="project-title">Gas({{stats.statsTable['gas'].count || 0}})</h4>
 										</div>	
 									</div>
 								</article>
-								<article ng-click="filterMaterialType('http://vocabulary.odm2.org/medium/ice')" class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.6s">
+								<article ng-click="filterMaterialType('ice')" class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.6s">
 									<div class="img-box">
 										<div class="hover-mask2"></div>
 										<span class="product-icon icon-eye"></span>
@@ -82,11 +82,11 @@
 									</div>
 									<div class="product-info col-md-12">
 										<div>
-											<h4 class="project-title">Ice({{stats.statsTable['ice'] || 0}})</h4>
+											<h4 class="project-title">Ice({{stats.statsTable['ice'].count || 0}})</h4>
 										</div>	
 									</div>
 								</article>
-								<article ng-click="filterMaterialType('http://vocabulary.odm2.org/medium/liquidAqueous')" class="design product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.2s">
+								<article ng-click="filterMaterialType('liquidAqueous')" class="design product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.2s">
 									<div class="img-box">
 										<div class="hover-mask2"></div>
 										<span class="product-icon icon-eye"></span>
@@ -94,11 +94,11 @@
 									</div>
 									<div class="product-info col-md-12">
 										<div>
-											<h4 class="project-title">Liquid Aqueous({{stats.statsTable['liquidAqueous'] || 0}})</h4>
+											<h4 class="project-title">Liquid Aqueous({{stats.statsTable['liquidAqueous'].count || 0}})</h4>
 										</div>
 									</div>
 								</article>
-								<article ng-click="filterMaterialType('http://vocabulary.odm2.org/medium/liquidOrganic')" class="mock-up product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.4s">
+								<article ng-click="filterMaterialType('liquidOrganic')" class="mock-up product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.4s">
 									<div class="img-box">
 										<div class="hover-mask2"></div>
 										<span class="product-icon icon-eye"></span>
@@ -106,11 +106,11 @@
 									</div>
 									<div class="product-info col-md-12">
 										<div>
-											<h4 class="project-title">Liquid Organic({{stats.statsTable['liquidOrganic'] || 0}})</h4>
+											<h4 class="project-title">Liquid Organic({{stats.statsTable['liquidOrganic'].count || 0}})</h4>
 										</div>	
 									</div>
 								</article>
-								<article ng-click="filterMaterialType('http://vocabulary.odm2.org/medium/mineral')" class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.6s">
+								<article ng-click="filterMaterialType('mineral')" class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.6s">
 									<div class="img-box">
 										<div class="hover-mask2"></div>
 										<span class="product-icon icon-eye"></span>
@@ -118,11 +118,11 @@
 									</div>
 									<div class="product-info col-md-12">
 										<div>
-											<h4 class="project-title">Mineral({{stats.statsTable['mineral'] || 0}})</h4>
+											<h4 class="project-title">Mineral({{stats.statsTable['mineral'].count || 0}})</h4>
 										</div>	
 									</div>
 								</article>
-								<article ng-click="filterMaterialType('http://vocabulary.odm2.org/medium/organism')" class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.2s">
+								<article ng-click="filterMaterialType('organism')" class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.2s">
 									<div class="img-box">
 										<div class="hover-mask2"></div>
 										<span class="product-icon icon-eye"></span>
@@ -130,11 +130,11 @@
 									</div>
 									<div class="product-info col-md-12">
 										<div>
-											<h4 class="project-title">Organism({{stats.statsTable['organism'] || 0}})</h4>
+											<h4 class="project-title">Organism({{stats.statsTable['organism'].count || 0}})</h4>
 										</div>	
 									</div>
 								</article>
-								<article ng-click="filterMaterialType('http://vocabulary.odm2.org/medium/particulate')" class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.4s">
+								<article ng-click="filterMaterialType('particulate')" class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.4s">
 									<div class="img-box">
 										<div class="hover-mask2"></div>
 										<span class="product-icon icon-eye"></span>
@@ -142,11 +142,11 @@
 									</div>
 									<div class="product-info col-md-12">
 										<div>
-											<h4 class="project-title">Particulate({{stats.statsTable['particulate'] || 0}})</h4>
+											<h4 class="project-title">Particulate({{stats.statsTable['particulate'].count || 0}})</h4>
 										</div>	
 									</div>
 								</article>
-								<article ng-click="filterMaterialType('http://vocabulary.odm2.org/medium/rock')" class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.6s">
+								<article ng-click="filterMaterialType('rock')" class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.6s">
 									<div class="img-box">
 										<div class="hover-mask2"></div>
 										<span class="product-icon icon-eye"></span>
@@ -154,11 +154,11 @@
 									</div>
 									<div class="product-info col-md-12">
 										<div>
-											<h4 class="project-title">Rock({{stats.statsTable['rock'] || 0}})</h4>
+											<h4 class="project-title">Rock({{stats.statsTable['rock'].count || 0}})</h4>
 										</div>	
 									</div>
 								</article>
-								<article ng-click="filterMaterialType('http://vocabulary.odm2.org/medium/sediment')" class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.2s">
+								<article ng-click="filterMaterialType('sediment')" class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.2s">
 									<div class="img-box">
 										<div class="hover-mask2"></div>
 										<span class="product-icon icon-eye"></span>
@@ -166,11 +166,11 @@
 									</div>
 									<div class="product-info col-md-12">
 										<div>
-											<h4 class="project-title">Sediment({{stats.statsTable['sediment'] || 0}})</h4>
+											<h4 class="project-title">Sediment({{stats.statsTable['sediment'].count || 0}})</h4>
 										</div>	
 									</div>
 								</article>
-								<article ng-click="filterMaterialType('http://vocabulary.odm2.org/medium/snow')" class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.4s">
+								<article ng-click="filterMaterialType('snow')" class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.4s">
 									<div class="img-box">
 										<div class="hover-mask2"></div>
 										<span class="product-icon icon-eye"></span>
@@ -178,11 +178,11 @@
 									</div>
 									<div class="product-info col-md-12">
 										<div>
-											<h4 class="project-title">snow({{stats.statsTable['snow'] || 0}})</h4>
+											<h4 class="project-title">snow({{stats.statsTable['snow'].count || 0}})</h4>
 										</div>	
 									</div>
 								</article>
-								<article ng-click="filterMaterialType('http://vocabulary.odm2.org/medium/soil')" class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.6s">
+								<article ng-click="filterMaterialType('soil')" class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.6s">
 									<div class="img-box">
 										<div class="hover-mask2"></div>
 										<span class="product-icon icon-eye"></span>
@@ -190,11 +190,11 @@
 									</div>
 									<div class="product-info col-md-12">
 										<div>
-											<h4 class="project-title">Soil({{stats.statsTable['soil'] || 0}})</h4>
+											<h4 class="project-title">Soil({{stats.statsTable['soil'].count || 0}})</h4>
 										</div>	
 									</div>
 								</article>
-								<article ng-click="filterMaterialType('http://vocabulary.odm2.org/medium/tissue')" class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.2s">
+								<article ng-click="filterMaterialType('tissue')" class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.2s">
 									<div class="img-box">
 										<div class="hover-mask2"></div>
 										<span class="product-icon icon-eye"></span>
@@ -202,11 +202,11 @@
 									</div>
 									<div class="product-info col-md-12">
 										<div>
-											<h4 class="project-title">Tissue({{stats.statsTable['tissue'] || 0}})</h4>
+											<h4 class="project-title">Tissue({{stats.statsTable['tissue'].count || 0}})</h4>
 										</div>	
 									</div>
 								</article>
-								<article ng-click="filterMaterialType('http://vocabulary.odm2.org/medium/other')" class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.4s">
+								<article ng-click="filterMaterialType('other')" class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.4s">
 									<div class="img-box">
 										<div class="hover-mask2"></div>
 										<span class="product-icon icon-eye"></span>
@@ -214,7 +214,7 @@
 									</div>
 									<div class="product-info col-md-12">
 										<div>
-											<h4 class="project-title">Others({{stats.statsTable['other'] || 0}})</h4>
+											<h4 class="project-title">Others({{stats.statsTable['other'].count || 0}})</h4>
 										</div>	
 									</div>
 								</article>
@@ -223,7 +223,7 @@
 					</div>
 					<div class="col-sm-12 col-md-6 tableList">						
 				  		<ul>
-				  			<li ng-repeat="sample in samples"><a ng-click="viewSample(sample.igsn)">{{sample.logTimeStamp}} - {{sample.igsn}}, {{sample.name}}</a></li>
+				  			<li ng-repeat="sample in samples"><a ng-click="viewSample(sample.igsn,sample.latitude,sample.longitude)">{{sample.logTimeStamp}} - {{sample.igsn}}, {{sample.name}}</a></li>
 				  		</ul>						    							
 					</div>
 				</div>

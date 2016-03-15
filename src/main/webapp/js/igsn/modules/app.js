@@ -100,7 +100,7 @@ app.service('DropDownValueService', ['$q','$http',function($q,$http) {
 
 app.service('ViewSampleSummaryService',['$modal','$q',function ($modal,$q) {
 	     
-     this.viewSample = function(igsn){
+     this.viewSample = function(igsn,lat,lon){
     	
 		 var modalInstance = $modal.open({
 	         animation: true,
@@ -110,7 +110,9 @@ app.service('ViewSampleSummaryService',['$modal','$q',function ($modal,$q) {
 	         resolve: {
 	        	 params: function () {
 	               return {
-	              	 igsn :igsn	              	
+	              	 igsn :igsn,
+	              	 lat : lat,
+	              	 lon : lon
 	               }
 	             }
 	           }

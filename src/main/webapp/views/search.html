@@ -2,12 +2,12 @@
 		
 	
 	<div ng-controller="searchCtrl" class="search-background">	
-		<section class="container">
+		<section class="container-fluid">
 		
 		<div class="row padding-top">
 			<div class="col-md-10 col-md-offset-1 col-sm-12 text-center wow fadeInUp">
 				<div class="banner mid">
-				  <h1><img  src="img/igsn_logo.png" alt="shop logo" width="50">&nbsp; Add IGSN logo and text or design something better</h1>
+				  <h1><i class="fa fa-search fa-3x"></i>&nbsp; Search IGSN</h1>
 				</div>
 			</div>
 		</div>
@@ -15,14 +15,21 @@
 		
 		
 		<div class="row">
-			<div class="col-md-2 col-md-offset-1 col-sm-4  wow fadeInUp padding-top-10">
-				<div class="panel panel-default" ng-repeat="stat in stats">
-				  <div class="panel-heading blue">{{stat.statsGroup}}</div>
-				  <div class="panel-body" ng-repeat="(key, value) in stat.statsTable">{{key}}({{value}}) <input class="pull-right" type="checkbox" ng-model="checkbox[stat.statsGroup][key]"></div>
-				  
-				</div>
+			<div class="col-md-2 col-md-offset-1 col-sm-4 col-xs-12 wow fadeInUp padding-top-10">
+				<div>
+					<div ng-if="samples && samples.length > 0" class="panel panel-default" ng-repeat="stat in stats">
+					  <div class="panel-heading blue"><span class="fa fa-filter fa-lg"></span> <b>{{stat.displayName}}</b></div>
+					  <div class="panel-body">
+					  	<div ng-click="filterSwitch(stat.statsGroup,false)" class = {{checkboxClass[stat.statsGroup]}} ng-repeat="(key, value) in stat.statsTable">{{key}} <input class="pull-right" type="checkbox" ng-model="checkbox[stat.statsGroup][key]"></div>
+					  	<div ng-click="filterSwitch(stat.statsGroup,true)">No Filter <input class="pull-right" type="checkbox" ng-model="checkbox[stat.statsGroup]['filter']"></div>
+					  </div>
+					</div>
+					<div>
+						<a class="btn btn-store color smooth-scroll pull-left" href="#search" ng-click="searchSample(1)"><i class="fa fa-search fa-lg white"></i> Update</a>						
+					</div>	
+				</div>		
 			</div>
-			<div class="col-md-8 col-sm-8 wow fadeInUp">
+			<div class="col-md-8 col-sm-8 col-xs-12">
 			
 				<div class="blackGradient" id="map-toolbar" style="height: 70px;"> 
 		            <ul>
@@ -45,12 +52,16 @@
          
          
 				<leaflet class="map" id="mapSearch" lf-center="center" tiles="tiles" markers="markers" defaults="defaults"></leaflet>
+				<div>
+					<pagination style="width: 100%;" ng-change="pageChanged()" total-items="totalItem" ng-model="currentPages" max-size="10" class="pagination-sm pull-left" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+				</div>
 				
 				
 				<div class="thumbNailList">
 				  <ul>
-				    <li ng-click="viewSample(sample.igsn)" ng-repeat="sample in samples">
-				      <img src="http://maps.google.com/mapfiles/kml/paddle/{{$index + 1 || 0}}.png" />
+				    <li ng-click="viewSample(sample.igsn,sample.latitude,sample.longitude)" ng-repeat="sample in samples">
+				      <img ng-if="sample.latitude && sample.longitude"  src="http://maps.google.com/mapfiles/kml/paddle/{{$index + 1 || 0}}.png" />
+				      <img ng-if="!sample.latitude || !sample.longitude"  src="img/not-available.jpg" />
 				      <h3>{{sample.igsn}}</h3>				     
 			      	  <ul>
 			    		<li>{{sample.logTimeStamp}}</li>

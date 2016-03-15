@@ -4,11 +4,13 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 	$scope.totalItem = 0;
 	$scope.currentPages = 1;
 	
+	
+	
 	angular.extend($scope, {
 	    center: {
 	    	lat: -28,
 	        lng: 135,
-	        zoom: 4
+	        zoom: 3
 	    },
 	    tiles:{
             url: "http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png",
@@ -22,15 +24,35 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 	});
 	
 	
-	
+	$scope.filterSwitch=function(statsGroup,filter){
+		if(filter==false){			
+			$scope.checkboxClass[statsGroup] ="";			
+			$scope.checkbox[statsGroup].filter=false;
+		}
+		
+		if(filter){	
+			if($scope.checkbox[statsGroup].filter==false){
+				$scope.checkboxClass[statsGroup] ="";			
+				$scope.checkbox[statsGroup].filter=false;
+				return;
+			}
+			$scope.checkboxClass[statsGroup] ="disable";
+			for(var key in $scope.checkbox[statsGroup]){
+				$scope.checkbox[statsGroup][key]=false;
+			}	
+			$scope.checkbox[statsGroup].filter=true;
+			
+		}
+	}
 	
     
-    $scope.viewSample = function(name){
-    	ViewSampleSummaryService.viewSample(name);
+    $scope.viewSample = function(name,lat,lon){
+    	ViewSampleSummaryService.viewSample(name,lat,lon);
     }
     //load stats
-    $scope.stats ={};
+    $scope.stats =[];
     $scope.checkbox=[];
+    $scope.checkboxClass=[];
     
     var getStats = function(){
 		
@@ -39,7 +61,7 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 		$http.get('getStats.do')     
 	     .success(function(data) {
 	    	 $scope.stats = data; 
-	    	 $scope.checkbox=setupCheckbox(data);
+	    	 setupCheckbox(data);
 	     })
 	     .error(function(data, status) {    	
 	    	 modalService.showModal({}, {    	            	           
@@ -54,20 +76,46 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
     getStats();
     //end load stats
     
-    $scope.pageChanged = function() {
-    	searchSample($scope.currentPages);
-	  };
-    
-    var searchSample = function(page){
-		$scope.currentPages = page;//VT page is reset to 1 on new search
-		var params ={	
+    var compileParam = function(page){
+    	var params ={	
 				pageNumber:page,
 				pageSize:10
 		}
+    	
+    	for(var statsgroup in $scope.checkbox){    		
+    		if(!$scope.checkbox[statsgroup].filter){
+    			var filters=[];
+    			var statsTable = {};
+    			$scope.stats.find(function(element,index,array){
+    				if(element.statsGroup==statsgroup){
+    					statsTable = element.statsTable;
+    					return;
+    				}
+    			},this);
+	    		for(var stats in $scope.checkbox[statsgroup]){
+	    			if($scope.checkbox[statsgroup][stats]==true){
+	    				filters.push(statsTable[stats].value);
+	    			}
+	    		}
+	    		params[statsgroup] = filters
+    		}
+    		
+    		
+    	}
+    	
+    	
+    	return params;
+    }
+    
+    $scope.pageChanged = function() {
+    	$scope.searchSample($scope.currentPages);
+	  };
+    
+    $scope.searchSample = function(page){
+		$scope.currentPages = page;//VT page is reset to 1 on new search
+		var params = compileParam(page);
 		
-		if($routeParams.materialIdentifier){
-			params.materialType=$routeParams.materialIdentifier;
-		}
+		
 		
 		//VT: Actual results
 		$http.get('search.do',{
@@ -75,18 +123,22 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 		 })     
 	     .success(function(data) {
 	       $scope.samples = data;	       
-	   	   $scope.totalItem = data[0].searchResultCount;
+	   	   $scope.totalItem = data[0]?data[0].searchResultCount:0;
 	   	   $scope.markers={};
+	   	   
+	   	   
 	   	   data.forEach(function(current,index,arr){
 	   		   
-
-	   		   this.markers[index+'wtf'] =   {
-	            	lat: current.latitude,
-	    	        lng: current.longitude,		    	     
-	                icon:{
-	                	iconUrl:'http://maps.google.com/mapfiles/kml/paddle/'+ (index+1) +'.png'
-	                }
-	            }
+	   		   if(current.latitude && current.longitude){
+		   		   this.markers[index+'_markers'] =   {
+		            	lat: current.latitude,
+		    	        lng: current.longitude,		    	     
+		                icon:{
+		                	iconUrl:'http://maps.google.com/mapfiles/kml/paddle/'+ (index+1) +'.png',
+		                	iconSize:     [35, 35], // size of the icon
+		                }
+		            }
+	   		   }
 	   	   },$scope);
 		
 	     })
@@ -100,19 +152,39 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 	     
 	}
     
-    searchSample($scope.currentPages);
-    
-    var setupCheckbox=function(stats){
-    	var results = [];
-    	for(var i=0;i< stats.length;i++){
-    		results[stats[i].statsGroup] = angular.copy(stats[i].statsTable);
-    		for(key in results[stats[i].statsGroup]){
-    			results[stats[i].statsGroup][key]=true;
-    		}
-    	}
-    	return results;
-    }
-	  
+
+	var setupCheckbox = function(stats) {	
+		
+		if($routeParams.materialIdentifier){
+			for (var i = 0; i < stats.length; i++) {
+				if(stats[i].statsGroup!='materialType'){
+					$scope.checkbox[stats[i].statsGroup]={};
+					$scope.checkbox[stats[i].statsGroup].filter=true;	
+					$scope.checkboxClass[stats[i].statsGroup]="disable";
+				}else{
+					$scope.checkbox[stats[i].statsGroup]={};
+					$scope.checkbox[stats[i].statsGroup].filter=false;
+					$scope.checkbox[stats[i].statsGroup][$routeParams.materialIdentifier]=true;
+					$scope.checkboxClass[stats[i].statsGroup]="";
+					
+				}
+						
+			}
+		}else{
+			for (var i = 0; i < stats.length; i++) {	
+				$scope.checkbox[stats[i].statsGroup]={};
+				$scope.checkbox[stats[i].statsGroup].filter=true;	
+				$scope.checkboxClass[stats[i].statsGroup]="disable";
+						
+			}
+		}
+		
+		 $scope.searchSample($scope.currentPages);
+
+	}
+	
+	
+	
 	  
 	  
 	  

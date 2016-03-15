@@ -6,21 +6,22 @@ public class LuceneStats {
 	
 	private String statsGroup;
 	
-	private Hashtable<String, Integer> statsTable;
+	private String displayName;
+	
+	private Hashtable<String, StatInfo> statsTable;
 	
 	
 	
-	public  LuceneStats(String statsGroup){
+	public  LuceneStats(String statsGroup,String displayName){
 		this.statsGroup = statsGroup;
-		statsTable = new Hashtable<String, Integer>();
+		this.setDisplayName(displayName);
+		statsTable = new Hashtable<String, StatInfo>();
 	}
 	
-	public void add(String stats, Integer count){
-		statsTable.put(stats, statsTable.get(stats) + count);
-	}
 	
-	public void put(String stats, Integer count){
-		statsTable.put(stats, count);
+	
+	public void put(String stats, String value, Integer count){
+		statsTable.put(stats, new StatInfo(value,count));
 		
 	}
 	
@@ -28,7 +29,7 @@ public class LuceneStats {
 		return statsTable.contains(stats);
 	}
 	
-	public Hashtable<String, Integer> getStatsTable(){
+	public Hashtable<String, StatInfo> getStatsTable(){
 		return statsTable;
 	}
 
@@ -42,6 +43,42 @@ public class LuceneStats {
 		String s = this.statsGroup  + ":" + statsTable;
 		return s;
 				
+	}
+
+	public String getDisplayName() {
+		return displayName;
+	}
+
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
+	
+	private class StatInfo{
+		private String value;
+		private Integer count;
+		
+		public StatInfo(String value, Integer count){
+			this.setValue(value);
+			this.setCount(count);
+		}
+
+		public Integer getCount() {
+			return count;
+		}
+
+		public void setCount(Integer count) {
+			this.count = count;
+		}
+
+		public String getValue() {
+			return value;
+		}
+
+		public void setValue(String value) {
+			this.value = value;
+		}
+		
+		
 	}
 
 }
