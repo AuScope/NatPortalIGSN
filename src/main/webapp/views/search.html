@@ -17,19 +17,21 @@
 		<div class="row">
 			<div class="col-md-2 col-md-offset-1 col-sm-4 col-xs-12 wow fadeInUp padding-top-10">
 				<div>
-					<div  class="panel panel-default" ng-repeat="stat in stats">
-					  <div class="panel-heading blue"> <b>{{stat.displayName}}</b></div>
-					  <div class="panel-body">
-					  	<div ng-if="stat.type=='Text'" class="form-group">
-						    <label>{{stat.displayName}}<br><small> Wild card *: 0 or more, ?: single char</small></label>
+					<div  class="panel panel-primary" >
+					  <div class="panel-heading"><span class="fa fa-search"></span> <b>Search Parameter</b></div>
+					  <div class="panel-body" >					  	
+						<fieldset ng-repeat="stat in stats"> 
+							<legend>{{stat.displayName}}:</legend>
+							<div ng-if="stat.type=='Text'" class="form-group">
+						   	<small> Wild card *: 0 or more, ?: single char</small>
 						    <input type="text"  class="form-control"  ng-model="text[stat.statsGroup]">
-						 </div>	
-					  	<div ng-if="stat.type=='Combo'" class="form-group">
-						    <label>{{stat.displayName}}</label>
-						    <select class="form-control" ng-model="combo[stat.statsGroup]" ng-options="value.value as value.value for (key, value) in stat.statsTable"></select>
-						 </div>	
-					  	<div ng-if="stat.type=='List'" ng-click="filterSwitch(stat.statsGroup,false)" class = {{checkboxClass[stat.statsGroup]}} ng-repeat="(key, value) in stat.statsTable">{{key}} <input class="pull-right" type="checkbox" ng-model="checkbox[stat.statsGroup][key]"></div>
-					  	<div ng-if="stat.type=='List'" ng-click="filterSwitch(stat.statsGroup,true)">No Filter <input class="pull-right" type="checkbox" ng-model="checkbox[stat.statsGroup]['filter']"></div>					  					  	
+							 </div>	
+						  	<div ng-if="stat.type=='Combo'" class="form-group">							   
+							    <select class="form-control" ng-model="combo[stat.statsGroup]" ng-options="value.value as value.value for (key, value) in stat.statsTable"></select>
+							 </div>	
+						  	<div ng-if="stat.type=='List'" ng-click="filterSwitch(stat.statsGroup,false)" class = {{checkboxClass[stat.statsGroup]}} ng-repeat="(key, value) in stat.statsTable">{{key}} <input class="pull-right" type="checkbox" ng-model="checkbox[stat.statsGroup][key]"></div>
+						  	<div ng-if="stat.type=='List'" ng-click="filterSwitch(stat.statsGroup,true)">No Filter <input class="pull-right" type="checkbox" ng-model="checkbox[stat.statsGroup]['filter']"></div>
+					  	</fieldset>					  					  	
 					  </div>
 					</div>
 					<div>
