@@ -41,44 +41,54 @@ public class PanFMPSearchService {
 	@Value("#{configProperties['PANFMP_CONFIG_LUCENCE_DIR']}")
 	private String PANFMP_CONFIG_LUCENCE_DIR;
 	
-	private static final String [] filterKeys = {"materialType","sampleType","samplingFeature"};
-	private static final String [] filterKeysDisplayName = {"Material Type","Sample Type","SamplingFeature"};
-	
+	//VT: this should probably be in an object rather than 3 arrays however this just makes it easier to init the config.
+	private static final String [] filterKeys = {"materialType","sampleType","samplingFeature","curators","sampleCollector","sampleName"};
+	private static final String [] filterKeysDisplayName = {"Material Type","Sample Type","SamplingFeature","Curators","Sample Collector","Sample Name"};
+	private static final String [] filterKeysType = {"List","List","List","Combo","Combo","Text"};
 	
 
-	public List<Samples> search(String igsn, String sampleName,String [] materialTypes,String sampleCollector, String [] sampleTypes,String [] samplingFeatureTypes, Integer pageNumber, Integer pageSize,MutableInt resultCount) throws Exception {
+	public List<Samples> search(String igsn, String sampleName,String [] materialTypes,String curators,String sampleCollector, String [] sampleTypes,String [] samplingFeatureTypes, Integer pageNumber, Integer pageSize,MutableInt resultCount) throws Exception {
 		
 		SearchService service = new SearchService(PANFMP_CONFIG_FILE_LOCATION, PANFMP_CONFIG_FILE_INDEX);
+		BooleanQuery or = service.newBooleanQuery();
+		BooleanQuery and = service.newBooleanQuery();
+		
 		BooleanQuery bq = service.newBooleanQuery();
 		
 		if(sampleName != null){
-			bq.add(service.newTextQuery("sampleName", sampleName), org.apache.lucene.search.BooleanClause.Occur.SHOULD);
+			and.add(service.newTextQuery("sampleName", sampleName), org.apache.lucene.search.BooleanClause.Occur.MUST);
 		}
 		if(igsn != null){
-			bq.add(service.newTextQuery("sampleNumber", igsn), org.apache.lucene.search.BooleanClause.Occur.SHOULD);
+			and.add(service.newTextQuery("sampleNumber", igsn), org.apache.lucene.search.BooleanClause.Occur.MUST);
 		}
-		
-		
-		for(String materialType:materialTypes){
-			bq.add(service.newTextQuery("materialType", URLDecoder.decode(materialType, "UTF-8")), org.apache.lucene.search.BooleanClause.Occur.SHOULD);
+
+		if(curators != null){
+			and.add(service.newTextQuery("curators", curators), org.apache.lucene.search.BooleanClause.Occur.MUST);
 		}
-		
 		
 		if(sampleCollector != null){
-			bq.add(service.newTextQuery("sampleCollector", sampleCollector), org.apache.lucene.search.BooleanClause.Occur.SHOULD);
+			and.add(service.newTextQuery("sampleCollector", sampleCollector), org.apache.lucene.search.BooleanClause.Occur.MUST);
+		}
+		
+		for(String materialType:materialTypes){
+			or.add(service.newTextQuery("materialType", URLDecoder.decode(materialType, "UTF-8")), org.apache.lucene.search.BooleanClause.Occur.SHOULD);
 		}
 		
 		for(String sampleType:sampleTypes){
-			bq.add(service.newTextQuery("sampleType", URLDecoder.decode(sampleType, "UTF-8")), org.apache.lucene.search.BooleanClause.Occur.SHOULD);
+			or.add(service.newTextQuery("sampleType", URLDecoder.decode(sampleType, "UTF-8")), org.apache.lucene.search.BooleanClause.Occur.SHOULD);
 		}
 		
 		
 		for(String samplingFeatureType :samplingFeatureTypes){
-			bq.add(service.newTextQuery("samplingFeature", URLDecoder.decode(samplingFeatureType, "UTF-8") ), org.apache.lucene.search.BooleanClause.Occur.SHOULD);
+			or.add(service.newTextQuery("samplingFeature", URLDecoder.decode(samplingFeatureType, "UTF-8") ), org.apache.lucene.search.BooleanClause.Occur.SHOULD);
 		}
 		
-	
-		
+		if(and.getClauses().length!=0){
+			bq.add(new org.apache.lucene.search.BooleanClause(and,org.apache.lucene.search.BooleanClause.Occur.MUST));
+		}
+		if(or.getClauses().length!=0){
+			bq.add(new org.apache.lucene.search.BooleanClause(or,org.apache.lucene.search.BooleanClause.Occur.MUST));
+		}
 
 		// create a Sort, if you want standard sorting by relevance use
 		// sort=null
@@ -130,18 +140,18 @@ public class PanFMPSearchService {
 	
 	public List<LuceneStats> getAllStats() throws IOException{
 		ArrayList<LuceneStats> result = new ArrayList<LuceneStats>();
-		for(int i=0;i < this.filterKeys.length;i++){
-			result.add(getStats(this.filterKeys[i],this.filterKeysDisplayName[i]));
+		for(int i=0;i < filterKeys.length;i++){
+			result.add(getStats(filterKeys[i],filterKeysDisplayName[i],filterKeysType[i]));
 		}
 		return result;
 	}
 	
-	public LuceneStats getStats(String type,String displayName) throws IOException{
+	public LuceneStats getStats(String statsgroup,String displayName,String displayType) throws IOException{
 		Directory dir = new MMapDirectory(new File(PANFMP_CONFIG_LUCENCE_DIR));
 		IndexReader ir = IndexReader.open(dir);
-		LuceneStats result = new LuceneStats(type,displayName);
+		LuceneStats result = new LuceneStats(statsgroup,displayName,displayType);
 		
-		TermEnum termEnum=ir.terms(new Term(type));
+		TermEnum termEnum=ir.terms(new Term(statsgroup));
 		
 		extractStats(termEnum,result);
 		

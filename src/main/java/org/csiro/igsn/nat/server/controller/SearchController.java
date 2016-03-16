@@ -36,6 +36,7 @@ public class SearchController {
             @RequestParam(required = false, value ="sampleName") String sampleName,
             @RequestParam(required = false, value ="materialType", defaultValue="") String [] materialType,
             @RequestParam(required = false, value ="sampleCollector") String sampleCollector,
+            @RequestParam(required = false, value ="curators") String curators,
             @RequestParam(required = false, value ="sampleType", defaultValue="") String [] sampleType,
             @RequestParam(required = false, value ="samplingFeatureType",defaultValue="") String [] samplingFeatureType,
             @RequestParam(required = false, value ="pageNumber") Integer pageNumber, 
@@ -45,7 +46,7 @@ public class SearchController {
 		
     	try{
     		MutableInt resultCount=new MutableInt() ;
-    		List<Samples> samples = panFMPSearchService.search(igsn, sampleName,materialType, sampleCollector,  sampleType, samplingFeatureType, pageNumber,pageSize,resultCount);
+    		List<Samples> samples = panFMPSearchService.search(igsn, sampleName,materialType,curators, sampleCollector,  sampleType, samplingFeatureType, pageNumber,pageSize,resultCount);
     		List<SampleSummaryResponse> responses= new ArrayList<SampleSummaryResponse>();
     		
     		for(Samples s: samples){
@@ -101,7 +102,7 @@ public class SearchController {
     		if(statsGroup==null){
     			return  new ResponseEntity<Object>(panFMPSearchService.getAllStats(),HttpStatus.OK);
     		}else{
-    			return  new ResponseEntity<Object>(panFMPSearchService.getStats(statsGroup,displayName),HttpStatus.OK);
+    			return  new ResponseEntity<Object>(panFMPSearchService.getStats(statsGroup,displayName,""),HttpStatus.OK);
     		}
     	}catch(Exception e){
     		return new  ResponseEntity<Object>(new ExceptionWrapper("Error getting stats",e.getMessage()),HttpStatus.BAD_REQUEST);

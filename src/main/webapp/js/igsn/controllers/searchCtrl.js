@@ -52,6 +52,8 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
     //load stats
     $scope.stats =[];
     $scope.checkbox=[];
+    $scope.combo=[];
+    $scope.text=[];
     $scope.checkboxClass=[];
     
     var getStats = function(){
@@ -99,8 +101,14 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 	    		}
 	    		params[statsgroup] = filters
     		}
-    		
-    		
+    	}
+    	
+    	for(var statsgroup in $scope.combo){    		
+    		params[statsgroup] = $scope.combo[statsgroup];
+    	}
+    	
+    	for(var statsgroup in $scope.text){    		
+    		params[statsgroup] = $scope.text[statsgroup];
     	}
     	
     	
@@ -123,9 +131,15 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 		 })     
 	     .success(function(data) {
 	       $scope.samples = data;	       
-	   	   $scope.totalItem = data[0]?data[0].searchResultCount:0;
+	   	   $scope.totalItem = data.length > 0?data[0].searchResultCount:0;
 	   	   $scope.markers={};
 	   	   
+	   	   if($scope.totalItem==0){
+   		     modalService.showModal({}, {
+		           headerText: "No Record Found" ,
+		           bodyText: "Please change your search parameter"
+	    	 });
+	   	   }
 	   	   
 	   	   data.forEach(function(current,index,arr){
 	   		   
@@ -143,7 +157,7 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 		
 	     })
 	     .error(function(data, status) {    	
-	    	 modalService.showModal({}, {    	            	           
+	    	 modalService.showModal({}, {
 		           headerText: "Error loading data:" + status ,
 		           bodyText: "Please contact cg-admin@csiro.au if this persist"
 	    	 });

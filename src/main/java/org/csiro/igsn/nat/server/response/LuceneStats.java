@@ -8,13 +8,17 @@ public class LuceneStats {
 	
 	private String displayName;
 	
+	private String type;
+	
 	private Hashtable<String, StatInfo> statsTable;
 	
 	
 	
-	public  LuceneStats(String statsGroup,String displayName){
+	public  LuceneStats(String statsGroup,String displayName,String type){
 		this.statsGroup = statsGroup;
 		this.setDisplayName(displayName);
+		this.setType(type);
+		
 		statsTable = new Hashtable<String, StatInfo>();
 	}
 	
@@ -53,6 +57,16 @@ public class LuceneStats {
 		this.displayName = displayName;
 	}
 	
+	public String getType() {
+		return type;
+	}
+
+
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	private class StatInfo{
 		private String value;
 		private Integer count;
