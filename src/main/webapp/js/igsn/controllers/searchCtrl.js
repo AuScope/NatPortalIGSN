@@ -1,5 +1,5 @@
-allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSampleSummaryService','modalService','DropDownValueService','leafletData','$routeParams',
-                                  function ($scope,$rootScope,$http,ViewSampleSummaryService,modalService,DropDownValueService,leafletData,$routeParams) {
+allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSampleSummaryService','modalService','leafletData','FrontPageSearchParamService',
+                                  function ($scope,$rootScope,$http,ViewSampleSummaryService,modalService,leafletData,FrontPageSearchParamService) {
 
 	$scope.totalItem = 0;
 	$scope.currentPages = 1;
@@ -56,14 +56,14 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
     $scope.text=[];
     $scope.checkboxClass=[];
     
-    var getStats = function(){
+    $scope.setStats = function(){
 		
 		
 		//VT: Actual results
 		$http.get('getStats.do')     
 	     .success(function(data) {
 	    	 $scope.stats = data; 
-	    	 setupCheckbox(data);
+	    	 setupControls(data);
 	     })
 	     .error(function(data, status) {    	
 	    	 modalService.showModal({}, {    	            	           
@@ -75,8 +75,18 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
    
 	}
     
-    getStats();
-    //end load stats
+    //VT: this is the code entry point
+    $scope.setStats();
+    
+    $scope.reset = function(){
+    	$scope.stats =[];
+        $scope.checkbox=[];
+        $scope.combo=[];
+        $scope.text=[];
+    	FrontPageSearchParamService.reset();
+    	$scope.setStats();
+    }
+    
     
     var compileParam = function(page){
     	var params ={	
@@ -110,6 +120,8 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
     	for(var statsgroup in $scope.text){    		
     		params[statsgroup] = $scope.text[statsgroup];
     	}
+    	
+    	
     	
     	
     	return params;
@@ -166,10 +178,11 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 	     
 	}
     
+    
 
-	var setupCheckbox = function(stats) {	
+	var setupControls = function(stats) {	
 		
-		if($routeParams.materialIdentifier){
+		if(FrontPageSearchParamService.getMaterialType()){
 			for (var i = 0; i < stats.length; i++) {
 				if(stats[i].statsGroup!='materialType'){
 					$scope.checkbox[stats[i].statsGroup]={};
@@ -178,12 +191,17 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 				}else{
 					$scope.checkbox[stats[i].statsGroup]={};
 					$scope.checkbox[stats[i].statsGroup].filter=false;
-					$scope.checkbox[stats[i].statsGroup][$routeParams.materialIdentifier]=true;
+					$scope.checkbox[stats[i].statsGroup][FrontPageSearchParamService.getMaterialType()]=true;
 					$scope.checkboxClass[stats[i].statsGroup]="";
-					
+					FrontPageSearchParamService.reset();
 				}
 						
 			}
+		}else if(FrontPageSearchParamService.getSearchText()){
+			
+			$scope.text.searchText = FrontPageSearchParamService.getSearchText();
+    		FrontPageSearchParamService.reset();
+	    	
 		}else{
 			for (var i = 0; i < stats.length; i++) {	
 				$scope.checkbox[stats[i].statsGroup]={};
@@ -193,9 +211,13 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 			}
 		}
 		
+		
+		
 		 $scope.searchSample($scope.currentPages);
 
 	}
+	
+	
 	
 	
 	

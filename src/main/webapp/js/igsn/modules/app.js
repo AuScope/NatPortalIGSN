@@ -14,11 +14,7 @@ app.config(['$routeProvider',
                 when('/search', {
                     templateUrl: 'views/search.html'
                  
-                 }).
-                 when('/search/:materialIdentifier', {
-                     templateUrl: 'views/search.html'
-                  
-                  }).
+                 }).	                
                 otherwise({
                   redirectTo: '/'
                 });
@@ -79,24 +75,32 @@ app.service('modalService', ['$modal',function ($modal) {
 
 }]);
 
-app.service('DropDownValueService', ['$q','$http',function($q,$http) {
+
+
+app.service('FrontPageSearchParamService', function() {
 	
-    this.getSampleType = function() {
-    	return $q(function(resolve, reject) {
-    		$http.get('getSampleType.do')     
-    	     .success(function(data) {
-    	       resolve(data);       
-    	        
-    	     })
-    	     .error(function(data, status) {    	
-    	    	 reject(data,status);    	       
-    	     }) 
-   	 	},1000);
-    };
-    	    	    
-  
-        
-}]);
+	 var param = {};	
+
+   return {
+   	  
+       setMaterialType : function(type){
+       	param.materialType=type;
+       },
+       getMaterialType : function(){
+       	return param.materialType;
+       },
+       setSearchText : function(text){
+          	param.searchText=text;
+       },
+       getSearchText : function(){
+      	 return param.searchText;
+       },
+       reset : function(){
+    	   param = {};
+       }
+   };	    
+   
+});
 
 app.service('ViewSampleSummaryService',['$modal','$q',function ($modal,$q) {
 	     

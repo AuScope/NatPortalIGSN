@@ -39,6 +39,7 @@ public class SearchController {
             @RequestParam(required = false, value ="curators") String curators,
             @RequestParam(required = false, value ="sampleType", defaultValue="") String [] sampleType,
             @RequestParam(required = false, value ="samplingFeatureType",defaultValue="") String [] samplingFeatureType,
+            @RequestParam(required = false, value ="searchText") String searchText,
             @RequestParam(required = false, value ="pageNumber") Integer pageNumber, 
             @RequestParam(required = false, value ="pageSize") Integer pageSize, 
             Principal user,
@@ -46,7 +47,7 @@ public class SearchController {
 		
     	try{
     		MutableInt resultCount=new MutableInt() ;
-    		List<Samples> samples = panFMPSearchService.search(igsn, sampleName,materialType,curators, sampleCollector,  sampleType, samplingFeatureType, pageNumber,pageSize,resultCount);
+    		List<Samples> samples = panFMPSearchService.search(igsn, sampleName,materialType,curators, sampleCollector,  sampleType, samplingFeatureType,searchText, pageNumber,pageSize,resultCount);
     		List<SampleSummaryResponse> responses= new ArrayList<SampleSummaryResponse>();
     		
     		for(Samples s: samples){

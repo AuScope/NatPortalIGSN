@@ -42,18 +42,25 @@ public class PanFMPSearchService {
 	private String PANFMP_CONFIG_LUCENCE_DIR;
 	
 	//VT: this should probably be in an object rather than 3 arrays however this just makes it easier to init the config.
-	private static final String [] filterKeys = {"materialType","sampleType","samplingFeature","curators","sampleCollector","sampleName"};
-	private static final String [] filterKeysDisplayName = {"Material Type","Sample Type","SamplingFeature","Curators","Sample Collector","Sample Name"};
+	private static final String [] filterKeys = {"materialType","sampleType","samplingFeature","curators","sampleCollector","searchText"};
+	private static final String [] filterKeysDisplayName = {"Material Type","Sample Type","SamplingFeature","Curators","Sample Collector","Text Search"};
 	private static final String [] filterKeysType = {"List","List","List","Combo","Combo","Text"};
 	
 
-	public List<Samples> search(String igsn, String sampleName,String [] materialTypes,String curators,String sampleCollector, String [] sampleTypes,String [] samplingFeatureTypes, Integer pageNumber, Integer pageSize,MutableInt resultCount) throws Exception {
+	public List<Samples> search(String igsn, String sampleName,String [] materialTypes,String curators,String sampleCollector, String [] sampleTypes,String [] samplingFeatureTypes,String searchText, Integer pageNumber, Integer pageSize,MutableInt resultCount) throws Exception {
 		
 		SearchService service = new SearchService(PANFMP_CONFIG_FILE_LOCATION, PANFMP_CONFIG_FILE_INDEX);
 		BooleanQuery or = service.newBooleanQuery();
 		BooleanQuery and = service.newBooleanQuery();
+		BooleanQuery textQuery = service.newBooleanQuery();
 		
 		BooleanQuery bq = service.newBooleanQuery();
+		
+		if(searchText != null && !searchText.isEmpty()){
+			textQuery.add(service.newTextQuery("sampleName", searchText + "*"), org.apache.lucene.search.BooleanClause.Occur.SHOULD);
+			textQuery.add(service.newTextQuery("sampleNumber", searchText + "*"), org.apache.lucene.search.BooleanClause.Occur.SHOULD);
+			textQuery.add(service.newTextQuery("description", searchText + "*"), org.apache.lucene.search.BooleanClause.Occur.SHOULD);
+		}
 		
 		if(sampleName != null){
 			and.add(service.newTextQuery("sampleName", sampleName), org.apache.lucene.search.BooleanClause.Occur.MUST);
@@ -88,6 +95,9 @@ public class PanFMPSearchService {
 		}
 		if(or.getClauses().length!=0){
 			bq.add(new org.apache.lucene.search.BooleanClause(or,org.apache.lucene.search.BooleanClause.Occur.MUST));
+		}
+		if(textQuery.getClauses().length!=0){
+			bq.add(new org.apache.lucene.search.BooleanClause(textQuery,org.apache.lucene.search.BooleanClause.Occur.MUST));
 		}
 
 		// create a Sort, if you want standard sorting by relevance use
@@ -147,6 +157,9 @@ public class PanFMPSearchService {
 	}
 	
 	public LuceneStats getStats(String statsgroup,String displayName,String displayType) throws IOException{
+		if(displayType.equals("Text")){
+			return  new LuceneStats(statsgroup,displayName,displayType);
+		}
 		Directory dir = new MMapDirectory(new File(PANFMP_CONFIG_LUCENCE_DIR));
 		IndexReader ir = IndexReader.open(dir);
 		LuceneStats result = new LuceneStats(statsgroup,displayName,displayType);

@@ -1,13 +1,20 @@
-allControllers.controller('browseCtrl', ['$scope','$rootScope','$http','ViewSampleSummaryService','modalService','DropDownValueService','$location','$filter',
-                                  function ($scope,$rootScope,$http,ViewSampleSummaryService,modalService,DropDownValueService,$location,$filter) {
+allControllers.controller('browseCtrl', ['$scope','$rootScope','$http','ViewSampleSummaryService','modalService','$location','$filter','FrontPageSearchParamService',
+                                  function ($scope,$rootScope,$http,ViewSampleSummaryService,modalService,$location,$filter,FrontPageSearchParamService) {
 
     $scope.viewSample = function(igsn,lat,lon){
     	ViewSampleSummaryService.viewSample(igsn,lat,lon);
     }
     
     $scope.filterMaterialType = function(materialIdentifier){
-    	$location.path("/search/" + $filter('escape')(materialIdentifier));
+    	FrontPageSearchParamService.setMaterialType(materialIdentifier);
+    	$location.path("/search");
     }
+    
+    $scope.$watch('searchText', function(newVal, oldVal){
+    	FrontPageSearchParamService.setSearchText(newVal);
+    });
+    
+    
     
     //Something in the angular route is trigger a refresh on a.href 
     var searchSample = function(page){
