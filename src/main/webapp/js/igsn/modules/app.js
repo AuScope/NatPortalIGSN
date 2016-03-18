@@ -106,6 +106,110 @@ app.service('FrontPageSearchParamService', function() {
    
 });
 
+app.service('DropDownValueService', ['$q','$http',function($q,$http) {
+	
+
+    this.getStates = function() {
+            return [{            	 
+            	value:{
+            		zoom:4,
+            		lat:-27.672817,
+            		lon:121.62831,
+            		bbox:{
+            			minlat:-36.87,
+            			maxlat:-14,
+            			minlon:112,
+            			maxlon:129
+            		}
+            	},
+            	display:'Western Australia'            	
+            },{            	
+            	value:{
+            		zoom:5,
+            		lat:-19.491411,
+            		lon:132.55096,
+            		bbox:{
+            			minlat:-27,
+            			maxlat:-11,
+            			minlon:128,
+            			maxlon:138.27
+            		}
+            	},
+            	display:'Northern Territory'             	
+            },{            	
+            	value:{
+            		zoom:5,
+            		lat:-32.2211,
+            		lon:136,
+            		bbox:{
+            			minlat:-39,
+            			maxlat:-25.56,
+            			minlon:128,
+            			maxlon:142
+            		}
+            	},
+            	display:'South Australia'             	
+            },{
+            	value:{
+            		zoom:6,
+            		lat:-37.471308,
+            		lon:144.785153,
+            		bbox:{
+            			minlat:-39.41,
+            			maxlat:-34.03,
+            			minlon:141,
+            			maxlon:150.12
+            		}
+            	},
+            	display:'Victoria'             	
+            },{
+            	value:{
+            		zoom:6,
+            		lat:-32.342841,
+            		lon:146.986084,
+            		bbox:{
+            			minlat:-28.80,
+            			maxlat:-25.56,
+            			minlon:140,
+            			maxlon:154
+            		}
+            	},
+            	display:'New South Whales'             	
+            },{
+            	value:{
+            		zoom:5,
+            		lat:-20.917574,
+            		lon:142.702796,
+            		bbox:{
+            			minlat:-29.53,
+            			maxlat:-10,
+            			minlon:137,
+            			maxlon:154
+            		}
+            	},
+            	display:'Queensland'             	
+            },{
+            	value:{
+            		zoom:7,
+            		lat:-42.252918,
+            		lon:146.607056,
+            		bbox:{
+            			minlat:-44.11,
+            			maxlat:-39.38,
+            			minlon:143,
+            			maxlon:148.8
+            		}
+            	},
+            	display:'Tasmania'             	
+            }];
+        };
+        
+        
+   
+     
+        
+}]);
+
 app.service('ViewSampleSummaryService',['$modal','$q',function ($modal,$q) {
 	     
      this.viewSample = function(igsn,lat,lon){

@@ -20,7 +20,14 @@
 				<div>
 					<div  class="panel panel-primary" >
 					  <div class="panel-heading"><span class="fa fa-search"></span> <b>Search Parameter</b></div>
-					  <div class="panel-body" >					  	
+					  <div class="panel-body" >	
+					  	<fieldset> 
+							<legend>Bounding Box</legend>
+							<div><span class="label label-info">Min Latitude<span class="pull-right badge">{{bboxSearch.minlat | number:4}}</span></span></div>
+							<div><span class="label label-info">Max Latitude<span class="pull-right badge">{{bboxSearch.maxlat | number:4}}</span></span></div>
+							<div><span class="label label-success">Min Longitude<span class="pull-right badge">{{bboxSearch.minlon | number:4}}</span></span></div>
+							<div><span class="label label-success">Max Longitude<span class="pull-right badge">{{bboxSearch.maxlon | number:4}}</span></span></div>
+					  	</fieldset>					  	
 						<fieldset ng-repeat="stat in stats"> 
 							<legend>{{stat.displayName}}:</legend>
 							<div ng-if="stat.type=='Text'" class="form-group">						   	
@@ -34,7 +41,7 @@
 						  	<div ng-if="stat.type=='List'" ng-click="filterSwitch(stat.statsGroup,true)">No Filter <input class="pull-right" type="checkbox" ng-model="checkbox[stat.statsGroup]['filter']"></div>
 					  	</fieldset>	
 					
-						  <button type="button" class="btn btn-warning smooth-scroll pull-left" href ng-click="reset()"><i class="fa fa-times fa-lg white"></i> Clear</button>
+						  <button type="button" class="btn btn-warning smooth-scroll pull-left " href ng-click="reset()"><i class="fa fa-times fa-lg white"></i> Clear</button>
 						  <button type="button" class="btn btn-primary smooth-scroll pull-right" href ng-click="searchSample(1)"><i class="fa fa-search fa-lg white"></i> Search</button>						  
 								  					  	
 					  </div>
@@ -48,7 +55,7 @@
 		            <ul>
 	            	<li class="heading first-child">Map Tools</li>
 	                <li style="display: list-item;">Pan<br><a title="To Pan" id="drag" class="panBtnActive"></a></li>
-	            	<li style="display: list-item;">Coordinates<br><a id="latlong" class="latLongBtn">Longitude &amp; Latitude</a></li>
+	            	<li style="display: list-item;">Coordinates<br><a id="latlong" class="latLongBtn">{{mapCoord.lat | number:4}} &amp; {{mapCoord.lon | number:4}}</a></li>
 	            	<li style="display: list-item;">Select region then 'GO'<br>
 	                  <div id="regionPanel">
 	                     <a ng-click="drawBoundingBox()" title="To draw a region: click in the map and drag the mouse to get a rectangle. Release the mouse to finish." id="box" class="boxBtn"></a>
@@ -57,7 +64,22 @@
 	                     <a ng-click="clearBoundingBox()" title="Clear selected region" id="del" class="delBtn"></a>
 	                  </div>
 	            	</li>
-	               <li style="display: list-item;">Show locations on map<br><input type="text" placeholder="Place Name" size="20" id="geocode" autocomplete="off"><a id="searchGeocodeBtn"></a></li>
+	               <li style="display: list-item;">Show region on map
+	               
+	               <form class="form-inline">
+					  <div class="form-group">					    
+					    <div class="input-group">					     
+					      <select class="form-control input-sm" ng-model="regionSelected" ng-change="panToRegion(regionSelected.lat,regionSelected.lon,regionSelected.zoom,regionSelected.bbox)" ng-options="state.value as state.display for state in states"></select>
+					      <div class="input-group-addon input-sm pointer-cursor" ng-click="clearRegion()"><span class="fa fa-times"></span></div>					       			     
+					    </div>
+					  </div>
+						
+					</form>
+	               
+	               
+	               
+	               
+	               </li>
 	               <li style="display: list-item;">Help<br><a id="map-help" class="helpBtn last-child"></a></li>
 		            </ul>
 		            <a class="hide">Hide</a>

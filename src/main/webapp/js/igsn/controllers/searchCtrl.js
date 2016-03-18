@@ -1,8 +1,15 @@
-allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSampleSummaryService','modalService','leafletData','FrontPageSearchParamService','leafletData',
-                                  function ($scope,$rootScope,$http,ViewSampleSummaryService,modalService,leafletData,FrontPageSearchParamService,leafletData) {
+allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSampleSummaryService','modalService','leafletData','FrontPageSearchParamService','leafletData','DropDownValueService',
+                                  function ($scope,$rootScope,$http,ViewSampleSummaryService,modalService,leafletData,FrontPageSearchParamService,leafletData,DropDownValueService) {
 
 	$scope.totalItem = 0;
 	$scope.currentPages = 1;
+	$scope.mapCoord={};
+	
+	
+	$scope.states = DropDownValueService.getStates();
+	
+	$scope.bboxSearch={};
+	
 	
 	
 	
@@ -13,9 +20,9 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 	        zoom: 3
 	    },
 	    tiles:{
-            url: "http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png",
+	    	url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
             options: {
-                attribution: 'All maps &copy; <a href="http://www.opencyclemap.org">OpenCycleMap</a>, map data &copy; <a href="http://www.openstreetmap.org">OpenStreetMap</a> (<a href="http://www.openstreetmap.org/copyright">ODbL</a>'
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }
         }, 
         events: {
@@ -42,6 +49,25 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
         }
 	});
 	
+	$scope.panToRegion=function(lat,lon,zoom,bbox){
+		$scope.center = {
+				lat: lat,
+		        lng: lon,
+		        zoom: zoom	
+		}
+		$scope.bboxSearch=bbox;
+		
+	}
+	
+	$scope.clearRegion = function(){
+		$scope.center = {
+		    	lat: -28,
+		        lng: 135,
+		        zoom: 3
+		    }
+		$scope.bboxSearch={};
+	}
+	
 	var bboxDrawer={};
 	
 	var me = this;
@@ -53,25 +79,26 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
            map.on('draw:created', function (e) {
              var layer = e.layer;
              drawnItems.addLayer(layer);
-             console.log(JSON.stringify(layer.toGeoJSON()));
+             $scope.bboxSearch=extractBbox(layer.toGeoJSON().geometry.coordinates[0])
            });
         });
     });
 	
-	$scope.$on('leafletDirectiveMap.mousemove', function(event,args){
-        $scope.map.lat = args.leafletEvent.latlng.lat;
-        $scope.map.lon = args.leafletEvent.latlng.lng;
+	$scope.$on('leafletDirectiveMap.mapSearch.mousemove', function(event,args){
+        $scope.mapCoord.lat = args.leafletEvent.latlng.lat;
+        $scope.mapCoord.lon = args.leafletEvent.latlng.lng;
        
     });	
 	
 	$scope.drawBoundingBox = function(){
+		$scope.clearBoundingBox
 		bboxDrawer.enable();
 	}
 	
 	$scope.clearBoundingBox = function(){
 		bboxDrawer.disable();
 		var drawnItems = this.layers.overlays.draw;
-		
+		$scope.bboxSearch={};
 		leafletData.getMap('mapSearch').then(function(map) {
 			leafletData.getLayers('mapSearch').then(function(baselayers) {
 	           var drawnItems = baselayers.overlays.draw;	          	            
@@ -279,7 +306,14 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 	
 	
 	
-	
+	var extractBbox = function(coordinates){
+		var bbox={};
+		bbox.minlon=Math.min(coordinates[0][0],Math.min(coordinates[1][0],Math.min(coordinates[2][0],coordinates[3][0])));
+		bbox.maxlon=Math.max(coordinates[0][0],Math.max(coordinates[1][0],Math.max(coordinates[2][0],coordinates[3][0])));
+		bbox.minlat=Math.min(coordinates[0][1],Math.min(coordinates[1][1],Math.min(coordinates[2][1],coordinates[3][1])));
+		bbox.maxlat=Math.max(coordinates[0][1],Math.max(coordinates[1][1],Math.max(coordinates[2][1],coordinates[3][1])));
+		return bbox;
+	}
 	
 	  
 	  
