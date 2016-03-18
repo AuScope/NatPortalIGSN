@@ -1,5 +1,5 @@
-allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSampleSummaryService','modalService','leafletData','FrontPageSearchParamService',
-                                  function ($scope,$rootScope,$http,ViewSampleSummaryService,modalService,leafletData,FrontPageSearchParamService) {
+allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSampleSummaryService','modalService','leafletData','FrontPageSearchParamService','leafletData',
+                                  function ($scope,$rootScope,$http,ViewSampleSummaryService,modalService,leafletData,FrontPageSearchParamService,leafletData) {
 
 	$scope.totalItem = 0;
 	$scope.currentPages = 1;
@@ -17,11 +17,71 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
             options: {
                 attribution: 'All maps &copy; <a href="http://www.opencyclemap.org">OpenCycleMap</a>, map data &copy; <a href="http://www.openstreetmap.org">OpenStreetMap</a> (<a href="http://www.openstreetmap.org/copyright">ODbL</a>'
             }
+        }, 
+        events: {
+            map: {
+                enable: ['zoomstart', 'drag', 'click', 'mousemove'],
+                logic: 'emit'
+            }
+        },
+        layers: {
+           
+            overlays: {
+                draw: {
+                    name: 'draw',
+                    type: 'group',
+                    visible: true,
+                    layerParams: {
+                        showOnSelector: false
+                    }
+                }
+            }
         },
 	    defaults: {
             scrollWheelZoom: false
         }
 	});
+	
+	var bboxDrawer={};
+	
+	var me = this;
+	
+	leafletData.getMap('mapSearch').then(function(map) {
+		bboxDrawer = new L.Draw.Rectangle(map);		
+        leafletData.getLayers().then(function(baselayers) {
+           var drawnItems = baselayers.overlays.draw;
+           map.on('draw:created', function (e) {
+             var layer = e.layer;
+             drawnItems.addLayer(layer);
+             console.log(JSON.stringify(layer.toGeoJSON()));
+           });
+        });
+    });
+	
+	$scope.$on('leafletDirectiveMap.mousemove', function(event,args){
+        $scope.map.lat = args.leafletEvent.latlng.lat;
+        $scope.map.lon = args.leafletEvent.latlng.lng;
+       
+    });	
+	
+	$scope.drawBoundingBox = function(){
+		bboxDrawer.enable();
+	}
+	
+	$scope.clearBoundingBox = function(){
+		bboxDrawer.disable();
+		var drawnItems = this.layers.overlays.draw;
+		
+		leafletData.getMap('mapSearch').then(function(map) {
+			leafletData.getLayers('mapSearch').then(function(baselayers) {
+	           var drawnItems = baselayers.overlays.draw;	          	            
+	           for(var i=0; i < drawnItems.getLayers().length;i++){
+	        	   drawnItems.removeLayer(drawnItems.getLayers()[i]);
+	           }
+	            
+	        });
+	    }); 
+	}
 	
 	
 	$scope.filterSwitch=function(statsGroup,filter){

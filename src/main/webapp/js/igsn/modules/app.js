@@ -25,6 +25,10 @@ app.filter('escape', function() {
 	  return window.encodeURIComponent;
 });
 
+app.config(function($logProvider){
+	  $logProvider.debugEnabled(false);
+	});
+
 app.service('modalService', ['$modal',function ($modal) {
 
     var modalDefaults = {

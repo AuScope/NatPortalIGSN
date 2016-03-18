@@ -51,10 +51,10 @@
 	            	<li style="display: list-item;">Coordinates<br><a id="latlong" class="latLongBtn">Longitude &amp; Latitude</a></li>
 	            	<li style="display: list-item;">Select region then 'GO'<br>
 	                  <div id="regionPanel">
-	                     <a title="To draw a region: click in the map and drag the mouse to get a rectangle. Release the mouse to finish." id="box" class="boxBtn"></a>
-	                     <a id="poly" class="polyBtn"></a>
+	                     <a ng-click="drawBoundingBox()" title="To draw a region: click in the map and drag the mouse to get a rectangle. Release the mouse to finish." id="box" class="boxBtn"></a>
+	                     <!-- a id="poly" class="polyBtn"></a-->
 	                     <a class="mapGoBtn"></a>
-	                     <a title="Clear selected region" id="del" class="delBtn"></a>
+	                     <a ng-click="clearBoundingBox()" title="Clear selected region" id="del" class="delBtn"></a>
 	                  </div>
 	            	</li>
 	               <li style="display: list-item;">Show locations on map<br><input type="text" placeholder="Place Name" size="20" id="geocode" autocomplete="off"><a id="searchGeocodeBtn"></a></li>
@@ -64,7 +64,7 @@
 		         </div>
          
          
-				<leaflet class="map" id="mapSearch" lf-center="center" tiles="tiles" markers="markers" defaults="defaults"></leaflet>
+				<leaflet class="map" id="mapSearch" event-broadcast="events" layers="layers" lf-center="center" tiles="tiles" markers="markers" defaults="defaults"></leaflet>
 				<div ng-show="totalItem > 0">
 					<pagination style="width: 100%;" ng-change="pageChanged()" total-items="totalItem" ng-model="currentPages" max-size="10" class="pagination-sm pull-left" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
 				</div>
