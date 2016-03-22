@@ -45,7 +45,7 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
             }
         },
 	    defaults: {
-            scrollWheelZoom: false
+            scrollWheelZoom: true
         }
 	});
 	
