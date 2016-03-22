@@ -66,6 +66,7 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 		        zoom: 3
 		    }
 		$scope.bboxSearch={};
+		$scope.regionSelected="";
 	}
 	
 	var bboxDrawer={};
@@ -91,7 +92,7 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
     });	
 	
 	$scope.drawBoundingBox = function(){
-		$scope.clearBoundingBox
+		$scope.clearBoundingBox();
 		bboxDrawer.enable();
 	}
 	
@@ -99,6 +100,7 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 		bboxDrawer.disable();
 		var drawnItems = this.layers.overlays.draw;
 		$scope.bboxSearch={};
+		$scope.regionSelected="";
 		leafletData.getMap('mapSearch').then(function(map) {
 			leafletData.getLayers('mapSearch').then(function(baselayers) {
 	           var drawnItems = baselayers.overlays.draw;	          	            
@@ -133,8 +135,8 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 	}
 	
     
-    $scope.viewSample = function(name,lat,lon){
-    	ViewSampleSummaryService.viewSample(name,lat,lon);
+    $scope.viewSample = function(name,lat,lon,viewSample){
+    	ViewSampleSummaryService.viewSample(name,lat,lon,viewSample);
     }
     //load stats
     $scope.stats =[];
@@ -207,8 +209,13 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
     	for(var statsgroup in $scope.text){    		
     		params[statsgroup] = $scope.text[statsgroup];
     	}
-    	
-    	
+    	    	    
+ 		
+ 		if($scope.bboxSearch.minlat && $scope.bboxSearch.maxlat && $scope.bboxSearch.minlon && $scope.bboxSearch.maxlon){
+ 			params.latitudeBound=[$scope.bboxSearch.minlat,$scope.bboxSearch.maxlat];
+ 			params.longitudeBound=[$scope.bboxSearch.minlon,$scope.bboxSearch.maxlon];
+ 		}
+         
     	
     	
     	return params;

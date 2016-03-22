@@ -59,11 +59,12 @@
 			      <div class="panel-body">
 			      	<ul>
 			      		<li ng-repeat="material in details.sample[0].materialTypes.value.materialType">{{material}}</li>
+			      		<li ng-show="details.sample[0].materialTypes.nil==true" >{{details.sample[0].materialTypes.value.nilReason}}</li>
 			      	</ul>
 			      </div>
 			    </div>
 			  </div>
-			  <div class="panel panel-info-gradient">
+			  <div ng-show="details.sample[0].relatedResources != null" class="panel panel-info-gradient">
 			    <div class="panel-heading">
 			      <h4 class="panel-title">
 			        <a data-toggle="collapse" data-parent="#accordion" data-target="#relatedResource">
@@ -89,11 +90,12 @@
 			      <div class="panel-body">
 			      	<ul>
 			      		<li ng-repeat="sampleCollector in details.sample[0].sampleCollectors.value.collector">{{sampleCollector.collectorIdentifier}} : {{sampleCollector.value}}</li>
+			      		<li ng-show="details.sample[0].sampleCollectors == true">{{details.sample[0].sampleCollectors.value.nilReason}}</li>
 			      	</ul>
 			      </div>
 			    </div>
 			  </div>
-			  <div class="panel panel-info-gradient">
+			  <div ng-show="details.sample[0].sampleCuration != null" class="panel panel-info-gradient">
 			    <div class="panel-heading">
 			      <h4 class="panel-title">
 			        <a data-toggle="collapse" data-parent="#accordion" data-target="#sampleCuration">
@@ -106,8 +108,8 @@
 				        <h4>{{sampleCurator.curator}}</h4>
 				      	<ul>
 				      		<li>Curation Location: {{sampleCurator.curationLocation}}</li>
-				      		<li ng-if="sampleCurator.curationTime.timeInstant == null">Curation Time: {{sampleCurator.curationTime.timePeriod.start}} - {{sampleCurator.curationTime.timePeriod.end}}</li>
-				      		<li ng-if="sampleCurator.curationTime.timeInstant != null">Curation Time: {{sampleCurator.curationTime.timeInstant}}</li>
+				      		<li ng-if="sampleCurator.curationTime!=null && sampleCurator.curationTime.timeInstant == null">Curation Time: {{sampleCurator.curationTime.timePeriod.start}} - {{sampleCurator.curationTime.timePeriod.end}}</li>
+				      		<li ng-if="sampleCurator.curationTime!=null && sampleCurator.curationTime.timeInstant != null">Curation Time: {{sampleCurator.curationTime.timeInstant}}</li>
 				      	</ul>
 			      	</div>
 			      </div>
@@ -124,6 +126,7 @@
 			      <div class="panel-body">
 			      	<ul>
 			      		<li ng-repeat="sampleType in details.sample[0].sampleTypes.value.sampleType">{{sampleType}}</li>
+			      		<li ng-show="details.sample[0].sampleTypes.nil==true">{{details.sample[0].sampleTypes.value.nilReason}}</li>
 			      	</ul>
 			      </div>
 			    </div>
@@ -138,12 +141,13 @@
 			    <div id="samplingMethod" class="panel-collapse collapse">
 			      <div class="panel-body">
 			      	<ul>
+			      		<li ng-if="details.sample[0].samplingMethod.nil==false">{{details.sample[0].samplingMethod.value.value}}</li>
 			      		<li ng-if="details.sample[0].samplingMethod.nil==true">{{details.sample[0].samplingMethod.value.nilReason}}</li>
 			      	</ul>
 			      </div>
 			    </div>
 			  </div>
-			  <div class="panel panel-info-gradient">
+			  <div ng-show="details.sample[0].samplingFeatures != null" class="panel panel-info-gradient">
 			    <div class="panel-heading">
 			      <h4 class="panel-title">
 			        <a data-toggle="collapse" data-parent="#accordion" data-target="#samplingFeature" >
@@ -160,7 +164,15 @@
 				      		<li>Datum: {{samplingFeature.samplingFeatureLocation.elevation.datum}}</li>
 				      		<li>Units: {{samplingFeature.samplingFeatureLocation.elevation.units}}</li>
 				      		<li>Elevation: {{samplingFeature.samplingFeatureLocation.elevation.value}}</li>
+				      		<li>SRS: {{samplingFeature.samplingFeatureLocation.wkt.srs}}</li>
+				      		<li>Geometry: {{samplingFeature.samplingFeatureLocation.wkt.value}}</li>
 				      	</ul>
+				      	<div ng-repeat="sampledFeature in samplingFeature.sampledFeatures.sampledFeature">
+					      	<h4>{{sampledFeature.value}}</h4>				        
+					      	<ul>
+					      		<li>Sampled Feature Type: {{sampledFeature.sampledFeatureType}}</li>				      	
+					      	</ul>
+				      	</div>
 			      	</div>
 			      </div>
 			    </div>
@@ -175,8 +187,9 @@
 			    <div id="samplingTime" class="panel-collapse collapse">
 			      <div class="panel-body">
 			      	<ul>
-			      		<li ng-if="details.sample[0].samplingTime.value.timeInstant == null">Time Period: {{details.sample[0].samplingTime.value.timePeriod.start}} - {{details.sample[0].samplingTime.value.timePeriod.end}}</li>
-			      		<li ng-if="details.sample[0].samplingTime.value.timeInstant != null">Time Instant: {{details.sample[0].samplingTime.value.timeInstant}}</li>
+			      		<li ng-if="details.sample[0].samplingTime.value.timeInstant == null && details.sample[0].samplingTime.nil==false">Time Period: {{details.sample[0].samplingTime.value.timePeriod.start}} - {{details.sample[0].samplingTime.value.timePeriod.end}}</li>
+			      		<li ng-if="details.sample[0].samplingTime.value.timeInstant != null && details.sample[0].samplingTime.nil==false">Time Instant: {{details.sample[0].samplingTime.value.timeInstant}}</li>
+			      		<li ng-if="details.sample[0].samplingTime.nil==true">{{details.sample[0].samplingTime.value.nilReason}}</li>
 			      	</ul>
 			      </div>
 			    </div>

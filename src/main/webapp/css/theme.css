@@ -616,10 +616,9 @@ hr.gradientwhite{
   text-transform: uppercase;
   margin: 0;
   position: relative;
-  top: 50%;
-  left: 50%;
+  top: 50%;  
   font-size: 3rem;
-  transform: translate(-65%, 20%);
+  
 }
 
 .search-background{

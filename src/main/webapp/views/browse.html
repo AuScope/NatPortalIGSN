@@ -33,7 +33,8 @@
 				<div class="slides-container">
 					<img src="img/rock1.jpg" alt="">
 					<img src="img/rock2.jpg" alt="">
-					<img src="img/rock3.jpg" alt="">
+					<img src="img/rock4.jpg" alt="">				
+					<img src="img/rock5.jpg" alt="">
 				</div>
 			</div>
 		</section>
@@ -223,7 +224,7 @@
 					</div>
 					<div class="col-sm-12 col-md-6 tableList">						
 				  		<ul>
-				  			<li ng-repeat="sample in samples"><a ng-click="viewSample(sample.igsn,sample.latitude,sample.longitude)">{{sample.logTimeStamp}} - {{sample.igsn}}, {{sample.name}}</a></li>
+				  			<li ng-repeat="sample in samples"><a ng-click="viewSample(sample.igsn,sample.latitude,sample.longitude,sample.message)">{{sample.logTimeStamp}} - {{sample.igsn}}, {{sample.name}}</a></li>
 				  		</ul>						    							
 					</div>
 				</div>

@@ -9,6 +9,7 @@ public class SampleSummaryResponse {
 	private Integer searchResultCount;
 	private Double latitude;
 	private Double longitude;
+	private String message;
 	
 	
 	
@@ -53,6 +54,15 @@ public class SampleSummaryResponse {
 	}
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
+	}
+	
+	public String getMessage() {
+		return this.message;
+	}
+	
+	public void setMessage(String parseMessage) {
+		this.message = parseMessage;
+		
 	}
 
 	

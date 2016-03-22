@@ -5,9 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.JAXBElement;
+
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.csiro.igsn.bindings.allocation2_0.Samples;
 import org.csiro.igsn.bindings.allocation2_0.Samples.Sample;
+import org.csiro.igsn.bindings.allocation2_0.Samples.Sample.SamplingLocation;
 import org.csiro.igsn.nat.server.response.SampleSummaryResponse;
 import org.csiro.igsn.nat.server.service.PanFMPSearchService;
 import org.csiro.igsn.utilities.SpatialUtilities;
@@ -30,6 +33,24 @@ public class SearchController {
 		this.panFMPSearchService = panFMPSearchService;
 	}
 	
+	/**
+	 * 
+	 * @param igsn
+	 * @param sampleName
+	 * @param materialType
+	 * @param sampleCollector
+	 * @param curators
+	 * @param sampleType
+	 * @param samplingFeatureType
+	 * @param searchText
+	 * @param latitudeBound - array size of 2 for where index 0 == min and index 1 == max
+	 * @param longitudeBound - array size of 2 for where index 0 == min and index 1 == max
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param user
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping(value = "search.do")
     public ResponseEntity<Object> search(            
             @RequestParam(required = false, value ="igsn") String igsn,
@@ -40,6 +61,8 @@ public class SearchController {
             @RequestParam(required = false, value ="sampleType", defaultValue="") String [] sampleType,
             @RequestParam(required = false, value ="samplingFeatureType",defaultValue="") String [] samplingFeatureType,
             @RequestParam(required = false, value ="searchText") String searchText,
+            @RequestParam(required = false, value ="latitudeBound",defaultValue="") Double [] latitudeBound,
+            @RequestParam(required = false, value ="longitudeBound",defaultValue="") Double [] longitudeBound,
             @RequestParam(required = false, value ="pageNumber") Integer pageNumber, 
             @RequestParam(required = false, value ="pageSize") Integer pageSize, 
             Principal user,
@@ -47,7 +70,7 @@ public class SearchController {
 		
     	try{
     		MutableInt resultCount=new MutableInt() ;
-    		List<Samples> samples = panFMPSearchService.search(igsn, sampleName,materialType,curators, sampleCollector,  sampleType, samplingFeatureType,searchText, pageNumber,pageSize,resultCount);
+    		List<Samples> samples = panFMPSearchService.search(igsn, sampleName,materialType,curators, sampleCollector,  sampleType, samplingFeatureType,searchText,latitudeBound,longitudeBound, pageNumber,pageSize,resultCount);
     		List<SampleSummaryResponse> responses= new ArrayList<SampleSummaryResponse>();
     		
     		for(Samples s: samples){
@@ -66,6 +89,7 @@ public class SearchController {
     			summaryResponse.setLogTimeStamp(sample.getLogElement().getTimeStamp());
     			summaryResponse.setLandingPage(sample.getLandingPage());     			
     			summaryResponse.setSearchResultCount(resultCount.getValue());
+    			summaryResponse.setMessage(parseMessage(sample.getSamplingLocation()));
     			responses.add(summaryResponse);
     		}
 		    return  new ResponseEntity<Object>(responses,HttpStatus.OK);    		
@@ -76,6 +100,21 @@ public class SearchController {
     	}
     }
 	
+	private String parseMessage(JAXBElement<SamplingLocation> samplingLocationJaxB) {
+		SamplingLocation samplingLocation = samplingLocationJaxB.getValue();
+		if(samplingLocationJaxB.isNil()){
+			return samplingLocationJaxB.getValue().getNilReason();
+		}
+		String message = "<p>";
+		message += samplingLocation.getLocality()==null?"":"<b>Locality:</b> " + samplingLocation.getLocality() + "<br>";
+		message += samplingLocation.getElevation()==null?"":"<b>Elevation:</b> " + samplingLocation.getElevation().getValue() + "<br>";
+		message += samplingLocation.getElevation()==null?"":"<b>Datum:</b> " + samplingLocation.getElevation().getDatum() + "<br>";
+		message += samplingLocation.getElevation()==null?"":"<b>Units:</b> " + samplingLocation.getElevation().getUnits() + "<br>";
+		message += "</p>";			
+		
+		return message;
+	}
+
 	@RequestMapping(value = "getDetailed.do")
     public ResponseEntity<Object> getDetailed(            
             @RequestParam(required = true, value ="igsn") String igsn,

@@ -48,7 +48,7 @@ allControllers.controller('sampleDetailsCtrl', function ($scope, $modalInstance,
             singleMarker: {
             	lat: params.lat,
     	        lng: params.lon,
-                message: params.igsn,
+                message: params.message,
                 focus: true,
                 draggable: false
             }

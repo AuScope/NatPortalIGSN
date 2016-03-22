@@ -47,7 +47,8 @@ public class PanFMPSearchService {
 	private static final String [] filterKeysType = {"List","List","List","Combo","Combo","Text"};
 	
 
-	public List<Samples> search(String igsn, String sampleName,String [] materialTypes,String curators,String sampleCollector, String [] sampleTypes,String [] samplingFeatureTypes,String searchText, Integer pageNumber, Integer pageSize,MutableInt resultCount) throws Exception {
+	public List<Samples> search(String igsn, String sampleName,String [] materialTypes,String curators,String sampleCollector, String [] sampleTypes,String [] samplingFeatureTypes,
+			String searchText, Double [] latitudeBound, Double [] longitudeBound,Integer pageNumber, Integer pageSize,MutableInt resultCount) throws Exception {
 		
 		SearchService service = new SearchService(PANFMP_CONFIG_FILE_LOCATION, PANFMP_CONFIG_FILE_INDEX);
 		BooleanQuery or = service.newBooleanQuery();
@@ -76,6 +77,12 @@ public class PanFMPSearchService {
 		if(sampleCollector != null){
 			and.add(service.newTextQuery("sampleCollector", sampleCollector), org.apache.lucene.search.BooleanClause.Occur.MUST);
 		}
+		
+		if(latitudeBound.length==2 && longitudeBound.length==2){			
+			and.add(service.newNumericRangeQuery("latitude", latitudeBound[0], latitudeBound[1]), org.apache.lucene.search.BooleanClause.Occur.MUST);
+			and.add(service.newNumericRangeQuery("longtitude", longitudeBound[0], longitudeBound[1]), org.apache.lucene.search.BooleanClause.Occur.MUST);			
+		}
+		
 		
 		for(String materialType:materialTypes){
 			or.add(service.newTextQuery("materialType", URLDecoder.decode(materialType, "UTF-8")), org.apache.lucene.search.BooleanClause.Occur.SHOULD);

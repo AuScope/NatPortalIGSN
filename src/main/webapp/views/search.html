@@ -16,7 +16,7 @@
 		
 		
 		<div class="row">
-			<div class="col-md-2 col-md-offset-1 col-sm-4 col-xs-12 wow fadeInUp padding-top-10">
+			<div class="col-lg-2 col-lg-offset-1 col-md-3 col-md-offset-1 col-sm-4 col-xs-12 wow fadeInUp padding-top-10">
 				<div>
 					<div  class="panel panel-primary" >
 					  <div class="panel-heading"><span class="fa fa-search"></span> <b>Search Parameter</b></div>
@@ -49,7 +49,7 @@
 						
 				</div>		
 			</div>
-			<div class="col-md-8 col-sm-8 col-xs-12">
+			<div class="col-lg-8 col-md-7 col-sm-8 col-xs-12">
 			
 				<div class="blackGradient" id="map-toolbar" style="height: 70px;"> 
 		            <ul>
@@ -60,7 +60,7 @@
 	                  <div id="regionPanel">
 	                     <a ng-click="drawBoundingBox()" title="To draw a region: click in the map and drag the mouse to get a rectangle. Release the mouse to finish." id="box" class="boxBtn"></a>
 	                     <!-- a id="poly" class="polyBtn"></a-->
-	                     <a class="mapGoBtn"></a>
+	                     <a ng-click="searchSample(1)" class="mapGoBtn"></a>
 	                     <a ng-click="clearBoundingBox()" title="Clear selected region" id="del" class="delBtn"></a>
 	                  </div>
 	            	</li>
@@ -94,7 +94,7 @@
 				
 				<div class="thumbNailList">
 				  <ul>
-				    <li ng-click="viewSample(sample.igsn,sample.latitude,sample.longitude)" ng-repeat="sample in samples">
+				    <li ng-click="viewSample(sample.igsn,sample.latitude,sample.longitude,sample.message)" ng-repeat="sample in samples">
 				      <img ng-if="sample.latitude && sample.longitude"  src="http://maps.google.com/mapfiles/kml/paddle/{{$index + 1 || 0}}.png" />
 				      <img ng-if="!sample.latitude || !sample.longitude"  src="img/not-available.jpg" />
 				      <h3>{{sample.igsn}}</h3>				     

@@ -1,8 +1,8 @@
 allControllers.controller('browseCtrl', ['$scope','$rootScope','$http','ViewSampleSummaryService','modalService','$location','$filter','FrontPageSearchParamService',
                                   function ($scope,$rootScope,$http,ViewSampleSummaryService,modalService,$location,$filter,FrontPageSearchParamService) {
 
-    $scope.viewSample = function(igsn,lat,lon){
-    	ViewSampleSummaryService.viewSample(igsn,lat,lon);
+    $scope.viewSample = function(igsn,lat,lon,viewSample){
+    	ViewSampleSummaryService.viewSample(igsn,lat,lon,viewSample);
     }
     
     $scope.filterMaterialType = function(materialIdentifier){
