@@ -94,15 +94,16 @@
 				
 				<div class="thumbNailList">
 				  <ul>
-				    <li ng-click="viewSample(sample.igsn,sample.latitude,sample.longitude,sample.message)" ng-repeat="sample in samples">
+				    <li  ng-repeat="sample in samples">
 				      <img ng-if="sample.latitude && sample.longitude"  src="http://maps.google.com/mapfiles/kml/paddle/{{$index + 1 || 0}}.png" />
 				      <img ng-if="!sample.latitude || !sample.longitude"  src="img/not-available.jpg" />
 				      <h3>{{sample.igsn}}</h3>				     
-			      	  <ul>
+			      	  <ul ng-click="viewSample(sample.igsn,sample.latitude,sample.longitude,sample.message)">
 			    		<li>{{sample.logTimeStamp}}</li>
 			    		<li>{{sample.name}}</li>
 			    		<li>{{sample.landingPage}}</li>
-			    	   </ul>				     
+			    	   </ul>
+			    	   <div ng-click="goToMarker(sample.latitude,sample.longitude)" ng-if="sample.latitude && sample.longitude" class="list_zoom"><i ng-click="zoomToMarker(sample.latitude,sample.longitude,'+')" class="fa fa-search-plus fa-2x"></i><i ng-click="zoomToMarker(sample.latitude,sample.longitude,'-')" class="fa fa-search-minus fa-2x"></i></div>				     
 				    </li>
 				      
 				   

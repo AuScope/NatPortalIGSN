@@ -720,6 +720,15 @@ hr.gradientwhite{
   padding : 15px;
 }
 
+.thumbNailList > ul > li > .list_zoom {
+  float: right;
+  position: absolute;
+  right : 5em;
+  transform: translate(0, -85%);
+  cursor: pointer;
+ 
+}
+
 .thumbNailList > ul > li ul {
   list-style-position: inside;
 }
@@ -737,6 +746,10 @@ hr.gradientwhite{
 
 .thumbNailList > ul > li:hover {
   background: #eee;
+ 
+}
+
+.thumbNailList > ul > li > ul > li:hover {
   cursor: pointer;
 }
 

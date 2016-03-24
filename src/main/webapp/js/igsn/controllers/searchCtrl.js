@@ -45,7 +45,7 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
             }
         },
 	    defaults: {
-            scrollWheelZoom: true
+            scrollWheelZoom: false
         }
 	});
 	
@@ -57,6 +57,22 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 		}
 		$scope.bboxSearch=bbox;
 		
+	}
+	
+	$scope.zoomToMarker = function (lat,lon, operation){
+		if(operation=='+'){
+			$scope.center = {
+					lat: lat,
+			        lng: lon,
+			        zoom: $scope.center.zoom + 2	
+			}
+		}else{
+			$scope.center = {
+					lat: lat,
+			        lng: lon,
+			        zoom: $scope.center.zoom - 2	
+			}
+		}
 	}
 	
 	$scope.clearRegion = function(){
