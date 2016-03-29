@@ -103,7 +103,7 @@
                 </property>         
             </activation>        
             <build>
-                <finalName>NatIGSN</finalName>                
+                <finalName>portal</finalName>                
                 <plugins>                                 
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -191,6 +191,10 @@
                 <updatePolicy>always</updatePolicy>
             </releases>
         </repository>
+         <repository>
+		    <id>igsn</id>
+		    <url>https://cgsrv8.arrc.csiro.au/nexus/content/repositories/igsn</url>
+		  </repository>
     </repositories>
     <!-- Dependencies -->
     <dependencies>
@@ -344,7 +348,39 @@
 			<artifactId>commons-jcs-core</artifactId>
 			<version>2.0-beta-1</version>
 		</dependency>
-				
+		<!-- This libraries are for panfmp to function -->
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-core</artifactId>
+			<version>3.6.2</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.2</version>
+		</dependency>				
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.8.2</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-digester</groupId>
+			<artifactId>commons-digester</artifactId>
+			<version>2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-discovery</groupId>
+			<artifactId>commons-discovery</artifactId>
+			<version>0.4</version>
+		</dependency>
+		<dependency>
+		  <groupId>igsn.panfmp</groupId>
+		  <artifactId>panfmp-core</artifactId>
+		  <version>1.1.0</version>
+		</dependency>
+		<!-- This libraries are for panfmp to function -->				
+								
 										   			
     </dependencies>
 </project>
