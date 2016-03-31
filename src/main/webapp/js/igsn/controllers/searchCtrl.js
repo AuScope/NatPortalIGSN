@@ -93,6 +93,7 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 	
 	$scope.changeRepository = function(repository){		
 		$scope.currentPages = 1;
+		$scope.reset();
 		$scope.setStats();
 	}
 	
@@ -196,7 +197,9 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
    
 	}
     
-    //VT: this is the code entry point
+    if(FrontPageSearchParamService.getRepository()){
+		$scope.repository=FrontPageSearchParamService.getRepository();
+	}
     $scope.setStats();
     
     $scope.reset = function(){
@@ -313,6 +316,8 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
     
 
 	var setupControls = function(stats) {	
+		
+		
 		
 		if(FrontPageSearchParamService.getMaterialType()){
 			for (var i = 0; i < stats.length; i++) {

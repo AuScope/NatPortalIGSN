@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -23,6 +25,7 @@ import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.MMapDirectory;
+import org.csiro.igsn.bindings.allocation2_0.ObjectFactory;
 import org.csiro.igsn.bindings.allocation2_0.Samples;
 import org.csiro.igsn.bindings.allocation2_0.Samples.Sample;
 import org.csiro.igsn.bindings.allocation2_0.Samples.Sample.SamplingLocation;
@@ -169,7 +172,7 @@ public class SESARPanFMPSearchService extends PanFMPSearchService{
 		SearchResultCollectorImpl searchResultCollectorImpl = new SearchResultCollectorImpl();		
 		service.search(searchResultCollectorImpl, bq);
 		//VT:There will always ever only  be one since we are searching by igsn
-		return searchResultCollectorImpl.getSamples().get(0);
+		return searchResultCollectorImpl.getSamples();
 	}
 	
 	
@@ -181,26 +184,25 @@ public class SESARPanFMPSearchService extends PanFMPSearchService{
 	
 	private class SearchResultCollectorImpl implements SearchResultCollector{
 		
-		ArrayList<Samples> samples=new ArrayList<Samples>();
+		Samples samples;
 
 		@Override
 		 public boolean collect(SearchResultItem item) {
 			   
-			JAXBContext jaxbContext;
+			
 			try {
-				jaxbContext = JAXBContext.newInstance(Samples.class);
-				Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-				Samples sample = (Samples) jaxbUnmarshaller.unmarshal(new StringReader(item.getXml()));
-				this.samples.add(sample); 
-			} catch (JAXBException e) {
+				ObjectFactory of = new ObjectFactory();
+				Samples sample = of.createSamples();
+				
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
-		     return true; // return false to stop collecting results
+		     return false; // return false to stop collecting results
 		   }
 		
-		public List<Samples> getSamples(){
+		public Samples getSamples(){
 			return this.samples;
 		}
 		

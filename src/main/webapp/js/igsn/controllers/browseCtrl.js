@@ -1,29 +1,46 @@
-allControllers.controller('browseCtrl', ['$scope','$rootScope','$http','ViewSampleSummaryService','modalService','$location','$filter','FrontPageSearchParamService',
-                                  function ($scope,$rootScope,$http,ViewSampleSummaryService,modalService,$location,$filter,FrontPageSearchParamService) {
+allControllers.controller('browseCtrl', ['$scope','$rootScope','$http','ViewSampleSummaryService','modalService','$location','$filter','FrontPageSearchParamService','DropDownValueService',
+                                  function ($scope,$rootScope,$http,ViewSampleSummaryService,modalService,$location,$filter,FrontPageSearchParamService,DropDownValueService) {
 
 	//VT: For the time being, our front page only show results from CSIRO repo.
     $scope.viewSample = function(igsn,lat,lon,viewSample){
     	ViewSampleSummaryService.viewSample(igsn,lat,lon,viewSample,'CSIRO');
     }
+    $scope.repositories = DropDownValueService.getRepositories();
+    $scope.selectedRepository='CSIRO';
     
     $scope.filterMaterialType = function(materialIdentifier){
-    	FrontPageSearchParamService.setMaterialType(materialIdentifier);
-    	$location.path("/search");
+    	if($scope.stats.statsTable[materialIdentifier] && $scope.stats.statsTable[materialIdentifier].count != 0){
+    		FrontPageSearchParamService.setMaterialType(materialIdentifier,$scope.selectedRepository);
+	    	$location.path("/search");    		
+    	}else{
+    		 modalService.showModal({}, {    	            	           
+		           headerText: "Material Type Selection" ,
+		           bodyText: "This selection does not contain any results. Please choose another."
+	    	 });  		 
+    	}
     }
     
     $scope.$watch('searchText', function(newVal, oldVal){
-    	FrontPageSearchParamService.setSearchText(newVal);
+    	FrontPageSearchParamService.setSearchText(newVal,$scope.selectedRepository);
     });
     
+    $scope.$watch('selectedRepository', function(newVal, oldVal){
+    	FrontPageSearchParamService.setRepository($scope.selectedRepository);
+    });
     
+    $scope.changeRepo = function(repository){
+    	searchSample(1,repository);
+    	getStats(repository);
+    	$scope.selectedRepository=repository; 
+    }
     
     //Something in the angular route is trigger a refresh on a.href 
-    var searchSample = function(page){
+    var searchSample = function(page,repository){
 		$scope.currentPages = page;//VT page is reset to 1 on new search
 		
 		//VT: for the time being, the front page only show a summary from the CSIRO repository
 		var params ={	
-				repository : 'CSIRO',
+				repository : repository,
 				pageNumber:page,
 				pageSize:20
 				}
@@ -46,15 +63,16 @@ allControllers.controller('browseCtrl', ['$scope','$rootScope','$http','ViewSamp
 	     
 	}
 	  
-	  searchSample(1);
+	  searchSample(1,'CSIRO');
 	  
 	  $scope.stats ={};
 	  
 	    
-	  var getStats = function(){
+	  var getStats = function(repository){
 			//VT: Actual results
 	  $http.get('getStats.do',{
-		  params:{			  
+		  params:{	
+			  repository : repository,
 			  statsGroup:"materialType",
 			  displayName : "Material Type"
 		  }
@@ -71,7 +89,7 @@ allControllers.controller('browseCtrl', ['$scope','$rootScope','$http','ViewSamp
 		       
 	    })
 	  }
-	  getStats();  
+	  getStats('CSIRO');  
 	    
 	   
 	  

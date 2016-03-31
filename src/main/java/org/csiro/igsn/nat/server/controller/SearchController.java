@@ -114,30 +114,23 @@ public class SearchController {
     public ResponseEntity<Object> getStats(  
     	   @RequestParam(required = false, value ="statsGroup") String statsGroup,
     	   @RequestParam(required = false, value ="displayName") String displayName,
-    	   @RequestParam(required = false, value ="repository") String repository,
+    	   @RequestParam(required = true, value ="repository") String repository,
             Principal user,
             HttpServletResponse response) {
 		
     	try{
     		if(statsGroup==null){
     			ArrayList<LuceneStats> result = new ArrayList<LuceneStats>();
-    			if(repository!=null){
-    				services.get(repository).getAllStats(result);
-    			}
+    			
+    			services.get(repository).getAllStats(result);
+    			
     			return  new ResponseEntity<Object>(result,HttpStatus.OK);
     		}else{
     			//VT: This is targeting a single stat group
     			LuceneStats result = new LuceneStats(statsGroup,displayName,"");
-    			if(repository!=null){
-    				services.get(repository).populatedStat(result);
-    			}else{    				
-    				/**
-    				 * VT: The only time and only reason why we want to browse through both catalogue is in the home page
-    				 * so that we can add up the total number of material Type in both catalogue
-    				 */    				
-    				services.get("CSIRO").populatedStat(result);
-    				services.get("SESAR").populatedStat(result);
-    			}
+    			
+    			services.get(repository).populatedStat(result);
+    			
     			return  new ResponseEntity<Object>(result,HttpStatus.OK);
     		}
     	}catch(Exception e){

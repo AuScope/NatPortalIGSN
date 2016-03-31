@@ -86,15 +86,22 @@ app.service('FrontPageSearchParamService', function() {
 	 var param = {};	
 
    return {
-   	  
-       setMaterialType : function(type){
+	   setRepository : function(repository){
+       	param.repository=repository;
+       },
+       getRepository : function(){
+       	return param.repository;
+       },
+       setMaterialType : function(type,repository){
        	param.materialType=type;
+       	param.repository=repository;
        },
        getMaterialType : function(){
        	return param.materialType;
        },
-       setSearchText : function(text){
+       setSearchText : function(text,repository){
           	param.searchText=text;
+          	param.repository=repository
        },
        getSearchText : function(){
       	 return param.searchText;

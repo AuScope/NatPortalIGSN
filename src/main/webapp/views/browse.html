@@ -1,7 +1,7 @@
 
 		
 		<script type="text/javascript" src="js/theme/custom-slider.js"></script>
-		
+<div ng-controller="browseCtrl">		
 		<section id="hero" class="light-typo">
 			<div class="container welcome-content">
 				<div class="row">
@@ -18,13 +18,16 @@
 						<hr class="gradientwhite">
 						
 						<h2>Search through National IGSN Repository</h2>
-						<div class="text-center">
+						<div class="text-center form-group">
 							<div class="input-group">
 							<input id="newsletter-mail" name="email" placeholder="Enter Search Text" ng-model="searchText" class="form-control input-lg" type="text" >
 							<span class="input-group-btn">
 								<a class="btn btn-store smooth-scroll" href="#search"><i class="fa fa-search fa-lg white"></i> Search</a>
 							</span>
 							</div>
+							
+							<label ng-repeat="repository in repositories" class="radio-inline"><input type="radio" name="repository" ng-model="$parent.selectedRepository" value={{repository}}>{{repository}} repository</label>
+							
 						</div>
 					</div>
 				</div>
@@ -40,195 +43,204 @@
 			</div>
 		</section>
 
-		<section class=" padding-top-bottom" ng-controller="browseCtrl">
-			
-			<div class="container">
-				<div id="projects-container" class="row">
-					<div class="row">
-							<header class="section-header text-center wow fadeInUp col-sm-6">
-								<h2>Material Type</h2>
-							</header>
-					</div>		
-					<div class="col-sm-12 col-md-6">									
-						<div class="row">							
-							<div class="col-sm-12">
-								<article ng-click="filterMaterialType('air')" class="design product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.2s">
-									<div class="img-box">
-										<div class="hover-mask2"></div>
-										<span class="product-icon icon-eye"></span>
-										<img class="img-responsive project-image" src="img/materialType/air.jpg" alt="">
+		<section class=" padding-top-bottom" >
+		
+		  <div class="container">	
+			  <uib-tabset active="active">
+			    <uib-tab index={{$index}}  select="changeRepo(repository)" ng-repeat="repository in repositories">
+			    	<uib-tab-heading>
+			        	 <h3 ng-show="repository=='SESAR'"><img src="http://www.geosamples.org/sites/geosamples.org/files/images/sesar_logo_right.jpg" height="37" width="55"> {{repository}}</h3>
+			        	 <h3 ng-show="repository=='CSIRO'"><img src="img/logo.png" height="42" width="42"> {{repository}}</h3>
+			        </uib-tab-heading>
+			    	<br><br>
+			    	<div>
+						<div class="row">
+								
+							<div class="col-sm-12 col-md-6">									
+								<div class="row">							
+									<div class="col-sm-12">
+										<article ng-click="filterMaterialType('air')" class="design product col-xs-12 col-sm-6 col-md-4 fadeInUp" ng-class="{'wow': repository=='CSIRO'}" ng-class="{'wow': repository=='CSIRO'}" data-wow-delay="0.2s">
+											<div class="img-box">
+												<div class="hover-mask2"></div>
+												<span class="product-icon icon-eye"></span>
+												<img class="img-responsive project-image" src="img/materialType/air.jpg" alt="">
+											</div>
+											<div class="product-info col-md-12">
+												<div>
+													<h4 class="project-title">Air({{stats.statsTable['air'].count || 0}})</h4>
+												</div>
+											</div>
+										</article>
+										<article ng-click="filterMaterialType('gas')" class="mock-up product col-xs-12 col-sm-6 col-md-4 fadeInUp" ng-class="{'wow': repository=='CSIRO'}" data-wow-delay="0.4s">
+											<div class="img-box">
+												<div class="hover-mask2"></div>
+												<span class="product-icon icon-eye"></span>
+												<img class="img-responsive project-image" src="img/materialType/gas.jpg" alt="">
+											</div>
+											<div class="product-info col-md-12">
+												<div>
+													<h4 class="project-title">Gas({{stats.statsTable['gas'].count || 0}})</h4>
+												</div>	
+											</div>
+										</article>
+										<article ng-click="filterMaterialType('ice')" class=" icons product col-xs-12 col-sm-6 col-md-4 fadeInUp" ng-class="{'wow': repository=='CSIRO'}" data-wow-delay="0.6s">
+											<div class="img-box">
+												<div class="hover-mask2"></div>
+												<span class="product-icon icon-eye"></span>
+												<img class="img-responsive project-image" src="img/materialType/ice.jpg" alt="">
+											</div>
+											<div class="product-info col-md-12">
+												<div>
+													<h4 class="project-title">Ice({{stats.statsTable['ice'].count || 0}})</h4>
+												</div>	
+											</div>
+										</article>
+										<article ng-click="filterMaterialType('liquidAqueous')" class="design product col-xs-12 col-sm-6 col-md-4 fadeInUp" ng-class="{'wow': repository=='CSIRO'}" data-wow-delay="0.2s">
+											<div class="img-box">
+												<div class="hover-mask2"></div>
+												<span class="product-icon icon-eye"></span>
+												<img class="img-responsive project-image" src="img/materialType/liquidAqueous.jpg" alt="">
+											</div>
+											<div class="product-info col-md-12">
+												<div>
+													<h4 class="project-title">Liquid Aqueous({{stats.statsTable['liquidAqueous'].count || 0}})</h4>
+												</div>
+											</div>
+										</article>
+										<article ng-click="filterMaterialType('liquidOrganic')" class="mock-up product col-xs-12 col-sm-6 col-md-4 fadeInUp" ng-class="{'wow': repository=='CSIRO'}" data-wow-delay="0.4s">
+											<div class="img-box">
+												<div class="hover-mask2"></div>
+												<span class="product-icon icon-eye"></span>
+												<img class="img-responsive project-image" src="img/materialType/liquidOrganic.jpg" alt="">
+											</div>
+											<div class="product-info col-md-12">
+												<div>
+													<h4 class="project-title">Liquid Organic({{stats.statsTable['liquidOrganic'].count || 0}})</h4>
+												</div>	
+											</div>
+										</article>
+										<article ng-click="filterMaterialType('mineral')" class=" icons product col-xs-12 col-sm-6 col-md-4 fadeInUp" ng-class="{'wow': repository=='CSIRO'}" data-wow-delay="0.6s">
+											<div class="img-box">
+												<div class="hover-mask2"></div>
+												<span class="product-icon icon-eye"></span>
+												<img class="img-responsive project-image" src="img/materialType/mineral.jpg" alt="">
+											</div>
+											<div class="product-info col-md-12">
+												<div>
+													<h4 class="project-title">Mineral({{stats.statsTable['mineral'].count || 0}})</h4>
+												</div>	
+											</div>
+										</article>
+										<article ng-click="filterMaterialType('organism')" class=" icons product col-xs-12 col-sm-6 col-md-4 fadeInUp" ng-class="{'wow': repository=='CSIRO'}" data-wow-delay="0.2s">
+											<div class="img-box">
+												<div class="hover-mask2"></div>
+												<span class="product-icon icon-eye"></span>
+												<img class="img-responsive project-image" src="img/materialType/organism.jpg" alt="">
+											</div>
+											<div class="product-info col-md-12">
+												<div>
+													<h4 class="project-title">Organism({{stats.statsTable['organism'].count || 0}})</h4>
+												</div>	
+											</div>
+										</article>
+										<article ng-click="filterMaterialType('particulate')" class=" icons product col-xs-12 col-sm-6 col-md-4 fadeInUp" ng-class="{'wow': repository=='CSIRO'}" data-wow-delay="0.4s">
+											<div class="img-box">
+												<div class="hover-mask2"></div>
+												<span class="product-icon icon-eye"></span>
+												<img class="img-responsive project-image" src="img/materialType/particulate.jpg" alt="">
+											</div>
+											<div class="product-info col-md-12">
+												<div>
+													<h4 class="project-title">Particulate({{stats.statsTable['particulate'].count || 0}})</h4>
+												</div>	
+											</div>
+										</article>
+										<article ng-click="filterMaterialType('rock')" class=" icons product col-xs-12 col-sm-6 col-md-4 fadeInUp" ng-class="{'wow': repository=='CSIRO'}" data-wow-delay="0.6s">
+											<div class="img-box">
+												<div class="hover-mask2"></div>
+												<span class="product-icon icon-eye"></span>
+												<img class="img-responsive project-image" src="img/materialType/rock.jpg" alt="">
+											</div>
+											<div class="product-info col-md-12">
+												<div>
+													<h4 class="project-title">Rock({{stats.statsTable['rock'].count || 0}})</h4>
+												</div>	
+											</div>
+										</article>
+										<article ng-click="filterMaterialType('sediment')" class=" icons product col-xs-12 col-sm-6 col-md-4 fadeInUp" ng-class="{'wow': repository=='CSIRO'}" data-wow-delay="0.2s">
+											<div class="img-box">
+												<div class="hover-mask2"></div>
+												<span class="product-icon icon-eye"></span>
+												<img class="img-responsive project-image" src="img/materialType/sediment.jpg" alt="">
+											</div>
+											<div class="product-info col-md-12">
+												<div>
+													<h4 class="project-title">Sediment({{stats.statsTable['sediment'].count || 0}})</h4>
+												</div>	
+											</div>
+										</article>
+										<article ng-click="filterMaterialType('snow')" class=" icons product col-xs-12 col-sm-6 col-md-4 fadeInUp" ng-class="{'wow': repository=='CSIRO'}" data-wow-delay="0.4s">
+											<div class="img-box">
+												<div class="hover-mask2"></div>
+												<span class="product-icon icon-eye"></span>
+												<img class="img-responsive project-image" src="img/materialType/snow.jpg" alt="">
+											</div>
+											<div class="product-info col-md-12">
+												<div>
+													<h4 class="project-title">snow({{stats.statsTable['snow'].count || 0}})</h4>
+												</div>	
+											</div>
+										</article>
+										<article ng-click="filterMaterialType('soil')" class=" icons product col-xs-12 col-sm-6 col-md-4 fadeInUp" ng-class="{'wow': repository=='CSIRO'}" data-wow-delay="0.6s">
+											<div class="img-box">
+												<div class="hover-mask2"></div>
+												<span class="product-icon icon-eye"></span>
+												<img class="img-responsive project-image" src="img/materialType/soil.jpg" alt="">
+											</div>
+											<div class="product-info col-md-12">
+												<div>
+													<h4 class="project-title">Soil({{stats.statsTable['soil'].count || 0}})</h4>
+												</div>	
+											</div>
+										</article>
+										<article ng-click="filterMaterialType('tissue')" class=" icons product col-xs-12 col-sm-6 col-md-4 fadeInUp" ng-class="{'wow': repository=='CSIRO'}" data-wow-delay="0.2s">
+											<div class="img-box">
+												<div class="hover-mask2"></div>
+												<span class="product-icon icon-eye"></span>
+												<img class="img-responsive project-image" src="img/materialType/tissue.jpg" alt="">
+											</div>
+											<div class="product-info col-md-12">
+												<div>
+													<h4 class="project-title">Tissue({{stats.statsTable['tissue'].count || 0}})</h4>
+												</div>	
+											</div>
+										</article>
+										<article ng-click="filterMaterialType('other')" class=" icons product col-xs-12 col-sm-6 col-md-4 fadeInUp" ng-class="{'wow': repository=='CSIRO'}" data-wow-delay="0.4s">
+											<div class="img-box">
+												<div class="hover-mask2"></div>
+												<span class="product-icon icon-eye"></span>
+												<img class="img-responsive project-image" src="img/materialType/others.jpg" alt="">
+											</div>
+											<div class="product-info col-md-12">
+												<div>
+													<h4 class="project-title">Others({{stats.statsTable['other'].count || 0}})</h4>
+												</div>	
+											</div>
+										</article>
 									</div>
-									<div class="product-info col-md-12">
-										<div>
-											<h4 class="project-title">Air({{stats.statsTable['air'].count || 0}})</h4>
-										</div>
-									</div>
-								</article>
-								<article ng-click="filterMaterialType('gas')" class="mock-up product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.4s">
-									<div class="img-box">
-										<div class="hover-mask2"></div>
-										<span class="product-icon icon-eye"></span>
-										<img class="img-responsive project-image" src="img/materialType/gas.jpg" alt="">
-									</div>
-									<div class="product-info col-md-12">
-										<div>
-											<h4 class="project-title">Gas({{stats.statsTable['gas'].count || 0}})</h4>
-										</div>	
-									</div>
-								</article>
-								<article ng-click="filterMaterialType('ice')" class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.6s">
-									<div class="img-box">
-										<div class="hover-mask2"></div>
-										<span class="product-icon icon-eye"></span>
-										<img class="img-responsive project-image" src="img/materialType/ice.jpg" alt="">
-									</div>
-									<div class="product-info col-md-12">
-										<div>
-											<h4 class="project-title">Ice({{stats.statsTable['ice'].count || 0}})</h4>
-										</div>	
-									</div>
-								</article>
-								<article ng-click="filterMaterialType('liquidAqueous')" class="design product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.2s">
-									<div class="img-box">
-										<div class="hover-mask2"></div>
-										<span class="product-icon icon-eye"></span>
-										<img class="img-responsive project-image" src="img/materialType/liquidAqueous.jpg" alt="">
-									</div>
-									<div class="product-info col-md-12">
-										<div>
-											<h4 class="project-title">Liquid Aqueous({{stats.statsTable['liquidAqueous'].count || 0}})</h4>
-										</div>
-									</div>
-								</article>
-								<article ng-click="filterMaterialType('liquidOrganic')" class="mock-up product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.4s">
-									<div class="img-box">
-										<div class="hover-mask2"></div>
-										<span class="product-icon icon-eye"></span>
-										<img class="img-responsive project-image" src="img/materialType/liquidOrganic.jpg" alt="">
-									</div>
-									<div class="product-info col-md-12">
-										<div>
-											<h4 class="project-title">Liquid Organic({{stats.statsTable['liquidOrganic'].count || 0}})</h4>
-										</div>	
-									</div>
-								</article>
-								<article ng-click="filterMaterialType('mineral')" class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.6s">
-									<div class="img-box">
-										<div class="hover-mask2"></div>
-										<span class="product-icon icon-eye"></span>
-										<img class="img-responsive project-image" src="img/materialType/mineral.jpg" alt="">
-									</div>
-									<div class="product-info col-md-12">
-										<div>
-											<h4 class="project-title">Mineral({{stats.statsTable['mineral'].count || 0}})</h4>
-										</div>	
-									</div>
-								</article>
-								<article ng-click="filterMaterialType('organism')" class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.2s">
-									<div class="img-box">
-										<div class="hover-mask2"></div>
-										<span class="product-icon icon-eye"></span>
-										<img class="img-responsive project-image" src="img/materialType/organism.jpg" alt="">
-									</div>
-									<div class="product-info col-md-12">
-										<div>
-											<h4 class="project-title">Organism({{stats.statsTable['organism'].count || 0}})</h4>
-										</div>	
-									</div>
-								</article>
-								<article ng-click="filterMaterialType('particulate')" class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.4s">
-									<div class="img-box">
-										<div class="hover-mask2"></div>
-										<span class="product-icon icon-eye"></span>
-										<img class="img-responsive project-image" src="img/materialType/particulate.jpg" alt="">
-									</div>
-									<div class="product-info col-md-12">
-										<div>
-											<h4 class="project-title">Particulate({{stats.statsTable['particulate'].count || 0}})</h4>
-										</div>	
-									</div>
-								</article>
-								<article ng-click="filterMaterialType('rock')" class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.6s">
-									<div class="img-box">
-										<div class="hover-mask2"></div>
-										<span class="product-icon icon-eye"></span>
-										<img class="img-responsive project-image" src="img/materialType/rock.jpg" alt="">
-									</div>
-									<div class="product-info col-md-12">
-										<div>
-											<h4 class="project-title">Rock({{stats.statsTable['rock'].count || 0}})</h4>
-										</div>	
-									</div>
-								</article>
-								<article ng-click="filterMaterialType('sediment')" class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.2s">
-									<div class="img-box">
-										<div class="hover-mask2"></div>
-										<span class="product-icon icon-eye"></span>
-										<img class="img-responsive project-image" src="img/materialType/sediment.jpg" alt="">
-									</div>
-									<div class="product-info col-md-12">
-										<div>
-											<h4 class="project-title">Sediment({{stats.statsTable['sediment'].count || 0}})</h4>
-										</div>	
-									</div>
-								</article>
-								<article ng-click="filterMaterialType('snow')" class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.4s">
-									<div class="img-box">
-										<div class="hover-mask2"></div>
-										<span class="product-icon icon-eye"></span>
-										<img class="img-responsive project-image" src="img/materialType/snow.jpg" alt="">
-									</div>
-									<div class="product-info col-md-12">
-										<div>
-											<h4 class="project-title">snow({{stats.statsTable['snow'].count || 0}})</h4>
-										</div>	
-									</div>
-								</article>
-								<article ng-click="filterMaterialType('soil')" class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.6s">
-									<div class="img-box">
-										<div class="hover-mask2"></div>
-										<span class="product-icon icon-eye"></span>
-										<img class="img-responsive project-image" src="img/materialType/soil.jpg" alt="">
-									</div>
-									<div class="product-info col-md-12">
-										<div>
-											<h4 class="project-title">Soil({{stats.statsTable['soil'].count || 0}})</h4>
-										</div>	
-									</div>
-								</article>
-								<article ng-click="filterMaterialType('tissue')" class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.2s">
-									<div class="img-box">
-										<div class="hover-mask2"></div>
-										<span class="product-icon icon-eye"></span>
-										<img class="img-responsive project-image" src="img/materialType/tissue.jpg" alt="">
-									</div>
-									<div class="product-info col-md-12">
-										<div>
-											<h4 class="project-title">Tissue({{stats.statsTable['tissue'].count || 0}})</h4>
-										</div>	
-									</div>
-								</article>
-								<article ng-click="filterMaterialType('other')" class=" icons product col-xs-12 col-sm-6 col-md-4 wow fadeInUp" data-wow-delay="0.4s">
-									<div class="img-box">
-										<div class="hover-mask2"></div>
-										<span class="product-icon icon-eye"></span>
-										<img class="img-responsive project-image" src="img/materialType/others.jpg" alt="">
-									</div>
-									<div class="product-info col-md-12">
-										<div>
-											<h4 class="project-title">Others({{stats.statsTable['other'].count || 0}})</h4>
-										</div>	
-									</div>
-								</article>
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-6 tableList">						
+						  		<ul>
+						  			<li ng-repeat="sample in samples"><a ng-click="viewSample(sample.igsn,sample.latitude,sample.longitude,sample.message)">{{sample.logTimeStamp}} - {{sample.igsn}}, {{sample.name}}</a></li>
+						  		</ul>						    							
 							</div>
 						</div>
-					</div>
-					<div class="col-sm-12 col-md-6 tableList">						
-				  		<ul>
-				  			<li ng-repeat="sample in samples"><a ng-click="viewSample(sample.igsn,sample.latitude,sample.longitude,sample.message)">{{sample.logTimeStamp}} - {{sample.igsn}}, {{sample.name}}</a></li>
-				  		</ul>						    							
-					</div>
-				</div>
-			</div>
+					</div>		    
+			    </uib-tab>			    
+			    
+			  </uib-tabset>
+			</div>			
 
 		</section>
+</div>		
