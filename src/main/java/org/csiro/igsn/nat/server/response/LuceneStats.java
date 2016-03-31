@@ -67,7 +67,7 @@ public class LuceneStats {
 		this.type = type;
 	}
 
-	private class StatInfo{
+	public class StatInfo{
 		private String value;
 		private Integer count;
 		

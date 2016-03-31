@@ -10,8 +10,8 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 	
 	$scope.bboxSearch={};
 	
-	
-	
+	$scope.repositories = DropDownValueService.getRepositories();
+	$scope.repository='CSIRO';
 	
 	angular.extend($scope, {
 	    center: {
@@ -66,11 +66,17 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 			        lng: lon,
 			        zoom: $scope.center.zoom + 2	
 			}
-		}else{
+		}else if (operation=='-'){
 			$scope.center = {
 					lat: lat,
 			        lng: lon,
 			        zoom: $scope.center.zoom - 2	
+			}
+		}else{
+			$scope.center = {
+					lat: lat,
+			        lng: lon,
+			        zoom: $scope.center.zoom	
 			}
 		}
 	}
@@ -83,6 +89,11 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 		    }
 		$scope.bboxSearch={};
 		$scope.regionSelected="";
+	}
+	
+	$scope.changeRepository = function(repository){		
+		$scope.currentPages = 1;
+		$scope.setStats();
 	}
 	
 	var bboxDrawer={};
@@ -151,8 +162,8 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 	}
 	
     
-    $scope.viewSample = function(name,lat,lon,viewSample){
-    	ViewSampleSummaryService.viewSample(name,lat,lon,viewSample);
+    $scope.viewSample = function(name,lat,lon,viewSample,repository){
+    	ViewSampleSummaryService.viewSample(name,lat,lon,viewSample,repository);
     }
     //load stats
     $scope.stats =[];
@@ -165,7 +176,12 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 		
 		
 		//VT: Actual results
-		$http.get('getStats.do')     
+		$http.get('getStats.do',{
+			  params:{
+				  repository:$scope.repository,
+				 
+			  }
+		  })     
 	     .success(function(data) {
 	    	 $scope.stats = data; 
 	    	 setupControls(data);
@@ -232,7 +248,7 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
  			params.longitudeBound=[$scope.bboxSearch.minlon,$scope.bboxSearch.maxlon];
  		}
          
-    	
+ 		params.repository=$scope.repository;
     	
     	return params;
     }
@@ -276,6 +292,12 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 		            }
 	   		   }
 	   	   },$scope);
+	   	   
+	   	   for(var key in $scope.markers){
+		   		$scope.zoomToMarker($scope.markers[key].lat,$scope.markers[key].lng);
+		   		break;
+	   	   }
+	   	   
 		
 	     })
 	     .error(function(data, status) {    	

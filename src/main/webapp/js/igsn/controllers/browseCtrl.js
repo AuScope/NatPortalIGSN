@@ -1,8 +1,9 @@
 allControllers.controller('browseCtrl', ['$scope','$rootScope','$http','ViewSampleSummaryService','modalService','$location','$filter','FrontPageSearchParamService',
                                   function ($scope,$rootScope,$http,ViewSampleSummaryService,modalService,$location,$filter,FrontPageSearchParamService) {
 
+	//VT: For the time being, our front page only show results from CSIRO repo.
     $scope.viewSample = function(igsn,lat,lon,viewSample){
-    	ViewSampleSummaryService.viewSample(igsn,lat,lon,viewSample);
+    	ViewSampleSummaryService.viewSample(igsn,lat,lon,viewSample,'CSIRO');
     }
     
     $scope.filterMaterialType = function(materialIdentifier){
@@ -19,7 +20,10 @@ allControllers.controller('browseCtrl', ['$scope','$rootScope','$http','ViewSamp
     //Something in the angular route is trigger a refresh on a.href 
     var searchSample = function(page){
 		$scope.currentPages = page;//VT page is reset to 1 on new search
+		
+		//VT: for the time being, the front page only show a summary from the CSIRO repository
 		var params ={	
+				repository : 'CSIRO',
 				pageNumber:page,
 				pageSize:20
 				}
@@ -50,7 +54,7 @@ allControllers.controller('browseCtrl', ['$scope','$rootScope','$http','ViewSamp
 	  var getStats = function(){
 			//VT: Actual results
 	  $http.get('getStats.do',{
-		  params:{
+		  params:{			  
 			  statsGroup:"materialType",
 			  displayName : "Material Type"
 		  }

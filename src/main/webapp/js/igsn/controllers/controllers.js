@@ -6,9 +6,10 @@ allControllers.controller('sampleDetailsCtrl', function ($scope, $modalInstance,
 	$scope.details={};
 	$scope.title = params.igsn;
 	
-	var getDetails = function(collectionId){
+	var getDetails = function(collectionId,repository){
 		$http.get('getDetailed.do',{
 			params:{	
+				repository : param.repository,
 				igsn: params.igsn		
 				}
 		 })     

@@ -107,7 +107,9 @@ app.service('FrontPageSearchParamService', function() {
 });
 
 app.service('DropDownValueService', ['$q','$http',function($q,$http) {
-	
+	this.getRepositories = function(){
+		return['CSIRO','SESAR'];
+	}
 
     this.getStates = function() {
             return [{            	 
@@ -212,7 +214,7 @@ app.service('DropDownValueService', ['$q','$http',function($q,$http) {
 
 app.service('ViewSampleSummaryService',['$modal','$q',function ($modal,$q) {
 	     
-     this.viewSample = function(igsn,lat,lon,message){
+     this.viewSample = function(igsn,lat,lon,message,repository){
     	
 		 var modalInstance = $modal.open({
 	         animation: true,
@@ -225,7 +227,8 @@ app.service('ViewSampleSummaryService',['$modal','$q',function ($modal,$q) {
 	              	 igsn :igsn,
 	              	 message : message,
 	              	 lat : lat,
-	              	 lon : lon
+	              	 lon : lon,
+	              	 repository : repository
 	               }
 	             }
 	           }

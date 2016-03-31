@@ -2,6 +2,7 @@ package org.csiro.igsn.nat.server.controller;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -11,8 +12,11 @@ import org.apache.commons.lang3.mutable.MutableInt;
 import org.csiro.igsn.bindings.allocation2_0.Samples;
 import org.csiro.igsn.bindings.allocation2_0.Samples.Sample;
 import org.csiro.igsn.bindings.allocation2_0.Samples.Sample.SamplingLocation;
+import org.csiro.igsn.nat.server.response.LuceneStats;
 import org.csiro.igsn.nat.server.response.SampleSummaryResponse;
+import org.csiro.igsn.nat.server.service.CSIROPanFMPSearchService;
 import org.csiro.igsn.nat.server.service.PanFMPSearchService;
+import org.csiro.igsn.nat.server.service.SESARPanFMPSearchService;
 import org.csiro.igsn.utilities.SpatialUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,11 +30,14 @@ import com.vividsolutions.jts.geom.Point;
 @Controller
 public class SearchController {
 	
-	PanFMPSearchService panFMPSearchService;
+	
+	Hashtable<String,PanFMPSearchService> services;
 	
 	@Autowired
-	public SearchController(PanFMPSearchService panFMPSearchService){
-		this.panFMPSearchService = panFMPSearchService;
+	public SearchController(CSIROPanFMPSearchService csiroPanFMPSearchService,SESARPanFMPSearchService sesarPanFMPSearchService ){
+		services = new Hashtable<String,PanFMPSearchService>();
+		services.put("CSIRO", csiroPanFMPSearchService);
+		services.put("SESAR", sesarPanFMPSearchService);
 	}
 	
 	/**
@@ -63,6 +70,7 @@ public class SearchController {
             @RequestParam(required = false, value ="searchText") String searchText,
             @RequestParam(required = false, value ="latitudeBound",defaultValue="") Double [] latitudeBound,
             @RequestParam(required = false, value ="longitudeBound",defaultValue="") Double [] longitudeBound,
+            @RequestParam(required = true, value ="repository") String repository,
             @RequestParam(required = false, value ="pageNumber") Integer pageNumber, 
             @RequestParam(required = false, value ="pageSize") Integer pageSize, 
             Principal user,
@@ -70,28 +78,12 @@ public class SearchController {
 		
     	try{
     		MutableInt resultCount=new MutableInt() ;
-    		List<Samples> samples = panFMPSearchService.search(igsn, sampleName,materialType,curators, sampleCollector,  sampleType, samplingFeatureType,searchText,latitudeBound,longitudeBound, pageNumber,pageSize,resultCount);
     		List<SampleSummaryResponse> responses= new ArrayList<SampleSummaryResponse>();
     		
-    		for(Samples s: samples){
-    			
-    			SampleSummaryResponse summaryResponse= new SampleSummaryResponse();
-    			Sample sample=s.getSample().get(0);
-    			
-    			if(sample.getSamplingLocation().isNil()==false && sample.getSamplingLocation().getValue().getWkt()!=null){
-	    			Point point =(Point)SpatialUtilities.wktToGeometry(sample.getSamplingLocation().getValue().getWkt().getValue());
-	    			summaryResponse.setLongitude(point.getCoordinate().x);
-	    			summaryResponse.setLatitude(point.getCoordinate().y);
-    			}
-    			
-    			summaryResponse.setIgsn(sample.getSampleNumber().getValue());
-    			summaryResponse.setName(sample.getSampleName());
-    			summaryResponse.setLogTimeStamp(sample.getLogElement().getTimeStamp());
-    			summaryResponse.setLandingPage(sample.getLandingPage());     			
-    			summaryResponse.setSearchResultCount(resultCount.getValue());
-    			summaryResponse.setMessage(parseMessage(sample.getSamplingLocation()));
-    			responses.add(summaryResponse);
-    		}
+    		services.get(repository).search(igsn, sampleName,materialType,curators, sampleCollector,  sampleType, samplingFeatureType,searchText,latitudeBound,longitudeBound, pageNumber,pageSize,responses);
+    	
+    		
+    		
 		    return  new ResponseEntity<Object>(responses,HttpStatus.OK);    		
 	    	
     	}catch(Exception e){
@@ -100,29 +92,16 @@ public class SearchController {
     	}
     }
 	
-	private String parseMessage(JAXBElement<SamplingLocation> samplingLocationJaxB) {
-		SamplingLocation samplingLocation = samplingLocationJaxB.getValue();
-		if(samplingLocationJaxB.isNil()){
-			return samplingLocationJaxB.getValue().getNilReason();
-		}
-		String message = "<p>";
-		message += samplingLocation.getLocality()==null?"":"<b>Locality:</b> " + samplingLocation.getLocality() + "<br>";
-		message += samplingLocation.getElevation()==null?"":"<b>Elevation:</b> " + samplingLocation.getElevation().getValue() + "<br>";
-		message += samplingLocation.getElevation()==null?"":"<b>Datum:</b> " + samplingLocation.getElevation().getDatum() + "<br>";
-		message += samplingLocation.getElevation()==null?"":"<b>Units:</b> " + samplingLocation.getElevation().getUnits() + "<br>";
-		message += "</p>";			
-		
-		return message;
-	}
 
 	@RequestMapping(value = "getDetailed.do")
     public ResponseEntity<Object> getDetailed(            
             @RequestParam(required = true, value ="igsn") String igsn,
+            @RequestParam(required = true, value ="repository") String repository,
             Principal user,
             HttpServletResponse response) {
     	
     	try{
-    		Samples samples = panFMPSearchService.search(igsn);
+    		Samples samples = services.get(repository).search(igsn);
     		
 		    return  new ResponseEntity<Object>(samples,HttpStatus.OK);    		
 	    	
@@ -135,14 +114,31 @@ public class SearchController {
     public ResponseEntity<Object> getStats(  
     	   @RequestParam(required = false, value ="statsGroup") String statsGroup,
     	   @RequestParam(required = false, value ="displayName") String displayName,
+    	   @RequestParam(required = false, value ="repository") String repository,
             Principal user,
             HttpServletResponse response) {
 		
     	try{
     		if(statsGroup==null){
-    			return  new ResponseEntity<Object>(panFMPSearchService.getAllStats(),HttpStatus.OK);
+    			ArrayList<LuceneStats> result = new ArrayList<LuceneStats>();
+    			if(repository!=null){
+    				services.get(repository).getAllStats(result);
+    			}
+    			return  new ResponseEntity<Object>(result,HttpStatus.OK);
     		}else{
-    			return  new ResponseEntity<Object>(panFMPSearchService.getStats(statsGroup,displayName,""),HttpStatus.OK);
+    			//VT: This is targeting a single stat group
+    			LuceneStats result = new LuceneStats(statsGroup,displayName,"");
+    			if(repository!=null){
+    				services.get(repository).populatedStat(result);
+    			}else{    				
+    				/**
+    				 * VT: The only time and only reason why we want to browse through both catalogue is in the home page
+    				 * so that we can add up the total number of material Type in both catalogue
+    				 */    				
+    				services.get("CSIRO").populatedStat(result);
+    				services.get("SESAR").populatedStat(result);
+    			}
+    			return  new ResponseEntity<Object>(result,HttpStatus.OK);
     		}
     	}catch(Exception e){
     		return new  ResponseEntity<Object>(new ExceptionWrapper("Error getting stats",e.getMessage()),HttpStatus.BAD_REQUEST);
