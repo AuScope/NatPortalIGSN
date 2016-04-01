@@ -3,7 +3,7 @@ allControllers.controller('browseCtrl', ['$scope','$rootScope','$http','ViewSamp
 
 	//VT: For the time being, our front page only show results from CSIRO repo.
     $scope.viewSample = function(igsn,lat,lon,viewSample){
-    	ViewSampleSummaryService.viewSample(igsn,lat,lon,viewSample,'CSIRO');
+    	ViewSampleSummaryService.viewSample(igsn,lat,lon,viewSample,$scope.selectedRepository);
     }
     $scope.repositories = DropDownValueService.getRepositories();
     $scope.selectedRepository='CSIRO';

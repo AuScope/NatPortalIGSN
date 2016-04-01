@@ -6,11 +6,11 @@ allControllers.controller('sampleDetailsCtrl', function ($scope, $modalInstance,
 	$scope.details={};
 	$scope.title = params.igsn;
 	
-	var getDetails = function(collectionId,repository){
+	var getDetails = function(igsn,repository){
 		$http.get('getDetailed.do',{
 			params:{	
-				repository : param.repository,
-				igsn: params.igsn		
+				repository : repository,
+				igsn: igsn		
 				}
 		 })     
 	     .success(function(data) {
@@ -25,7 +25,7 @@ allControllers.controller('sampleDetailsCtrl', function ($scope, $modalInstance,
 	       
 	     })
 	}
-	getDetails();
+	getDetails(params.igsn, params.repository);
 	
 	angular.extend($scope, {
 	    center: {

@@ -4,11 +4,21 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+
+
+
+
+
+
+
+
 
 
 
@@ -25,10 +35,18 @@ import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.MMapDirectory;
+import org.csiro.igsn.bindings.allocation2_0.EventType;
+import org.csiro.igsn.bindings.allocation2_0.IdentifierType;
+import org.csiro.igsn.bindings.allocation2_0.NilReasonType;
 import org.csiro.igsn.bindings.allocation2_0.ObjectFactory;
 import org.csiro.igsn.bindings.allocation2_0.Samples;
 import org.csiro.igsn.bindings.allocation2_0.Samples.Sample;
+import org.csiro.igsn.bindings.allocation2_0.Samples.Sample.MaterialTypes;
+import org.csiro.igsn.bindings.allocation2_0.Samples.Sample.SampleCollectors;
+import org.csiro.igsn.bindings.allocation2_0.Samples.Sample.SampleTypes;
 import org.csiro.igsn.bindings.allocation2_0.Samples.Sample.SamplingLocation;
+import org.csiro.igsn.bindings.allocation2_0.Samples.Sample.SamplingMethod;
+import org.csiro.igsn.bindings.allocation2_0.Samples.Sample.SamplingTime;
 import org.csiro.igsn.nat.server.response.LuceneStats;
 import org.csiro.igsn.nat.server.response.SampleSummaryResponse;
 import org.csiro.igsn.utilities.SpatialUtilities;
@@ -54,7 +72,7 @@ public class SESARPanFMPSearchService extends PanFMPSearchService{
 	@Value("#{configProperties['SESAR_PANFMP_CONFIG_LUCENCE_DIR']}")
 	private String PANFMP_CONFIG_LUCENCE_DIR;
 	
-	
+	SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
 	
 
 	public void search(String igsn, String sampleName,String [] materialTypes,String curators,String sampleCollector, String [] sampleTypes,String [] samplingFeatureTypes,
@@ -192,7 +210,127 @@ public class SESARPanFMPSearchService extends PanFMPSearchService{
 			
 			try {
 				ObjectFactory of = new ObjectFactory();
-				Samples sample = of.createSamples();
+				samples = of.createSamples();
+				Sample sample = new Sample();
+				
+				//VT:Name
+				sample.setSampleName((String)item.getField("sampleName")[0]);
+				
+				//VT:Sample number
+				Samples.Sample.SampleNumber sampleNumber = new Samples.Sample.SampleNumber();
+				sampleNumber.setValue((String)item.getField("sampleNumber")[0]);
+				sampleNumber.setIdentifierType(IdentifierType.IGSN);
+				sample.setSampleNumber(sampleNumber);
+				
+				//VT:Material Type
+				Samples.Sample.MaterialTypes materialType = of.createSamplesSampleMaterialTypes();
+				JAXBElement<MaterialTypes> materialTypeJaxB = of.createSamplesSampleMaterialTypes(materialType);
+				if(item.getField("materialType") != null){
+					materialTypeJaxB.setNil(false);
+					for(Object material:item.getField("materialType")){
+						materialType.getMaterialType().add((String)material);
+					}
+				}else{
+					materialTypeJaxB.setNil(true);
+					materialType.setNilReason(NilReasonType.MISSING.value());
+				}
+				sample.setMaterialTypes(materialTypeJaxB);
+				
+				
+				//VT: sampleCollector
+				Samples.Sample.SampleCollectors sampleCollector = of.createSamplesSampleSampleCollectors();
+				JAXBElement<SampleCollectors> sampleCollectorJaxb = of.createSamplesSampleSampleCollectors(sampleCollector);
+				if(item.getField("sampleCollector") != null){
+					sampleCollectorJaxb.setNil(false);
+					for(Object sampleCollectorObj:item.getField("sampleCollector")){
+						Samples.Sample.SampleCollectors.Collector collector = new Samples.Sample.SampleCollectors.Collector();
+						collector.setValue((String)sampleCollectorObj);
+						sampleCollector.getCollector().add(collector);
+					}
+				}else{
+					sampleCollectorJaxb.setNil(true);
+					sampleCollector.setNilReason(NilReasonType.MISSING.value());
+				}
+				
+				sample.setSampleCollectors(sampleCollectorJaxb);
+				
+				
+				//VT:Curators
+				if(item.getField("curators").length > 0){
+					Samples.Sample.SampleCuration sampleCuration = new Samples.Sample.SampleCuration();					
+					for(Object curationObj: item.getField("curators")){
+						Samples.Sample.SampleCuration.Curation curation = new Samples.Sample.SampleCuration.Curation();
+						curation.setCurator((String)curationObj);
+						sampleCuration.getCuration().add(curation);
+					}
+					sample.setSampleCuration(sampleCuration);
+				}
+				
+				//VT: sampleType
+				Samples.Sample.SampleTypes sampleTypes = of.createSamplesSampleSampleTypes();
+				JAXBElement<SampleTypes> sampleTypesJaxb = of.createSamplesSampleSampleTypes(sampleTypes);
+				if(item.getField("sampleType") != null){
+					sampleTypesJaxb.setNil(false);
+					for(Object o:item.getField("sampleType")){
+						sampleTypes.getSampleType().add((String)o);
+					}
+				}else{
+					sampleTypesJaxb.setNil(true);
+					sampleTypes.setNilReason(NilReasonType.MISSING.value());
+				}
+				sample.setSampleTypes(sampleTypesJaxb);
+				
+				//VT: logtime
+				if(item.getField("logtime") != null){
+					Samples.Sample.LogElement logElement = new Samples.Sample.LogElement();
+					logElement.setEvent(EventType.SUBMITTED);
+					logElement.setValue("Registered");
+					if(item.getField("logtime")!=null){					
+						
+						logElement.setTimeStamp(dateFormat.format((Date)item.getField("logtime")[0]));
+					}
+					sample.setLogElement(logElement);
+				}
+				
+				//VT:landingPage
+				sample.setLandingPage((String)item.getField("landingPage")[0]);
+				
+				//VT: Othername
+				if(item.getField("otherName") != null){
+					Samples.Sample.OtherNames otherNameList = new Samples.Sample.OtherNames();
+					for( Object otherName: item.getField("otherName")){					
+						otherNameList.getOtherName().add((String)otherName);										
+					}
+					
+					sample.setOtherNames(otherNameList); 
+					
+				}
+				
+				if(item.getField("description") != null){
+					sample.setComments((String)item.getField("description")[0]);
+				}
+				
+				//VT:SamplingMethod
+				Samples.Sample.SamplingMethod samplingMethod = of.createSamplesSampleSamplingMethod();
+				JAXBElement<SamplingMethod> samplingMethodJaxb = of.createSamplesSampleSamplingMethod(samplingMethod);
+				samplingMethod.setNilReason(NilReasonType.MISSING.value());
+				samplingMethodJaxb.setNil(true);
+				sample.setSamplingMethod(samplingMethodJaxb);
+				
+				//VT:sampling time
+				Samples.Sample.SamplingTime samplingTime = of.createSamplesSampleSamplingTime();
+				JAXBElement<SamplingTime> samplingTimeJaxb = of.createSamplesSampleSamplingTime(samplingTime);
+				if(item.getField("logtime") != null){					
+					samplingTimeJaxb.setNil(false);
+					samplingTime.setTimeInstant(dateFormat.format((Date)item.getField("logtime")[0]));
+				}else{
+					samplingTimeJaxb.setNil(true);
+					samplingTime.setNilReason(NilReasonType.MISSING.value());
+				}
+				sample.setSamplingTime(samplingTimeJaxb);
+				
+				samples.getSample().add(sample);
+				
 				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
