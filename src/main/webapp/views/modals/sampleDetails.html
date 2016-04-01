@@ -10,25 +10,47 @@
 		<div class="row summary-panel">
 			<div class="col-md-6">
 			 <h2>Sample Number</h2>
-			 <p><b>{{details.sample[0].sampleNumber.identifierType}}:</b>{{details.sample[0].sampleNumber.value}}</p>
+			 <p><a href="http://hdl.handle.net/10273/{{details.sample[0].sampleNumber.value}}"><b>{{details.sample[0].sampleNumber.identifierType}}:</b>{{details.sample[0].sampleNumber.value}}</a></p>
 			 <h2>Sample Name</h2>
-			 <p>{{details.sample[0].sampleName}}</p>
-			 <h2>Description</h2>
-			 <p>{{details.sample[0].comments}}</p>
-			 <h2>Classification</h2>
-			 <p>{{details.sample[0].classification.classificationIdentifier}}:<br>{{details.sample[0].classification.value}}</p>
-			  <h2>Landing Page</h2>
-			 <p><a href="{{details.sample[0].landingPage}}" target="_blank">{{details.sample[0].landingPage}}</a></p>
+			 <p>{{details.sample[0].sampleName}}
+			 	<h4 ng-show="details.sample[0].otherNames.otherName">Other names</h4>
+			 	<ul>
+		      		<li ng-repeat="otherName in details.sample[0].otherNames.otherName">{{otherName}}</li>
+		      	</ul>	
+			 </p>
+			 <h2 ng-if="details.sample[0].comments">Description</h2>
+			 <p nf-if="details.sample[0].comments">{{details.sample[0].comments}}</p>
+			 <h2>Material Type</h2>
+			  <ul>
+	      		<li ng-repeat="material in details.sample[0].materialTypes.value.materialType">{{material}}</li>
+			    <li ng-show="details.sample[0].materialTypes.nil==true" >{{details.sample[0].materialTypes.value.nilReason}}</li>
+	      	  </ul>
+			 <h2>Link to Resource</h2>
+			 <ul>
+			 	<li><a href="http://hdl.handle.net/10273/{{details.sample[0].sampleNumber.value}}">IGSN Link</a></li>
+	      		<li><a href="{{details.sample[0].landingPage}}">Direct Link</a></li>			    
+	      	  </ul>
+			
+			  
 			</div>
 			<div class="col-md-6">
-			  <h2>Other Names</h2>
+			  <h2>Sample Curation</h2>			 			 
+			  <p>
+			  	<div ng-repeat="sampleCurator in details.sample[0].sampleCuration.curation">
+			        <h4>Curator: {{sampleCurator.curator}}</h4>
+			      	<ul>
+			      		<li ng-if="sampleCurator.curationLocation != null">Curation Location: {{sampleCurator.curationLocation}}</li>
+			      		<li ng-if="sampleCurator.curationTime!=null && sampleCurator.curationTime.timeInstant == null">Curation Time: {{sampleCurator.curationTime.timePeriod.start}} - {{sampleCurator.curationTime.timePeriod.end}}</li>
+			      		<li ng-if="sampleCurator.curationTime!=null && sampleCurator.curationTime.timeInstant != null">Curation Time: {{sampleCurator.curationTime.timeInstant}}</li>
+			      	</ul>
+		      	</div>
+			  </p>	
+			  <h2>Sample Type</h2>
 			  <ul>
-		      	<li ng-repeat="otherName in details.sample[0].otherNames.otherName">{{otherName}}</li>
-		      </ul>			
-			 <h2>Purpose</h2>
-			 <p>{{details.sample[0].purpose}}</p>
-			 <h2>Sampling Campaign</h2>
-			 <p>{{details.sample[0].samplingCampaign}}</p>
+	      		<li ng-repeat="sampleType in details.sample[0].sampleTypes.value.sampleType">{{sampleType}}</li>
+	      		<li ng-show="details.sample[0].sampleTypes.nil==true">{{details.sample[0].sampleTypes.value.nilReason}}</li>
+	      	  </ul>			  			 
+			
 			 <h2>Log</h2>
 			 <ul>
 			 	<li>Event: {{details.sample[0].logElement.event}}</li>
@@ -48,22 +70,7 @@
 		
 		<div class="row">
 			<div class="panel-group" id="accordion">
-			  <div class="panel panel-info-gradient">
-			    <div class="panel-heading">
-			      <h4 class="panel-title">
-			        <a data-toggle="collapse" data-parent="#accordion" data-target="#materialType">
-			        Material Type</a>
-			      </h4>
-			    </div>
-			    <div id="materialType" class="panel-collapse collapse in">
-			      <div class="panel-body">
-			      	<ul>
-			      		<li ng-repeat="material in details.sample[0].materialTypes.value.materialType">{{material}}</li>
-			      		<li ng-show="details.sample[0].materialTypes.nil==true" >{{details.sample[0].materialTypes.value.nilReason}}</li>
-			      	</ul>
-			      </div>
-			    </div>
-			  </div>
+			  
 			  <div ng-show="details.sample[0].relatedResources != null" class="panel panel-info-gradient">
 			    <div class="panel-heading">
 			      <h4 class="panel-title">
@@ -90,43 +97,55 @@
 			      <div class="panel-body">
 			      	<ul>
 			      		<li ng-repeat="sampleCollector in details.sample[0].sampleCollectors.value.collector">{{sampleCollector.collectorIdentifier}} : {{sampleCollector.value}}</li>
-			      		<li ng-show="details.sample[0].sampleCollectors == true">{{details.sample[0].sampleCollectors.value.nilReason}}</li>
+			      		<li ng-show="details.sample[0].sampleCollectors.nil == true">{{details.sample[0].sampleCollectors.value.nilReason}}</li>
 			      	</ul>
 			      </div>
 			    </div>
 			  </div>
-			  <div ng-show="details.sample[0].sampleCuration != null" class="panel panel-info-gradient">
+			 
+			   <div ng-show="details.sample[0].purpose != null" class="panel panel-info-gradient">
 			    <div class="panel-heading">
 			      <h4 class="panel-title">
-			        <a data-toggle="collapse" data-parent="#accordion" data-target="#sampleCuration">
-			        Sample Curation</a>
+			        <a data-toggle="collapse" data-parent="#accordion" data-target="#purpose">
+			        Purpose</a>
 			      </h4>
 			    </div>
-			    <div id="sampleCuration" class="panel-collapse collapse">
+			    <div id="purpose" class="panel-collapse collapse">
 			      <div class="panel-body">
-			      	<div ng-repeat="sampleCurator in details.sample[0].sampleCuration.curation">
-				        <h4>{{sampleCurator.curator}}</h4>
-				      	<ul>
-				      		<li>Curation Location: {{sampleCurator.curationLocation}}</li>
-				      		<li ng-if="sampleCurator.curationTime!=null && sampleCurator.curationTime.timeInstant == null">Curation Time: {{sampleCurator.curationTime.timePeriod.start}} - {{sampleCurator.curationTime.timePeriod.end}}</li>
-				      		<li ng-if="sampleCurator.curationTime!=null && sampleCurator.curationTime.timeInstant != null">Curation Time: {{sampleCurator.curationTime.timeInstant}}</li>
-				      	</ul>
-			      	</div>
+		      		<ul>
+			      		<li>{{details.sample[0].purpose}}</li>			      		
+			      	</ul>			      	
 			      </div>
 			    </div>
 			  </div>
-			  <div class="panel panel-info-gradient">
+			  <div ng-show="details.sample[0].samplingCampaign != null" class="panel panel-info-gradient">
 			    <div class="panel-heading">
 			      <h4 class="panel-title">
-			        <a data-toggle="collapse" data-parent="#accordion" data-target="#sampleType">
-			        SampleType</a>
+			        <a data-toggle="collapse" data-parent="#accordion" data-target="#samplingCampaign">
+			        Sampling Campaign</a>
 			      </h4>
 			    </div>
-			    <div id="sampleType" class="panel-collapse collapse">
+			    <div id="samplingCampaign" class="panel-collapse collapse">
+			      <div class="panel-body">
+		      		<ul>
+			      		<li>{{details.sample[0].samplingCampaign}}</li>			      		
+			      	</ul>			      	
+			      </div>
+			    </div>
+			  </div>
+			  
+			  <div ng-if="details.sample[0].classification.value && details.sample[0].classification.classificationIdentifier " class="panel panel-info-gradient">
+			    <div class="panel-heading">
+			      <h4 class="panel-title">
+			        <a data-toggle="collapse" data-parent="#accordion" data-target="#classification" >
+			        Classification</a>
+			      </h4>
+			    </div>
+			    <div id="classification" class="panel-collapse collapse">
 			      <div class="panel-body">
 			      	<ul>
-			      		<li ng-repeat="sampleType in details.sample[0].sampleTypes.value.sampleType">{{sampleType}}</li>
-			      		<li ng-show="details.sample[0].sampleTypes.nil==true">{{details.sample[0].sampleTypes.value.nilReason}}</li>
+			      		<li ng-if="details.sample[0].classification.classificationIdentifier">Identifier: {{details.sample[0].classification.classificationIdentifier}}</li>
+			      		<li ng-if="details.sample[0].classification.value">Classification: {{details.sample[0].classification.value}}</li>
 			      	</ul>
 			      </div>
 			    </div>
