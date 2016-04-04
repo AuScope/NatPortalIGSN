@@ -22,8 +22,8 @@
 			 <p nf-if="details.sample[0].comments">{{details.sample[0].comments}}</p>
 			 <h2>Material Type</h2>
 			  <ul>
-	      		<li ng-repeat="material in details.sample[0].materialTypes.value.materialType">{{material}}</li>
-			    <li ng-show="details.sample[0].materialTypes.nil==true" >{{details.sample[0].materialTypes.value.nilReason}}</li>
+	      		<li ng-repeat="material in details.sample[0].materialTypes.value.materialType"><a href="{{material}}">{{material}}</a></li>
+			    <li ng-show="details.sample[0].materialTypes.nil==true" ><a href="{{details.sample[0].materialTypes.value.nilReason}}">{{details.sample[0].materialTypes.value.nilReason}}</a></li>
 	      	  </ul>
 			 <h2>Link to Resource</h2>
 			 <ul>
@@ -34,21 +34,14 @@
 			  
 			</div>
 			<div class="col-md-6">
-			  <h2>Sample Curation</h2>			 			 
-			  <p>
-			  	<div ng-repeat="sampleCurator in details.sample[0].sampleCuration.curation">
-			        <h4>Curator: {{sampleCurator.curator}}</h4>
-			      	<ul>
-			      		<li ng-if="sampleCurator.curationLocation != null">Curation Location: {{sampleCurator.curationLocation}}</li>
-			      		<li ng-if="sampleCurator.curationTime!=null && sampleCurator.curationTime.timeInstant == null">Curation Time: {{sampleCurator.curationTime.timePeriod.start}} - {{sampleCurator.curationTime.timePeriod.end}}</li>
-			      		<li ng-if="sampleCurator.curationTime!=null && sampleCurator.curationTime.timeInstant != null">Curation Time: {{sampleCurator.curationTime.timeInstant}}</li>
-			      	</ul>
-		      	</div>
-			  </p>	
+			  <h2>Sample Curator</h2>			 			 			 
+		        <ul>
+		        	<li ng-repeat="sampleCurator in details.sample[0].sampleCuration.curation">Curator: {{sampleCurator.curator}}</li>
+		        </ul>			      	
 			  <h2>Sample Type</h2>
 			  <ul>
-	      		<li ng-repeat="sampleType in details.sample[0].sampleTypes.value.sampleType">{{sampleType}}</li>
-	      		<li ng-show="details.sample[0].sampleTypes.nil==true">{{details.sample[0].sampleTypes.value.nilReason}}</li>
+	      		<li ng-repeat="sampleType in details.sample[0].sampleTypes.value.sampleType"><a href="{{sampleType}}">{{sampleType}}</a></li>
+	      		<li ng-show="details.sample[0].sampleTypes.nil==true"><a href="{{details.sample[0].sampleTypes.value.nilReason}}">{{details.sample[0].sampleTypes.value.nilReason}}</a></li>
 	      	  </ul>			  			 
 			
 			 <h2>Log</h2>
@@ -147,6 +140,28 @@
 			      		<li ng-if="details.sample[0].classification.classificationIdentifier">Identifier: {{details.sample[0].classification.classificationIdentifier}}</li>
 			      		<li ng-if="details.sample[0].classification.value">Classification: {{details.sample[0].classification.value}}</li>
 			      	</ul>
+			      </div>
+			    </div>
+			  </div>
+			  <div class="panel panel-info-gradient">
+			    <div class="panel-heading">
+			      <h4 class="panel-title">
+			        <a data-toggle="collapse" data-parent="#accordion" data-target="#sampleCuration" >
+			        Sample Curation</a>
+			      </h4>
+			    </div>
+			    <div id="sampleCuration" class="panel-collapse collapse">
+			      <div class="panel-body">
+			        <div ng-repeat="sampleCurator in details.sample[0].sampleCuration.curation">
+			        	<div>
+			        		<h4>Curator: {{sampleCurator.curator}}</h4>			        	
+				      	<ul>
+				      		<li>Curation Location: {{sampleCurator.curationLocation || 'Not Available'}}</li>
+				      		<li ng-if="sampleCurator.curationTime!=null && sampleCurator.curationTime.timeInstant == null">Curation Time: {{sampleCurator.curationTime.timePeriod.start}} - {{sampleCurator.curationTime.timePeriod.end}}</li>
+				      		<li ng-if="sampleCurator.curationTime!=null && sampleCurator.curationTime.timeInstant != null">Curation Time: {{sampleCurator.curationTime.timeInstant}}</li>
+			      		</ul>
+			      		</div>
+			      	</div>
 			      </div>
 			    </div>
 			  </div>

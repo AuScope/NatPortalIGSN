@@ -91,8 +91,10 @@
          
          
 				<leaflet class="map" id="mapSearch" event-broadcast="events" layers="layers" lf-center="center" tiles="tiles" markers="markers" defaults="defaults"></leaflet>
-				<div ng-show="totalItem > 0">
-					<pagination style="width: 100%;" ng-change="pageChanged()" total-items="totalItem" ng-model="currentPages" max-size="10" class="pagination-sm pull-left" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+				<div class="row">
+					<div ng-show="totalItem > 0">
+						<uib-pagination style="width: 100%;" ng-change="pageChanged()" total-items="totalItem" ng-model="currentPages" max-size="10" class="pagination-sm pull-left" boundary-links="true" rotate="false" num-pages="numPages"></uib-pagination>
+					</div>
 				</div>
 				
 				
@@ -118,7 +120,7 @@
 				
 				<div ng-show="totalItem > 0"  class="row">
 		            <div class="col-sm-8">
-		              	<pagination ng-change="pageChanged()" total-items="totalItem" ng-model="currentPages" max-size="10" class="pagination-sm pull-left" boundary-links="true" rotate="false" num-pages="numPages"></pagination>		              
+		              	<uib-pagination ng-change="pageChanged()" total-items="totalItem" ng-model="currentPages" max-size="10" class="pagination-sm pull-left" boundary-links="true" rotate="false" num-pages="numPages"></uib-pagination>		              
 		            </div>
 		            <div class="col-sm-4 padding-top-20 light-typo">
 		              	<p>Page: {{currentPages}} / {{numPages}}</p>			              

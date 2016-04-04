@@ -29,7 +29,7 @@ app.config(function($logProvider){
 	  $logProvider.debugEnabled(false);
 	});
 
-app.service('modalService', ['$modal',function ($modal) {
+app.service('modalService', ['$uibModal',function ($uibModal) {
 
     var modalDefaults = {
         backdrop: true,
@@ -74,7 +74,7 @@ app.service('modalService', ['$modal',function ($modal) {
             }
         }
 
-        return $modal.open(tempModalDefaults).result;
+        return $uibModal.open(tempModalDefaults).result;
     };
 
 }]);
@@ -219,11 +219,11 @@ app.service('DropDownValueService', ['$q','$http',function($q,$http) {
         
 }]);
 
-app.service('ViewSampleSummaryService',['$modal','$q',function ($modal,$q) {
+app.service('ViewSampleSummaryService',['$uibModal','$q',function ($uibModal,$q) {
 	     
      this.viewSample = function(igsn,lat,lon,message,repository){
     	
-		 var modalInstance = $modal.open({
+		 var modalInstance = $uibModal.open({
 	         animation: true,
 	         templateUrl: 'views/modals/sampleDetails.html',
 	         controller: 'sampleDetailsCtrl',
