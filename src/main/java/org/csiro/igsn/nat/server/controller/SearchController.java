@@ -69,7 +69,7 @@ public class SearchController {
             @RequestParam(required = false, value ="samplingFeatureType",defaultValue="") String [] samplingFeatureType,
             @RequestParam(required = false, value ="searchText") String searchText,
             @RequestParam(required = false, value ="latitudeBound",defaultValue="") Double [] latitudeBound,
-            @RequestParam(required = false, value ="longitudeBound",defaultValue="") Double [] longitudeBound,
+            @RequestParam(required = false, value ="longitudeBound",defaultValue="") Double [] longitudeBound,           
             @RequestParam(required = true, value ="repository") String repository,
             @RequestParam(required = false, value ="pageNumber") Integer pageNumber, 
             @RequestParam(required = false, value ="pageSize") Integer pageSize, 

@@ -84,21 +84,23 @@
 	               
 	               
 	               </li>
-	               <li style="display: list-item;">Help<br><a id="map-help" class="helpBtn last-child"></a></li>
+	               <li style="display: list-item;">Reset<br><a  ng-click="clearRegion()" id="map-help" class="helpBtn last-child"></a></li>
 		            </ul>
 		            <a class="hide">Hide</a>
 		         </div>
          
          
-				<leaflet class="map" id="mapSearch" event-broadcast="events" layers="layers" lf-center="center" tiles="tiles" markers="markers" defaults="defaults"></leaflet>
-				<div class="row">
-					<div ng-show="totalItem > 0">
-						<uib-pagination style="width: 100%;" ng-change="pageChanged()" total-items="totalItem" ng-model="currentPages" max-size="10" class="pagination-sm pull-left" boundary-links="true" rotate="false" num-pages="numPages"></uib-pagination>
-					</div>
-				</div>
+				<leaflet ng-class="{'map_expand': browse ==true, 'map': browse == false}" id="mapSearch" event-broadcast="events" layers="layers" lf-center="center" tiles="tiles" markers="markers" defaults="defaults"></leaflet>
+				 
+				<div class="row" ng-hide="browse==true">
+	                <div ng-show="totalItem > 0">
+	                    <uib-pagination style="width: 100%;" ng-change="pageChanged()" total-items="totalItem" ng-model="currentPages" max-size="10" items-per-page="browse?'500':'10'" class="pagination-sm pull-left" boundary-links="true" rotate="false" num-pages="numPages"></uib-pagination>
+	                </div>
+                </div>
+
 				
 				
-				<div class="thumbNailList">
+				<div ng-if="browse==false" class="thumbNailList">
 				  <ul>
 				    <li  ng-repeat="sample in samples">
 				      <img ng-if="sample.latitude && sample.longitude"  src="http://maps.google.com/mapfiles/kml/paddle/{{$index + 1 || 0}}.png" />
@@ -120,7 +122,7 @@
 				
 				<div ng-show="totalItem > 0"  class="row">
 		            <div class="col-sm-8">
-		              	<uib-pagination ng-change="pageChanged()" total-items="totalItem" ng-model="currentPages" max-size="10" class="pagination-sm pull-left" boundary-links="true" rotate="false" num-pages="numPages"></uib-pagination>		              
+		              	<uib-pagination ng-change="pageChanged()" total-items="totalItem" ng-model="currentPages" max-size="10" items-per-page="browse?'500':'10'" class="pagination-sm pull-left" boundary-links="true" rotate="false" num-pages="numPages"></uib-pagination>		              
 		            </div>
 		            <div class="col-sm-4 padding-top-20 light-typo">
 		              	<p>Page: {{currentPages}} / {{numPages}}</p>			              

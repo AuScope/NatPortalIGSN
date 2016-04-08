@@ -67,6 +67,8 @@
 			<cfg:field name="samplingFeature" datatype="string" lucenestorage="true" luceneindexed="true">/igsn:samples/igsn:sample/igsn:samplingFeatures/igsn:samplingFeature/igsn:samplingFeatureName/@samplingFeatureType</cfg:field>
 			<cfg:field name="longtitude" datatype="number" lucenestorage="true" luceneindexed="true">substring-before(substring-after($wkt,'('),' ')</cfg:field>
 			<cfg:field name="latitude" datatype="number" lucenestorage="true" luceneindexed="true">substring-before(substring-after(substring-after($wkt,'('),' '),')')</cfg:field>
+			<cfg:field name="logtime" datatype="string" lucenestorage="true" luceneindexed="true">/igsn:samples/igsn:sample/igsn:logElement/@timeStamp</cfg:field>
+			<cfg:field name="landingPage" datatype="string" lucenestorage="true" luceneindexed="true">/igsn:samples/igsn:sample/igsn:landingPage</cfg:field>
 			<cfg:field name="timestamp" datatype="dateTime" lucenestorage="true" luceneindexed="true">date:date-time()</cfg:field>
 			<cfg:field name="description" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:samples/igsn:sample/igsn:comments</cfg:field>
 			<!--cfg:field name="citation" datatype="tokenizedText" lucenestorage="false" luceneindexed="true" lucenetermvectors="true">/dif:DIF/dif:Data_Set_Citation|/dif:DIF/dif:Entry_Title|/dif:DIF/dif:Entry_ID</cfg:field>
