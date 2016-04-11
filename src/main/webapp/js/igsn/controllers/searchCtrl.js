@@ -113,7 +113,7 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 	$scope.changeRepository = function(repository){		
 		$scope.currentPages = 1;
 		$scope.reset();
-		$scope.setStats();
+		
 	}
 	
 	var bboxDrawer={};
@@ -167,8 +167,12 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 		for(var key in $scope.markers){
    		   if($scope.browse){
    			   $scope.zoomToMarker($scope.markers[key].lat,$scope.markers[key].lng);
-   		   }else{
-   			   $scope.zoomToMarker($scope.markers[key].lat,$scope.markers[key].lng+25);	   			   
+   		   }else{   			   			  
+		   		$scope.center = {
+					lat: $scope.markers[key].lat,
+			        lng: $scope.markers[key].lng+25,
+			        zoom: 3	
+				}
    		   }
 	   		leafletData.getMap('mapSearch').then(function(map) {
 	   			setTimeout(function(){
@@ -312,7 +316,7 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
     
     $scope.searchSample = function(page,noParam){
 		$scope.currentPages = page;//VT page is reset to 1 on new search
-		
+		$scope.samples=[];
 		var params={};
 		if(noParam){
 			params ={	
