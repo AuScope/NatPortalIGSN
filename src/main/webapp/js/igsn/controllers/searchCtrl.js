@@ -309,12 +309,12 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
     	if($scope.browse==true){
     		$scope.searchSample($scope.currentPages,true);
     	}else{
-    		$scope.searchSample($scope.currentPages);
+    		$scope.searchSample($scope.currentPages,false,true);
     	}
     	
 	  };
     
-    $scope.searchSample = function(page,noParam){
+    $scope.searchSample = function(page,noParam,paging){
 		$scope.currentPages = page;//VT page is reset to 1 on new search
 		$scope.samples=[];
 		var params={};
@@ -329,10 +329,11 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 			$scope.browse = true;
 		}else{
 			params = compileParam(page);
-			$scope.markers={};
-			$scope.samples=[];
+			$scope.markers={};			
 			$scope.browse = false;
-			$scope.showMapOverlayListFunc(true);
+			if(!paging){//VT: if we are simply paging through the records, honor the user's request to show or hide the overlay
+				$scope.showMapOverlayListFunc(true);
+			}
 		}
 		
 		
