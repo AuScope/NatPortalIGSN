@@ -5,6 +5,10 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 	$scope.currentPages = 1;
 	$scope.mapCoord={};
 	$scope.browse = true;
+	$scope.showMapOverlayList= true;
+	$scope.showMapOverlayListFunc = function(show){
+		$scope.showMapOverlayList = show;
+	} 
 	
 	
 	$scope.states = DropDownValueService.getStates();
@@ -159,6 +163,21 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 	    }); 
 	}
 	
+	$scope.panToFirstMarker = function(){
+		for(var key in $scope.markers){
+   		   if($scope.browse){
+   			   $scope.zoomToMarker($scope.markers[key].lat,$scope.markers[key].lng);
+   		   }else{
+   			   $scope.zoomToMarker($scope.markers[key].lat,$scope.markers[key].lng+25);	   			   
+   		   }
+	   		leafletData.getMap('mapSearch').then(function(map) {
+	   			setTimeout(function(){
+	   		      map.invalidateSize();
+	   		    }, 200);
+		    });
+	   		break;
+   	   }
+	}
 	
 	$scope.filterSwitch=function(statsGroup,filter){
 		if(filter==false){			
@@ -309,6 +328,7 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 			$scope.markers={};
 			$scope.samples=[];
 			$scope.browse = false;
+			$scope.showMapOverlayListFunc(true);
 		}
 		
 		
@@ -367,15 +387,7 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 	   	   
 	   	
 	   	   
-	   	   for(var key in $scope.markers){
-		   		$scope.zoomToMarker($scope.markers[key].lat,$scope.markers[key].lng);
-		   		leafletData.getMap('mapSearch').then(function(map) {
-		   			setTimeout(function(){
-		   		      map.invalidateSize();
-		   		    }, 200);
-			    });
-		   		break;
-	   	   }
+	   	   $scope.panToFirstMarker();
 	   	   
 		
 	     })

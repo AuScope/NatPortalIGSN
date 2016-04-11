@@ -68,59 +68,50 @@
 	                     <a ng-click="clearBoundingBox()" title="Clear selected region" id="del" class="delBtn"></a>
 	                  </div>
 	            	</li>
-	               <li style="display: list-item;">Show region on map
-	               
+	               <li style="display: list-item;">Show region on map	               
 	               <form class="form-inline">
 					  <div class="form-group">					    
 					    <div class="input-group">					     
 					      <select class="form-control input-sm" ng-model="regionSelected" ng-change="panToRegion(regionSelected.lat,regionSelected.lon,regionSelected.zoom,regionSelected.bbox)" ng-options="state.value as state.display for state in states"></select>
 					      <div class="input-group-addon input-sm pointer-cursor" ng-click="clearRegion()"><span class="fa fa-times"></span></div>					       			     
 					    </div>
-					  </div>
-						
+					  </div>						
 					</form>
-	               
-	               
-	               
-	               
 	               </li>
-	               <li style="display: list-item;">Reset<br><a  ng-click="clearRegion()" id="map-help" class="helpBtn last-child"></a></li>
+	               <li style="display: list-item;">Reset<br><a  ng-click="panToFirstMarker()"  class="helpBtn last-child"></a></li>	               
 		            </ul>
 		            <a class="hide">Hide</a>
 		         </div>
          
-         
-				<leaflet ng-class="{'map_expand': browse ==true, 'map': browse == false}" id="mapSearch" event-broadcast="events" layers="layers" lf-center="center" tiles="tiles" markers="markers" defaults="defaults"></leaflet>
-				 
-				<div class="row" ng-hide="browse==true">
-	                <div ng-show="totalItem > 0">
-	                    <uib-pagination style="width: 100%;" ng-change="pageChanged()" total-items="totalItem" ng-model="currentPages" max-size="10" items-per-page="browse?'500':'10'" class="pagination-sm pull-left" boundary-links="true" rotate="false" num-pages="numPages"></uib-pagination>
-	                </div>
-                </div>
-
+         		 <div>
+					<leaflet class="map_expand" id="mapSearch" event-broadcast="events" layers="layers" lf-center="center" tiles="tiles" markers="markers" defaults="defaults">
+						
+						 <button ng-show="browse==false && showMapOverlayList==false" ng-click="showMapOverlayListFunc(true)"  class="map-overlay-panel-toggle animated fadeInRight">
+				             <i class="fa fa-list fa-2x white"> List</i>
+				          </button>
+						<div ng-show="browse==false && showMapOverlayList==true" class="map-overlay-panel">
+							<div  class="thumbNailList animated fadeInRight">
+							  <div ng-click="showMapOverlayListFunc(false)"><i class="fa fa-times fa-2x"></i></div>	
+							  <ul>
+							    <li ng-if="browse==false" ng-repeat="sample in samples">
+							      <img ng-if="sample.latitude && sample.longitude"  src="http://maps.google.com/mapfiles/kml/paddle/{{$index + 1 || 0}}.png" width="64" height="64"/>
+							      <img ng-if="!sample.latitude || !sample.longitude"  src="img/not-available.jpg" width="64" height="64" />
+							      <h3>{{sample.igsn}}</h3>				     
+						      	  <ul ng-click="viewSample(sample.igsn,sample.latitude,sample.longitude,sample.message,repository)">
+						    		<li>{{sample.logTimeStamp}}</li>
+						    		<li>{{sample.name}}</li>
+						    		<li>http://hdl.handle.net/10273/{{details.sample[0].sampleNumber.value}}</li>
+						    	   </ul>
+						    	  				     
+							    </li>
+							  </ul>
+							</div>					
+						</div>
+					</leaflet>
+					
+				 </div>
 				
-				
-				<div ng-if="browse==false" class="thumbNailList">
-				  <ul>
-				    <li  ng-repeat="sample in samples">
-				      <img ng-if="sample.latitude && sample.longitude"  src="http://maps.google.com/mapfiles/kml/paddle/{{$index + 1 || 0}}.png" />
-				      <img ng-if="!sample.latitude || !sample.longitude"  src="img/not-available.jpg" />
-				      <h3>{{sample.igsn}}</h3>				     
-			      	  <ul ng-click="viewSample(sample.igsn,sample.latitude,sample.longitude,sample.message,repository)">
-			    		<li>{{sample.logTimeStamp}}</li>
-			    		<li>{{sample.name}}</li>
-			    		<li>{{sample.landingPage}}</li>
-			    	   </ul>
-			    	   <div ng-click="goToMarker(sample.latitude,sample.longitude)" ng-if="sample.latitude && sample.longitude" class="list_zoom"><i ng-click="zoomToMarker(sample.latitude,sample.longitude,'+')" class="fa fa-search-plus fa-2x"></i><i ng-click="zoomToMarker(sample.latitude,sample.longitude,'-')" class="fa fa-search-minus fa-2x"></i></div>				     
-				    </li>
-				      
-				   
-				  </ul>
-				</div>
-				
-				
-				
-				<div ng-show="totalItem > 0"  class="row">
+				<div class="row">
 		            <div class="col-sm-8">
 		              	<uib-pagination ng-change="pageChanged()" total-items="totalItem" ng-model="currentPages" max-size="10" items-per-page="browse?'500':'10'" class="pagination-sm pull-left" boundary-links="true" rotate="false" num-pages="numPages"></uib-pagination>		              
 		            </div>

@@ -712,7 +712,7 @@ hr.gradientwhite{
 }
 
 .thumbNailList h3 {
-  font: bold 20px/1.5 Helvetica, Verdana, sans-serif;
+  font: bold 18px/1.5 Helvetica, Verdana, sans-serif;
 }
 
 .thumbNailList > ul > li {
@@ -721,17 +721,8 @@ hr.gradientwhite{
 
 .thumbNailList > ul > li img {
   float: left;
-  margin: 0 15px 0 0;
-  padding : 15px;
-}
-
-.thumbNailList > ul > li > .list_zoom {
-  float: right;
-  position: absolute;
-  right : 5em;
-  transform: translate(0, -85%);
-  cursor: pointer;
- 
+  margin: 0 10px 0 0;
+  padding : 10px;
 }
 
 .thumbNailList > ul > li ul {
@@ -843,3 +834,36 @@ hr.gradientwhite{
       background: white; }
   .tabsdemoDynamicHeight md-content h1:first-child {
     margin-top: 0; }
+    
+    
+.map-overlay-panel {
+  background:  #ffffff;
+  opacity: 0.8;
+  display: block;
+  width: 20em;
+  overflow: scroll;
+  position: absolute;
+  right : 0em;	
+  font-size: 15px;  
+  height: 100%;
+  z-index: 50;  
+  	
+  padding-left: 0px
+ 
+}  
+
+.thumbNailList i {
+	margin: 5px 5px 5px 5px;
+}
+
+button.map-overlay-panel-toggle {
+  background: none repeat scroll 0 0 #a6a6a6;
+  color: #ffffff;
+  display: block; 
+  height: 28px;
+  width: 100px;
+  top : 30px;
+  right : 1em;	  
+  position: absolute;   
+  z-index: 50;
+}
