@@ -129,6 +129,10 @@ h3.center {
 	color: #fff;
 }
 
+.dark-typo {
+	color: #272727;
+}
+
 .section-header{
 	margin-bottom: 40px;
 }
@@ -854,6 +858,7 @@ hr.gradientwhite{
 
 .thumbNailList i {
 	margin: 5px 5px 5px 5px;
+	 cursor: pointer;
 }
 
 button.map-overlay-panel-toggle {
@@ -866,4 +871,5 @@ button.map-overlay-panel-toggle {
   right : 1em;	  
   position: absolute;   
   z-index: 50;
+ 
 }
