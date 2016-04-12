@@ -861,8 +861,10 @@ hr.gradientwhite{
 	 cursor: pointer;
 }
 
-button.map-overlay-panel-toggle {
-  background: none repeat scroll 0 0 #a6a6a6;
+button.map-overlay-panel-toggle {  
+  background-color: Transparent;
+  outline:none;
+  border: none;
   color: #ffffff;
   display: block; 
   height: 28px;
