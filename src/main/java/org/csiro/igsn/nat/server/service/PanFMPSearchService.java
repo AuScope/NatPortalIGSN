@@ -14,6 +14,7 @@ import org.apache.lucene.search.Sort;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.MMapDirectory;
 import org.csiro.igsn.bindings.allocation2_0.Samples;
+import org.csiro.igsn.jaxb.oai.bindings.igsn.Resource;
 import org.csiro.igsn.nat.server.response.LuceneStats;
 import org.csiro.igsn.nat.server.response.SampleSummaryResponse;
 
@@ -91,7 +92,7 @@ public abstract class PanFMPSearchService {
 	
 	public abstract String getLuceneDir();
 	
-	public abstract Samples search(String igsn) throws Exception;
+	public abstract Resource search(String igsn) throws Exception;
 	
 	public abstract String getStoreLocation();
 	

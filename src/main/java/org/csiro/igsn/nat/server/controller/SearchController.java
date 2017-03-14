@@ -4,28 +4,19 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
-
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.bind.JAXBElement;
-
 import org.apache.commons.lang3.mutable.MutableInt;
-import org.csiro.igsn.bindings.allocation2_0.Samples;
-import org.csiro.igsn.bindings.allocation2_0.Samples.Sample;
-import org.csiro.igsn.bindings.allocation2_0.Samples.Sample.SamplingLocation;
+import org.csiro.igsn.jaxb.oai.bindings.igsn.Resource;
 import org.csiro.igsn.nat.server.response.LuceneStats;
 import org.csiro.igsn.nat.server.response.SampleSummaryResponse;
 import org.csiro.igsn.nat.server.service.CSIROPanFMPSearchService;
 import org.csiro.igsn.nat.server.service.PanFMPSearchService;
-import org.csiro.igsn.nat.server.service.SESARPanFMPSearchService;
-import org.csiro.igsn.utilities.SpatialUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import com.vividsolutions.jts.geom.Point;
 
 @Controller
 public class SearchController {
@@ -34,10 +25,10 @@ public class SearchController {
 	Hashtable<String,PanFMPSearchService> services;
 	
 	@Autowired
-	public SearchController(CSIROPanFMPSearchService csiroPanFMPSearchService,SESARPanFMPSearchService sesarPanFMPSearchService ){
+	public SearchController(CSIROPanFMPSearchService csiroPanFMPSearchService){
 		services = new Hashtable<String,PanFMPSearchService>();
 		services.put("CSIRO", csiroPanFMPSearchService);
-		services.put("SESAR", sesarPanFMPSearchService);
+		services.put("TEST", csiroPanFMPSearchService);
 	}
 	
 	/**
@@ -101,7 +92,7 @@ public class SearchController {
             HttpServletResponse response) {
     	
     	try{
-    		Samples samples = services.get(repository).search(igsn);
+    		Resource samples = services.get(repository).search(igsn);
     		
 		    return  new ResponseEntity<Object>(samples,HttpStatus.OK);    		
 	    	

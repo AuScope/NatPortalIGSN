@@ -1,41 +1,21 @@
 package org.csiro.igsn.nat.server.service;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.StringReader;
-import java.net.URLDecoder;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-import org.apache.commons.lang3.mutable.MutableInt;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.index.TermEnum;
 import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.Sort;
-import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.MMapDirectory;
 import org.csiro.igsn.bindings.allocation2_0.Samples;
-import org.csiro.igsn.bindings.allocation2_0.Samples.Sample;
-import org.csiro.igsn.bindings.allocation2_0.Samples.Sample.SamplingLocation;
-import org.csiro.igsn.nat.server.response.LuceneStats;
 import org.csiro.igsn.nat.server.response.SampleSummaryResponse;
-import org.csiro.igsn.utilities.SpatialUtilities;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.vividsolutions.jts.geom.Point;
-
 import de.pangaea.metadataportal.search.SearchResultCollector;
 import de.pangaea.metadataportal.search.SearchResultItem;
-import de.pangaea.metadataportal.search.SearchResultList;
 import de.pangaea.metadataportal.search.SearchService;
 
 @Service
@@ -123,12 +103,6 @@ public class CSIROPanFMPSearchService extends PanFMPSearchService{
 		}
 		
 	}
-
-
-
-
-
-
 
 
 	@Override
