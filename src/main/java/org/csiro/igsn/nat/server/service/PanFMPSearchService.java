@@ -13,7 +13,6 @@ import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.MMapDirectory;
-import org.csiro.igsn.bindings.allocation2_0.Samples;
 import org.csiro.igsn.jaxb.oai.bindings.igsn.Resource;
 import org.csiro.igsn.nat.server.response.LuceneStats;
 import org.csiro.igsn.nat.server.response.SampleSummaryResponse;
@@ -25,9 +24,9 @@ import de.pangaea.metadataportal.search.SearchService;
 public abstract class PanFMPSearchService {
 	
 	//VT: this should probably be in an object rather than 3 arrays however this just makes it easier to init the config.
-	private static final String [] filterKeys = {"materialType","sampleType","samplingFeature","curators","sampleCollector","searchText"};
-	private static final String [] filterKeysDisplayName = {"Material Type","Sample Type","SamplingFeature","Curators","Sample Collector","Text Search"};
-	private static final String [] filterKeysType = {"List","List","List","Combo","Combo","Text"};
+	private static final String [] filterKeys = {"material","resourceType","searchText"};
+	private static final String [] filterKeysDisplayName = {"Material","Resource Type","Text Search"};
+	private static final String [] filterKeysType = {"List","List","Text"};
 
 	public void getAllStats(ArrayList<LuceneStats> result) throws IOException{
 		//VT: Stats already populated
@@ -101,62 +100,64 @@ public abstract class PanFMPSearchService {
 	public abstract void createSummaryResponse(List<SearchResultItem> searchResultItems,int size,List<SampleSummaryResponse> responses);
 	
 	
-	public void search(String igsn, String sampleName,String [] materialTypes,String curators,String sampleCollector, String [] sampleTypes,String [] samplingFeatureTypes,
-			String searchText, Double [] latitudeBound, Double [] longitudeBound,Integer pageNumber, Integer pageSize,List<SampleSummaryResponse> responses) throws Exception{
+	public void search(String []resourceType,String [] material,String searchText, Double [] latitudeBound, Double [] longitudeBound,Integer pageNumber, Integer pageSize,List<SampleSummaryResponse> responses) throws Exception{
 		
 		SearchService service = new SearchService(getStoreLocation(), getStoreIndex());
-		BooleanQuery or = service.newBooleanQuery();
-		BooleanQuery and = service.newBooleanQuery();
+		BooleanQuery latlngQuery = service.newBooleanQuery();
+		BooleanQuery resourceTypeQuery = service.newBooleanQuery();
+		BooleanQuery materialTypeQuery = service.newBooleanQuery();
 		BooleanQuery textQuery = service.newBooleanQuery();
 		
 		BooleanQuery bq = service.newBooleanQuery();
 		
 		if(searchText != null && !searchText.isEmpty()){
-			textQuery.add(service.newTextQuery("sampleName", searchText + "*"), org.apache.lucene.search.BooleanClause.Occur.SHOULD);
-			textQuery.add(service.newTextQuery("sampleNumber", searchText + "*"), org.apache.lucene.search.BooleanClause.Occur.SHOULD);
-			textQuery.add(service.newTextQuery("description", searchText + "*"), org.apache.lucene.search.BooleanClause.Occur.SHOULD);
+			textQuery.add(service.newTextQuery("title",searchText + "*"), org.apache.lucene.search.BooleanClause.Occur.SHOULD);
+			textQuery.add(service.newTextQuery("identifierId",searchText + "*"), org.apache.lucene.search.BooleanClause.Occur.SHOULD);
+			textQuery.add(service.newTextQuery("identifier",searchText + "*"), org.apache.lucene.search.BooleanClause.Occur.SHOULD);
+			textQuery.add(service.newTextQuery("alternateidentifier", searchText + "*"), org.apache.lucene.search.BooleanClause.Occur.SHOULD);			
+			textQuery.add(service.newTextQuery("contributorIdentifier", searchText + "*"), org.apache.lucene.search.BooleanClause.Occur.SHOULD);
+			textQuery.add(service.newTextQuery("contributorName",  searchText + "*"), org.apache.lucene.search.BooleanClause.Occur.SHOULD);			
+			textQuery.add(service.newTextQuery("supplementalMetaData",   searchText + "*"), org.apache.lucene.search.BooleanClause.Occur.SHOULD);
+			textQuery.add(service.newTextQuery("description",  searchText + "*"), org.apache.lucene.search.BooleanClause.Occur.SHOULD);
+			textQuery.add(service.newTextQuery("relatedResource",searchText + "*"), org.apache.lucene.search.BooleanClause.Occur.SHOULD);
+			textQuery.add(service.newTextQuery("collector", searchText + "*"), org.apache.lucene.search.BooleanClause.Occur.SHOULD);
+			textQuery.add(service.newTextQuery("collectorAffiliation", searchText + "*"), org.apache.lucene.search.BooleanClause.Occur.SHOULD);			
 		}
 		
-		if(sampleName != null){
-			and.add(service.newTextQuery("sampleName", sampleName), org.apache.lucene.search.BooleanClause.Occur.MUST);
-		}
-		if(igsn != null){
-			and.add(service.newTextQuery("sampleNumber", igsn), org.apache.lucene.search.BooleanClause.Occur.MUST);
-		}
+//		if(sampleName != null){
+//			and.add(service.newTextQuery("sampleName", sampleName), org.apache.lucene.search.BooleanClause.Occur.MUST);
+//		}
 
-		if(curators != null){
-			and.add(service.newTextQuery("curators", curators), org.apache.lucene.search.BooleanClause.Occur.MUST);
-		}
-		
-		if(sampleCollector != null){
-			and.add(service.newTextQuery("sampleCollector", sampleCollector), org.apache.lucene.search.BooleanClause.Occur.MUST);
-		}
 		
 		if(latitudeBound.length==2 && longitudeBound.length==2){			
-			and.add(service.newNumericRangeQuery("latitude", latitudeBound[0], latitudeBound[1]), org.apache.lucene.search.BooleanClause.Occur.MUST);
-			and.add(service.newNumericRangeQuery("longtitude", longitudeBound[0], longitudeBound[1]), org.apache.lucene.search.BooleanClause.Occur.MUST);			
+			latlngQuery.add(service.newNumericRangeQuery("latitude", latitudeBound[0], latitudeBound[1]), org.apache.lucene.search.BooleanClause.Occur.MUST);
+			latlngQuery.add(service.newNumericRangeQuery("longtitude", longitudeBound[0], longitudeBound[1]), org.apache.lucene.search.BooleanClause.Occur.MUST);			
 		}
 		
 		
-		for(String materialType:materialTypes){
-			or.add(service.newTextQuery("materialType", URLDecoder.decode(materialType, "UTF-8")), org.apache.lucene.search.BooleanClause.Occur.SHOULD);
+		for(String materialType:material){
+			materialTypeQuery.add(service.newTextQuery("material", URLDecoder.decode(materialType, "UTF-8")), org.apache.lucene.search.BooleanClause.Occur.SHOULD);
 		}
 		
-		for(String sampleType:sampleTypes){
-			or.add(service.newTextQuery("sampleType", URLDecoder.decode(sampleType, "UTF-8")), org.apache.lucene.search.BooleanClause.Occur.SHOULD);
+		for(String resource:resourceType){
+			resourceTypeQuery.add(service.newTextQuery("resourceType", URLDecoder.decode(resource, "UTF-8")), org.apache.lucene.search.BooleanClause.Occur.SHOULD);
 		}
 		
 		
-		for(String samplingFeatureType :samplingFeatureTypes){
-			or.add(service.newTextQuery("samplingFeature", URLDecoder.decode(samplingFeatureType, "UTF-8") ), org.apache.lucene.search.BooleanClause.Occur.SHOULD);
-		}
+	
 		
-		if(and.getClauses().length!=0){
-			bq.add(new org.apache.lucene.search.BooleanClause(and,org.apache.lucene.search.BooleanClause.Occur.MUST));
+		if(latlngQuery.getClauses().length!=0){
+			bq.add(new org.apache.lucene.search.BooleanClause(latlngQuery,org.apache.lucene.search.BooleanClause.Occur.MUST));
 		}
-		if(or.getClauses().length!=0){
-			bq.add(new org.apache.lucene.search.BooleanClause(or,org.apache.lucene.search.BooleanClause.Occur.MUST));
+		if(resourceTypeQuery.getClauses().length!=0){
+			bq.add(new org.apache.lucene.search.BooleanClause(resourceTypeQuery,org.apache.lucene.search.BooleanClause.Occur.MUST));
 		}
+		if(materialTypeQuery.getClauses().length!=0){
+			bq.add(new org.apache.lucene.search.BooleanClause(materialTypeQuery,org.apache.lucene.search.BooleanClause.Occur.MUST));
+		}
+//		if(or.getClauses().length!=0){
+//			bq.add(new org.apache.lucene.search.BooleanClause(or,org.apache.lucene.search.BooleanClause.Occur.MUST));
+//		}
 		if(textQuery.getClauses().length!=0){
 			bq.add(new org.apache.lucene.search.BooleanClause(textQuery,org.apache.lucene.search.BooleanClause.Occur.MUST));
 		}

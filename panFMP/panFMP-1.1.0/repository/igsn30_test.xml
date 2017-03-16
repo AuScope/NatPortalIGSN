@@ -13,12 +13,18 @@
 		<cfg:variables>
 			<cfg:variable name="wkt">/igsn:resource/igsn:locations/igsn:geometry</cfg:variable>			
 		
-			<!--cfg:variable-template name="boost" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+			<cfg:variable-template name="lng" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 				<xsl:choose>
-					<xsl:when test="/dif:DIF/dif:Parent_DIF">1.0</xsl:when>
-					<xsl:otherwise>5.0</xsl:otherwise>
+					<xsl:when test="contains($wkt,'POINT')"> <xsl:value-of select="substring-before(substring-after($wkt,'('),' ')" /></xsl:when>
+					<xsl:otherwise></xsl:otherwise>
 				</xsl:choose>
-			</cfg:variable-template-->
+			</cfg:variable-template>
+			<cfg:variable-template name="lat" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+				<xsl:choose>
+					<xsl:when test="contains($wkt,'POINT')"> <xsl:value-of select="substring-before(substring-after(substring-after($wkt,'('),' '),')')" /></xsl:when>
+					<xsl:otherwise></xsl:otherwise>
+				</xsl:choose>				
+			</cfg:variable-template>			
 		</cfg:variables>
 		<!--
 			Each harvested document goes through filter steps:
@@ -60,15 +66,22 @@
 			<!--cfg:xml-field name="xml"/-->			
 			<cfg:field name="title" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:title</cfg:field>
 			<cfg:field name="identifier" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:identifier</cfg:field>
+			<cfg:field name="identifierId" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">substring-after(/igsn:resource/igsn:identifier,'http://hdl.handle.net/10273/')</cfg:field>
 			<cfg:field name="alternateidentifier" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:alternateIdentifiers/igsn:alternateIdentifier</cfg:field>
 			<cfg:field name="material" datatype="string" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:materials/igsn:material</cfg:field>
 			<cfg:field name="contributorIdentifier" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:contributors/igsn:contributor/igsn:identifier</cfg:field>
 			<cfg:field name="contributorName" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:contributors/igsn:contributor/igsn:name</cfg:field>		
-			<cfg:field name="resourceType" datatype="string" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:resourceTypes/igsn:resourceType</cfg:field>					
+			<cfg:field name="resourceType" datatype="string" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:resourceTypes/igsn:resourceType</cfg:field>	
+			<cfg:field name="longtitude" datatype="number" lucenestorage="true" luceneindexed="true">$lng</cfg:field>
+			<cfg:field name="latitude" datatype="number" lucenestorage="true" luceneindexed="true">$lat</cfg:field>			
 			<cfg:field name="wkt" datatype="string" lucenestorage="true" luceneindexed="true">$wkt</cfg:field>
 			<cfg:field name="supplementalMetaData" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:supplementalMetadata/igsn:metadata/igsn:metadataTitle</cfg:field>			
 			<cfg:field name="timestamp" datatype="dateTime" lucenestorage="true" luceneindexed="true">date:date-time()</cfg:field>
-			<cfg:field name="description" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:description</cfg:field>		
+			<cfg:field name="description" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:description</cfg:field>
+			<cfg:field name="relatedResource" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:relatedResources/igsn:relatedResource</cfg:field>			
+			<cfg:field name="collector" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:collectors/igsn:collector/igsn:name</cfg:field>						
+			<cfg:field name="collectorAffiliation" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:collectors/igsn:collector/igsn:affiliation/igsn:name</cfg:field>	
+						
 		</cfg:fields>
 		<!-- document boost may only be a XPath query that returns a "number". To generate it, we use a variable defined by a template and cast it here to "number". -->
 		<!--cfg:documentBoost>number($boost)</cfg:documentBoost-->
@@ -112,7 +125,7 @@
 	<cfg:indexVersionCompatibility>LUCENE_24</cfg:indexVersionCompatibility>
 	<!-- Definition of Indexes to harvester and their properties -->
 	<cfg:indexes>
-		<cfg:index id="igsn30-csiro">
+		<cfg:index id="igsn30-test">
 			<cfg:displayName>IGSN30-TEST</cfg:displayName>
 			<cfg:indexDir>./lucene-store/igsn30-test</cfg:indexDir>
 			<cfg:harvesterClass>de.pangaea.metadataportal.harvester.OAIHarvester</cfg:harvesterClass>

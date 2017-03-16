@@ -73,7 +73,7 @@ allControllers.controller('browseCtrl', ['$scope','$rootScope','$http','ViewSamp
 	  $http.get('getStats.do',{
 		  params:{	
 			  repository : repository,
-			  statsGroup:"materialType",
+			  statsGroup:"material",
 			  displayName : "Material Type"
 		  }
 	  })     

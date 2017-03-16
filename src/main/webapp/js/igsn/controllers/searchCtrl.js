@@ -414,7 +414,7 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 		
 		if(FrontPageSearchParamService.getMaterialType()){
 			for (var i = 0; i < stats.length; i++) {
-				if(stats[i].statsGroup!='materialType'){
+				if(stats[i].statsGroup!='material'){
 					$scope.checkbox[stats[i].statsGroup]={};
 					$scope.checkbox[stats[i].statsGroup].filter=true;	
 					$scope.checkboxClass[stats[i].statsGroup]="disable";

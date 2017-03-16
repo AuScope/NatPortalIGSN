@@ -28,7 +28,7 @@ public class SearchController {
 	public SearchController(CSIROPanFMPSearchService csiroPanFMPSearchService){
 		services = new Hashtable<String,PanFMPSearchService>();
 		services.put("CSIRO", csiroPanFMPSearchService);
-		services.put("TEST", csiroPanFMPSearchService);
+		//services.put("TEST", csiroPanFMPSearchService);
 	}
 	
 	/**
@@ -47,17 +47,14 @@ public class SearchController {
 	 * @param pageSize
 	 * @param user
 	 * @param response
+	 * "materialType","sampleType","samplingFeature","curators","sampleCollector","searchText"
 	 * @return
 	 */
 	@RequestMapping(value = "search.do")
     public ResponseEntity<Object> search(            
-            @RequestParam(required = false, value ="igsn") String igsn,
-            @RequestParam(required = false, value ="sampleName") String sampleName,
-            @RequestParam(required = false, value ="materialType", defaultValue="") String [] materialType,
-            @RequestParam(required = false, value ="sampleCollector") String sampleCollector,
-            @RequestParam(required = false, value ="curators") String curators,
-            @RequestParam(required = false, value ="sampleType", defaultValue="") String [] sampleType,
-            @RequestParam(required = false, value ="samplingFeatureType",defaultValue="") String [] samplingFeatureType,
+    		
+    		@RequestParam(required = false, value ="resourceType", defaultValue="") String [] resourceType,
+            @RequestParam(required = false, value ="material", defaultValue="") String [] material,
             @RequestParam(required = false, value ="searchText") String searchText,
             @RequestParam(required = false, value ="latitudeBound",defaultValue="") Double [] latitudeBound,
             @RequestParam(required = false, value ="longitudeBound",defaultValue="") Double [] longitudeBound,           
@@ -71,7 +68,7 @@ public class SearchController {
     		MutableInt resultCount=new MutableInt() ;
     		List<SampleSummaryResponse> responses= new ArrayList<SampleSummaryResponse>();
     		
-    		services.get(repository).search(igsn, sampleName,materialType,curators, sampleCollector,  sampleType, samplingFeatureType,searchText,latitudeBound,longitudeBound, pageNumber,pageSize,responses);
+    		services.get(repository).search(resourceType,material,searchText,latitudeBound,longitudeBound, pageNumber,pageSize,responses);
     	
     		
     		

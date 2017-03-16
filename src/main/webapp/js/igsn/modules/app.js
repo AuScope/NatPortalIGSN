@@ -63,13 +63,13 @@ app.service('modalService', ['$uibModal',function ($uibModal) {
         angular.extend(tempModalOptions, modalOptions, customModalOptions);
 
         if (!tempModalDefaults.controller) {
-            tempModalDefaults.controller = function ($scope, $modalInstance) {
+            tempModalDefaults.controller = function ($scope, $uibModalInstance) {
                 $scope.modalOptions = tempModalOptions;
                 $scope.modalOptions.ok = function (result) {
-                    $modalInstance.close(result);
+                    $uibModalInstance.close(result);
                 };
                 $scope.modalOptions.close = function (result) {
-                    $modalInstance.dismiss('cancel');
+                    $uibModalInstance.dismiss('cancel');
                 };
             }
         }
@@ -223,7 +223,7 @@ app.service('ViewSampleSummaryService',['$uibModal','$q',function ($uibModal,$q)
 	     
      this.viewSample = function(igsn,lat,lon,message,repository){
     	
-		 var modalInstance = $uibModal.open({
+		 var uibModalInstance = $uibModal.open({
 	         animation: true,
 	         templateUrl: 'views/modals/sampleDetails.html',
 	         controller: 'sampleDetailsCtrl',

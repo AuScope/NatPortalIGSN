@@ -227,12 +227,24 @@
 												</div>	
 											</div>
 										</article>
+										<article ng-click="filterMaterialType('unknown')" class=" icons product col-xs-12 col-sm-6 col-md-4 fadeInUp" ng-class="{'wow': repository=='CSIRO'}" data-wow-delay="0.6s">
+											<div class="img-box">
+												<div class="hover-mask2"></div>
+												<span class="product-icon icon-eye"></span>
+												<img class="img-responsive project-image" src="img/materialType/unknown.jpg" alt="">
+											</div>
+											<div class="product-info col-md-12">
+												<div>
+													<h4 class="project-title">Unknown({{stats.statsTable['unknown'].count || 0}})</h4>
+												</div>	
+											</div>
+										</article>
 									</div>
 								</div>
 							</div>
 							<div class="col-sm-12 col-md-6 tableList">						
 						  		<ul>
-						  			<li ng-repeat="sample in samples"><a ng-click="viewSample(sample.igsn,sample.latitude,sample.longitude,sample.message)">{{sample.logTimeStamp}} - {{sample.igsn}}, {{sample.name}}</a></li>
+						  			<li ng-repeat="sample in samples"><a ng-click="viewSample(sample.igsn,sample.latitude,sample.longitude,sample.message)">{{sample.igsn}}</a></li>
 						  		</ul>						    							
 							</div>
 						</div>

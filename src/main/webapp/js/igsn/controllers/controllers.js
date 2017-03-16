@@ -1,7 +1,7 @@
 var allControllers = angular.module('allControllers', []);
 
 //SERVICE LEVEL CONTROLLERS
-allControllers.controller('sampleDetailsCtrl', function ($scope, $modalInstance, params, modalService,$http,leafletData,$timeout) {
+allControllers.controller('sampleDetailsCtrl', function ($scope, $uibModalInstance, params, modalService,$http,leafletData,$timeout) {
 	
 	$scope.details={};
 	$scope.title = params.igsn;
@@ -71,10 +71,10 @@ allControllers.controller('sampleDetailsCtrl', function ($scope, $modalInstance,
 	
 	
     $scope.ok = function () {	
-		 $modalInstance.close();		 
+		 $uibModalInstance.close();		 
 	 };
 	$scope.cancel = function () {
-		    $modalInstance.dismiss('cancel');
+		    $uibModalInstance.dismiss('cancel');
 	}; 
 	  
 });
