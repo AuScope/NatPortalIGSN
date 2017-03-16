@@ -102,7 +102,7 @@ public abstract class PanFMPSearchService {
 	
 	public void search(String []resourceType,String [] material,String searchText, Double [] latitudeBound, Double [] longitudeBound,Integer pageNumber, Integer pageSize,List<SampleSummaryResponse> responses) throws Exception{
 		
-		SearchService service = new SearchService(getStoreLocation(), getStoreIndex());
+		SearchService service = new SearchService(getStoreLocation(), getStoreIndex()); 
 		BooleanQuery latlngQuery = service.newBooleanQuery();
 		BooleanQuery resourceTypeQuery = service.newBooleanQuery();
 		BooleanQuery materialTypeQuery = service.newBooleanQuery();
