@@ -81,6 +81,7 @@
 			<cfg:field name="relatedResource" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:relatedResources/igsn:relatedResource</cfg:field>			
 			<cfg:field name="collector" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:collectors/igsn:collector/igsn:name</cfg:field>						
 			<cfg:field name="collectorAffiliation" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:collectors/igsn:collector/igsn:affiliation/igsn:name</cfg:field>	
+			<cfg:field name="repository" datatype="string" lucenestorage="true" luceneindexed="true">'test'</cfg:field>	
 						
 		</cfg:fields>
 		<!-- document boost may only be a XPath query that returns a "number". To generate it, we use a variable defined by a template and cast it here to "number". -->
@@ -125,13 +126,12 @@
 	<cfg:indexVersionCompatibility>LUCENE_24</cfg:indexVersionCompatibility>
 	<!-- Definition of Indexes to harvester and their properties -->
 	<cfg:indexes>
-		<cfg:index id="igsn30-test">
-			<cfg:displayName>IGSN30-TEST</cfg:displayName>
-			<cfg:indexDir>./lucene-store/igsn30-test</cfg:indexDir>
+		<cfg:index id="igsn30-csiro">
+			<cfg:displayName>IGSN30-CSIRO</cfg:displayName>
+			<cfg:indexDir>./lucene-store/igsn30-csiro</cfg:indexDir>
 			<cfg:harvesterClass>de.pangaea.metadataportal.harvester.OAIHarvester</cfg:harvesterClass>
 			<cfg:harvesterProperties>
-				<cfg:baseUrl>http://localhost:8080/igsn30/api/service/30/oai</cfg:baseUrl>
-				<!--cfg:baseUrl>https://igsn.csiro.au/csiro/service/oai</cfg:baseUrl-->
+				<cfg:baseUrl>http://localhost:8080/igsn30/api/service/30/oai</cfg:baseUrl>			
 				<cfg:metadataPrefix>igsn</cfg:metadataPrefix>
 				<!--cfg:setSpec>CARBOOCEAN</cfg:setSpec-->
 				<cfg:autoOptimize>true</cfg:autoOptimize>

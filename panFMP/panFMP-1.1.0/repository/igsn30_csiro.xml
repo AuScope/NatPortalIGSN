@@ -24,7 +24,7 @@
 					<xsl:when test="contains($wkt,'POINT')"> <xsl:value-of select="substring-before(substring-after(substring-after($wkt,'('),' '),')')" /></xsl:when>
 					<xsl:otherwise></xsl:otherwise>
 				</xsl:choose>				
-			</cfg:variable-template>
+			</cfg:variable-template>			
 		</cfg:variables>
 		<!--
 			Each harvested document goes through filter steps:
@@ -71,13 +71,18 @@
 			<cfg:field name="material" datatype="string" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:materials/igsn:material</cfg:field>
 			<cfg:field name="contributorIdentifier" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:contributors/igsn:contributor/igsn:identifier</cfg:field>
 			<cfg:field name="contributorName" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:contributors/igsn:contributor/igsn:name</cfg:field>		
-			<cfg:field name="resourceType" datatype="string" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:resourceTypes/igsn:resourceType</cfg:field>
+			<cfg:field name="resourceType" datatype="string" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:resourceTypes/igsn:resourceType</cfg:field>	
 			<cfg:field name="longtitude" datatype="number" lucenestorage="true" luceneindexed="true">$lng</cfg:field>
-			<cfg:field name="latitude" datatype="number" lucenestorage="true" luceneindexed="true">$lat</cfg:field>		
+			<cfg:field name="latitude" datatype="number" lucenestorage="true" luceneindexed="true">$lat</cfg:field>			
 			<cfg:field name="wkt" datatype="string" lucenestorage="true" luceneindexed="true">$wkt</cfg:field>
 			<cfg:field name="supplementalMetaData" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:supplementalMetadata/igsn:metadata/igsn:metadataTitle</cfg:field>			
 			<cfg:field name="timestamp" datatype="dateTime" lucenestorage="true" luceneindexed="true">date:date-time()</cfg:field>
-			<cfg:field name="description" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:description</cfg:field>		
+			<cfg:field name="description" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:description</cfg:field>
+			<cfg:field name="relatedResource" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:relatedResources/igsn:relatedResource</cfg:field>			
+			<cfg:field name="collector" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:collectors/igsn:collector/igsn:name</cfg:field>						
+			<cfg:field name="collectorAffiliation" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:collectors/igsn:collector/igsn:affiliation/igsn:name</cfg:field>	
+			<cfg:field name="repository" datatype="string" lucenestorage="true" luceneindexed="true">'CSIRO'</cfg:field>	
+						
 		</cfg:fields>
 		<!-- document boost may only be a XPath query that returns a "number". To generate it, we use a variable defined by a template and cast it here to "number". -->
 		<!--cfg:documentBoost>number($boost)</cfg:documentBoost-->
@@ -126,8 +131,7 @@
 			<cfg:indexDir>./lucene-store/igsn30-csiro</cfg:indexDir>
 			<cfg:harvesterClass>de.pangaea.metadataportal.harvester.OAIHarvester</cfg:harvesterClass>
 			<cfg:harvesterProperties>
-				<cfg:baseUrl>http://localhost:8080/igsn30/api/service/30/oai</cfg:baseUrl>
-				<!--cfg:baseUrl>https://igsn.csiro.au/csiro/service/oai</cfg:baseUrl-->
+				<cfg:baseUrl>https://igsn.csiro.au/igsn30/api/service/30/oai</cfg:baseUrl>
 				<cfg:metadataPrefix>igsn</cfg:metadataPrefix>
 				<!--cfg:setSpec>CARBOOCEAN</cfg:setSpec-->
 				<cfg:autoOptimize>true</cfg:autoOptimize>

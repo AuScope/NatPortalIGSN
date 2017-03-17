@@ -20,14 +20,14 @@ import de.pangaea.metadataportal.search.SearchService;
 @Service
 public class CSIROPanFMPSearchService extends PanFMPSearchService{
 	
-	@Value("#{configProperties['TEST_PANFMP_CONFIG_FILE_LOCATION']}")
-	private String TEST_PANFMP_CONFIG_FILE_LOCATION;
+	@Value("#{configProperties['PANFMP_CONFIG_FILE_LOCATION']}")
+	private String PANFMP_CONFIG_FILE_LOCATION;
 	
-	@Value("#{configProperties['TEST_PANFMP_CONFIG_FILE_INDEX']}")
-	private String TEST_PANFMP_CONFIG_FILE_INDEX;
+	@Value("#{configProperties['PANFMP_CONFIG_FILE_INDEX']}")
+	private String PANFMP_CONFIG_FILE_INDEX;
 	
-	@Value("#{configProperties['TEST_PANFMP_CONFIG_LUCENCE_DIR']}")
-	private String TEST_PANFMP_CONFIG_LUCENCE_DIR;
+	@Value("#{configProperties['PANFMP_CONFIG_LUCENCE_DIR']}")
+	private String PANFMP_CONFIG_LUCENCE_DIR;
 	
 	
 	
@@ -59,7 +59,7 @@ public class CSIROPanFMPSearchService extends PanFMPSearchService{
 //	}
 	
 	public Resource search(String identifier) throws Exception {
-		SearchService service=new SearchService(TEST_PANFMP_CONFIG_FILE_LOCATION, TEST_PANFMP_CONFIG_FILE_INDEX);
+		SearchService service=new SearchService(PANFMP_CONFIG_FILE_LOCATION, PANFMP_CONFIG_FILE_INDEX);
 		BooleanQuery bq=service.newBooleanQuery();
 		bq.add(service.newTextQuery("identifier",identifier), org.apache.lucene.search.BooleanClause.Occur.MUST);
 
@@ -106,17 +106,17 @@ public class CSIROPanFMPSearchService extends PanFMPSearchService{
 
 	@Override
 	public String getLuceneDir() {
-		return this.TEST_PANFMP_CONFIG_LUCENCE_DIR; 
+		return this.PANFMP_CONFIG_LUCENCE_DIR; 
 	}
 
 	@Override
 	public String getStoreLocation() {
-		return this.TEST_PANFMP_CONFIG_FILE_LOCATION;
+		return this.PANFMP_CONFIG_FILE_LOCATION;
 	}
 
 	@Override
 	public String getStoreIndex() {
-		return this.TEST_PANFMP_CONFIG_FILE_INDEX;
+		return this.PANFMP_CONFIG_FILE_INDEX;
 	}
 
 	@Override
