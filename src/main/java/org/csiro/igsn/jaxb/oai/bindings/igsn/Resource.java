@@ -20,6 +20,8 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 
 /**
  * <p>Java class for anonymous complex type.
@@ -2609,13 +2611,14 @@ public class Resource {
         "material",
         "alternateMaterials"
     })
+    
     public static class Materials {
 
         @XmlElement(required = true)
         @XmlSchemaType(name = "string")
         protected List<MaterialType> material;
         protected Resource.Materials.AlternateMaterials alternateMaterials;
-
+      
         /**
          * Gets the value of the material property.
          * 

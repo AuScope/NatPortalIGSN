@@ -12,6 +12,9 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 
 /**
  * <p>Java class for materialType.
@@ -81,6 +84,7 @@ public enum MaterialType {
         value = v;
     }
 
+    @JsonValue
     public String value() {
         return value;
     }
@@ -93,5 +97,6 @@ public enum MaterialType {
         }
         throw new IllegalArgumentException(v);
     }
+    
 
 }

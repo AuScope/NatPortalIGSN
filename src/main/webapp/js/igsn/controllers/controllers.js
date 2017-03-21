@@ -6,10 +6,9 @@ allControllers.controller('sampleDetailsCtrl', function ($scope, $uibModalInstan
 	$scope.details={};
 	$scope.title = params.igsn;
 	
-	var getDetails = function(igsn,repository){
+	var getDetails = function(igsn){
 		$http.get('getDetailed.do',{
-			params:{	
-				repository : repository,
+			params:{				
 				igsn: igsn		
 				}
 		 })     
@@ -25,7 +24,7 @@ allControllers.controller('sampleDetailsCtrl', function ($scope, $uibModalInstan
 	       
 	     })
 	}
-	getDetails(params.igsn, params.repository);
+	getDetails(params.igsn);
 	
 	angular.extend($scope, {
 	    center: {
@@ -37,23 +36,50 @@ allControllers.controller('sampleDetailsCtrl', function ($scope, $uibModalInstan
             scrollWheelZoom: false
         },
         tiles:{
-            url: "http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png",
+	    	url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
             options: {
-                attribution: 'All maps &copy; <a href="http://www.opencyclemap.org">OpenCycleMap</a>, map data &copy; <a href="http://www.openstreetmap.org">OpenStreetMap</a> (<a href="http://www.openstreetmap.org/copyright">ODbL</a>'
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }
         }
 	});
 	
-	if(params.lat && params.lon){
-		$scope.markers = {
-            singleMarker: {
-            	lat: params.lat,
-    	        lng: params.lon,
-                message: params.message,
-                focus: true,
-                draggable: false
-            }
-        }
+	if((params.lat && params.lon) || params.wkt){
+		if(params.wkt){
+//			leafletData.getMap('map').then(function(mymap) {
+//	        	var wkt = new Wkt.Wkt();        	
+//	        	wkt.read(params.wkt);        	
+//	        	wkt.toObject();	        	
+//	        	var myLayer = L.geoJSON().addTo(mymap);
+//	        	myLayer.addData(wkt.toJson());
+//	        	if(wkt.type=="point"){
+//	        		mymap.panTo(L.latLng(wkt.components[0].y, wkt.components[0].x));
+//	        	}else if(wkt.components[0][0]){
+//	        		var arr = [];
+//	        		for(var i = 0; i<wkt.components[0].length;i++){
+//	        			arr.push(L.latLng(wkt.components[0][i].y, wkt.components[0][i].x));
+//	        		}
+//	        		var polygon = L.polygon(arr);
+//	        		mymap.panTo(polygon.getBounds().getCenter());
+//	        	}
+//	        });    
+		}else{
+			$scope.markers = {
+		            singleMarker: {
+		            	lat: params.lat,
+		    	        lng: params.lon,
+		                message: params.message,
+		                focus: true,
+		                draggable: false
+		            }
+		        };
+		}
+		
+		
+		$scope.center = {
+			lat: params.lat,
+	        lng: params.lon,
+	        zoom: 4
+		}
 	}
 	
 	leafletData.getMap("map").then(function (map) {

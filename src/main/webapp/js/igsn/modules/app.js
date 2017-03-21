@@ -86,22 +86,16 @@ app.service('FrontPageSearchParamService', function() {
 	 var param = {};	
 
    return {
-	   setRepository : function(repository){
-       	param.repository=repository;
-       },
-       getRepository : function(){
-       	return param.repository;
-       },
-       setMaterialType : function(type,repository){
+	  
+       setMaterialType : function(type){
        	param.materialType=type;
-       	param.repository=repository;
+    
        },
        getMaterialType : function(){
        	return param.materialType;
        },
-       setSearchText : function(text,repository){
-          	param.searchText=text;
-          	param.repository=repository
+       setSearchText : function(text){
+          	param.searchText=text;        
        },
        getSearchText : function(){
       	 return param.searchText;
@@ -115,7 +109,7 @@ app.service('FrontPageSearchParamService', function() {
 
 app.service('DropDownValueService', ['$q','$http',function($q,$http) {
 	this.getRepositories = function(){
-		return['CSIRO','SESAR'];
+		return['CSIRO','test'];
 	}
 
     this.getStates = function() {
@@ -221,7 +215,7 @@ app.service('DropDownValueService', ['$q','$http',function($q,$http) {
 
 app.service('ViewSampleSummaryService',['$uibModal','$q',function ($uibModal,$q) {
 	     
-     this.viewSample = function(igsn,lat,lon,message,repository){
+     this.viewSample = function(igsn,lat,lon,wkt,message){
     	
 		 var uibModalInstance = $uibModal.open({
 	         animation: true,
@@ -235,7 +229,7 @@ app.service('ViewSampleSummaryService',['$uibModal','$q',function ($uibModal,$q)
 	              	 message : message,
 	              	 lat : lat,
 	              	 lon : lon,
-	              	 repository : repository
+	              	 wkt : wkt
 	               }
 	             }
 	           }

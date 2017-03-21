@@ -100,12 +100,13 @@ public abstract class PanFMPSearchService {
 	public abstract void createSummaryResponse(List<SearchResultItem> searchResultItems,int size,List<SampleSummaryResponse> responses);
 	
 	
-	public void search(String []resourceType,String [] material,String searchText, Double [] latitudeBound, Double [] longitudeBound,Integer pageNumber, Integer pageSize,List<SampleSummaryResponse> responses) throws Exception{
+	public void search(String []resourceType,String [] material,String searchText, Double [] latitudeBound, Double [] longitudeBound,String repository,Integer pageNumber, Integer pageSize,List<SampleSummaryResponse> responses) throws Exception{
 		
 		SearchService service = new SearchService(getStoreLocation(), getStoreIndex()); 
 		BooleanQuery latlngQuery = service.newBooleanQuery();
 		BooleanQuery resourceTypeQuery = service.newBooleanQuery();
 		BooleanQuery materialTypeQuery = service.newBooleanQuery();
+		BooleanQuery repositoryQuery = service.newBooleanQuery();
 		BooleanQuery textQuery = service.newBooleanQuery();
 		
 		BooleanQuery bq = service.newBooleanQuery();
@@ -142,7 +143,9 @@ public abstract class PanFMPSearchService {
 		for(String resource:resourceType){
 			resourceTypeQuery.add(service.newTextQuery("resourceType", URLDecoder.decode(resource, "UTF-8")), org.apache.lucene.search.BooleanClause.Occur.SHOULD);
 		}
-		
+		if(repository!=null && !repository.isEmpty()){
+			repositoryQuery.add(service.newTextQuery("repository", URLDecoder.decode(repository, "UTF-8")), org.apache.lucene.search.BooleanClause.Occur.MUST);
+		}
 		
 	
 		
@@ -160,6 +163,10 @@ public abstract class PanFMPSearchService {
 //		}
 		if(textQuery.getClauses().length!=0){
 			bq.add(new org.apache.lucene.search.BooleanClause(textQuery,org.apache.lucene.search.BooleanClause.Occur.MUST));
+		}
+		
+		if(repositoryQuery.getClauses().length!=0){
+			bq.add(new org.apache.lucene.search.BooleanClause(repositoryQuery,org.apache.lucene.search.BooleanClause.Occur.MUST));
 		}
 
 		// create a Sort, if you want standard sorting by relevance use

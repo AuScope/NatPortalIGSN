@@ -16,7 +16,7 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 	$scope.bboxSearch={};
 	
 	$scope.repositories = DropDownValueService.getRepositories();
-	$scope.repository='CSIRO';
+	
 	
 	angular.extend($scope, {
 	    center: {
@@ -109,12 +109,7 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 		$scope.regionSelected="";
 		
 	}
-	
-	$scope.changeRepository = function(repository){		
-		$scope.currentPages = 1;
-		$scope.reset();
 		
-	}
 	
 	var bboxDrawer={};
 	
@@ -139,7 +134,7 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
     });	
 	
 	$scope.$on('leafletDirectiveMarker.mapSearch.click', function (e, args) {
-		ViewSampleSummaryService.viewSample(args.model.igsn,args.model.lat,args.model.lng,args.model.message,args.model.repository);
+		ViewSampleSummaryService.viewSample(args.model.igsn,args.model.lat,args.model.lng,args.model.wkt,args.model.message);
 	});
 	
 	$scope.drawBoundingBox = function(){
@@ -205,8 +200,8 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 	}
 	
     
-    $scope.viewSample = function(name,lat,lon,message,repository){
-    	ViewSampleSummaryService.viewSample(name,lat,lon,message,repository);
+    $scope.viewSample = function(name,lat,lon,message){
+    	ViewSampleSummaryService.viewSample(name,lat,lon,message);
     }
     //load stats
     $scope.stats =[];
@@ -219,12 +214,7 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 		
 		
 		//VT: Actual results
-		$http.get('getStats.do',{
-			  params:{
-				  repository:$scope.repository,
-				 
-			  }
-		  })     
+		$http.get('getStats.do')     
 	     .success(function(data) {
 	    	 $scope.stats = data; 
 	    	 setupControls(data);
@@ -239,9 +229,7 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
    
 	}
     
-    if(FrontPageSearchParamService.getRepository()){
-		$scope.repository=FrontPageSearchParamService.getRepository();
-	}
+    
     $scope.setStats();
     
     $scope.reset = function(){
@@ -286,8 +274,10 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
     		}
     	}
     	
-    	for(var statsgroup in $scope.combo){    		
-    		params[statsgroup] = $scope.combo[statsgroup];
+    	for(var statsgroup in $scope.combo){ 
+    		if($scope.combo[statsgroup] && $scope.combo[statsgroup] != ""){
+    			params[statsgroup] = $scope.combo[statsgroup];
+    		}
     	}
     	
     	for(var statsgroup in $scope.text){    		
@@ -300,7 +290,7 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
  			params.longitudeBound=[$scope.bboxSearch.minlon,$scope.bboxSearch.maxlon];
  		}
          
- 		params.repository=$scope.repository;
+ 		
     	
     	return params;
     }
@@ -321,8 +311,7 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 		if(noParam){
 			params ={	
 				pageNumber:page,
-				pageSize:500,
-				repository : $scope.repository
+				pageSize:500				
 			}
 			params.latitudeBound=[-90,90];
  			params.longitudeBound=[-180,180];
@@ -362,8 +351,7 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 			            	lat: current.latitude,
 			    	        lng: current.longitude,	
 			    	        igsn: current.igsn,
-			    	        message: current.message,
-			    	        repository: this.repository,
+			    	        message: current.message,			    	        
 			    	        layer: 'samplecluster'			               
 			            }
 		   		   }
@@ -376,8 +364,7 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 			   				lat: current.latitude,
 			    	        lng: current.longitude,	
 			    	        igsn: current.igsn,
-			    	        message: current.message,
-			    	        repository: this.repository,
+			    	        message: current.message,			    	      
 			    	        layer: 'samplecluster',	
 			                icon:{
 			                	iconUrl:'http://maps.google.com/mapfiles/kml/paddle/'+ (index+1) +'.png',

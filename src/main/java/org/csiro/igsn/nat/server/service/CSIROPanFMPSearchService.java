@@ -59,9 +59,13 @@ public class CSIROPanFMPSearchService extends PanFMPSearchService{
 //	}
 	
 	public Resource search(String identifier) throws Exception {
+		if(identifier.contains("/")){
+			String [] idArray = identifier.split("/");
+			identifier = idArray[idArray.length-1];
+		}
 		SearchService service=new SearchService(PANFMP_CONFIG_FILE_LOCATION, PANFMP_CONFIG_FILE_INDEX);
 		BooleanQuery bq=service.newBooleanQuery();
-		bq.add(service.newTextQuery("identifier",identifier), org.apache.lucene.search.BooleanClause.Occur.MUST);
+		bq.add(service.newTextQuery("identifierId",identifier), org.apache.lucene.search.BooleanClause.Occur.MUST);
 
 		SearchResultCollectorImpl searchResultCollectorImpl = new SearchResultCollectorImpl();		
 		service.search(searchResultCollectorImpl, bq);

@@ -9,47 +9,57 @@
 		
 		<div class="row summary-panel">
 			<div class="col-md-6">
-			 <h2>Sample Number</h2>
-			 <p><a href="http://hdl.handle.net/10273/{{details.sample[0].sampleNumber.value}}"><b>{{details.sample[0].sampleNumber.identifierType}}:</b>{{details.sample[0].sampleNumber.value}}</a></p>
-			 <h2>Sample Name</h2>
-			 <p>{{details.sample[0].sampleName}}
-			 	<h4 ng-show="details.sample[0].otherNames.otherName">Other names</h4>
+			 <h2>Resource IGSN</h2>
+			 <p><a href="http://igsn.org/{{details.identifier.value.replace('http://hdl.handle.net/10273/','')}}"><b>{{details.identifier.type}}:</b>{{details.identifier.value.replace('http://hdl.handle.net/10273/','')}}</a></p>
+			 <p ng-show="details.alternateIdentifiers.alternateIdentifier"><b>Alternate Identifiers</b>			 	
 			 	<ul>
-		      		<li ng-repeat="otherName in details.sample[0].otherNames.otherName">{{otherName}}</li>
+		      		<li ng-repeat="alternateIdentifier in details.alternateIdentifiers.alternateIdentifier"><b ng-show="alternateIdentifier.type">{{alternateIdentifier.type}}:</b>{{alternateIdentifier.value}}</li>
 		      	</ul>	
 			 </p>
-			 <h2 ng-if="details.sample[0].comments">Description</h2>
-			 <p nf-if="details.sample[0].comments">{{details.sample[0].comments}}</p>
-			 <h2>Material Type</h2>
+			 <h2>Title</h2>
+			 <p>{{details.title}}</p>			 
+			 <h2>Material</h2>
 			  <ul>
-	      		<li ng-repeat="material in details.sample[0].materialTypes.value.materialType"><a href="{{material}}">{{material}}</a></li>
-			    <li ng-show="details.sample[0].materialTypes.nil==true" ><a href="{{details.sample[0].materialTypes.value.nilReason}}">{{details.sample[0].materialTypes.value.nilReason}}</a></li>
+	      		<li ng-repeat="material in details.materials.material"><a href="{{material}}">{{material}}</a></li>			   
 	      	  </ul>
-			 <h2>Link to Resource</h2>
-			 <ul>
-			 	<li><a href="http://hdl.handle.net/10273/{{details.sample[0].sampleNumber.value}}">IGSN Link</a></li>
-	      		<li><a href="{{details.sample[0].landingPage}}">Direct Link</a></li>			    
-	      	  </ul>
-			
-			  
+	      	  <p ng-show="details.materials.alternateMaterials.alternateMaterial"><b>Alternate Materials</b>			 	
+			 	<ul>
+		      		<li ng-repeat="material in details.materials.alternateMaterials.alternateMaterial"><a href="{{material}}">{{material}}</a></li>
+		      	</ul>	
+			  </p>
+			  <h2>Resource Type</h2>			 			 			 
+		        <ul>
+		        	<li><a href="{{details.resourceTypes.resourceType}}" target='_BLANK'>{{details.resourceTypes.resourceType}}</a></li>
+		        </ul>
+		        <p ng-show="details.resourceTypes.alternateResourceTypes"><b>Alternate Resource Types</b>			 	
+				 	<ul>
+			      		<li ng-repeat="resourceType in details.resourceTypes.alternateResourceTypes.alternateResourceType"><a ng-href="{{resourceType}}" target='_BLANK'>{{resourceType}}</a></li>
+			      	</ul>	
+			 	</p>
+
 			</div>
 			<div class="col-md-6">
-			  <h2>Sample Curator</h2>			 			 			 
-		        <ul>
-		        	<li ng-repeat="sampleCurator in details.sample[0].sampleCuration.curation">Curator: {{sampleCurator.curator}}</li>
-		        </ul>			      	
-			  <h2>Sample Type</h2>
-			  <ul>
-	      		<li ng-repeat="sampleType in details.sample[0].sampleTypes.value.sampleType"><a href="{{sampleType}}">{{sampleType}}</a></li>
-	      		<li ng-show="details.sample[0].sampleTypes.nil==true"><a href="{{details.sample[0].sampleTypes.value.nilReason}}">{{details.sample[0].sampleTypes.value.nilReason}}</a></li>
-	      	  </ul>			  			 
-			
-			 <h2>Log</h2>
-			 <ul>
-			 	<li>Event: {{details.sample[0].logElement.event}}</li>
-			 	<li>Time Stamp: {{details.sample[0].logElement.timeStamp}}</li>
-			 	<li>{{details.sample[0].logElement.value}}</li>
-			 </ul>
+			   <h2>Registered Object Type</h2>	
+			   <ul>
+		       	 <li><a href="{{details.registedObjectType}}" target='_BLANK'>{{details.registedObjectType}}</a></li>
+		       </ul>
+		       <h2 ng-show="details.registrant.name">Registrant</h2>	
+			   <ul>
+	        	 <li><b>Name:</b> {{details.registrant.name}}</li>
+	        	 <li ng-show="details.registrant.identifier"><b>Identifier:</b> {{details.registrant.identifier}}</li>	        	 
+	           </ul>
+	           <p ng-show="details.registrant.affiliation.name"><b>Affiliation</b>			 	
+			 	<ul>
+		      		<li><b>Name:</b> {{details.registrant.affiliation.name}}</li>
+		      		<li ng-show="details.registrant.affiliation.identifier.value"><b> Affiliation Identifier:</b> {{details.registrant.affiliation.identifier.type}} - {{details.registrant.affiliation.identifier.value}}</li>
+		      	</ul>	
+			   </p> 	
+			   <h2 ng-if="details.description">Description</h2>
+			 	<p ng-if="details.description">{{details.description}}</p>		      					  			 
+			   <h2>Link to Resource</h2>
+			   <ul>
+			 	  <li><a href="http://igsn.org/{{details.identifier.value.replace('http://hdl.handle.net/10273/','')}}">http://igsn.org/{{details.identifier.value.replace('http://hdl.handle.net/10273/','')}}</a></li>	      					   
+	      	   </ul>
 			</div>
 		</div>
 	
@@ -62,168 +72,131 @@
 		</div>
 		
 		<div class="row">
-			<div class="panel-group" id="accordion">
-			  
-			  <div ng-show="details.sample[0].relatedResources != null" class="panel panel-info-gradient">
+			<div  class="panel-group" id="accordion">
+			   <div ng-if="details.locations.toponym" class="panel panel-info-gradient">
 			    <div class="panel-heading">
 			      <h4 class="panel-title">
-			        <a data-toggle="collapse" data-parent="#accordion" data-target="#relatedResource">
-			        Related Resources</a>
+			        <a data-toggle="collapse" data-parent="#accordion" data-target="#toponym">
+			         Toponym</a>
 			      </h4>
 			    </div>
-			    <div id="relatedResource" class="panel-collapse collapse">
+			    <div id="toponym" class="panel-collapse collapse">
+			      <div class="panel-body">
+			      	<div>
+				      	<p><b>Locality</b></p>
+				      	<ul>
+				      		<li ng-if="details.locations.toponym.name"><b>Name:</b> {{details.locations.toponym.name}}</li>			      		
+				      		<li ng-if="details.locations.toponym.identifier"><b>Identifier({{details.locations.toponym.identifier.type}}):</b> {{details.locations.toponym.identifier.value}}</li>
+				      	</ul>
+				      
+			      	</div>
+			      </div>
+			    </div>
+			  </div>
+			  <div ng-show="details.collectionMethods != null" class="panel panel-info-gradient">
+			    <div class="panel-heading">
+			      <h4 class="panel-title">
+			        <a data-toggle="collapse" data-parent="#accordion" data-target="#collectionMethods">
+			        Collection Method</a>
+			      </h4>
+			    </div>
+			    <div id="collectionMethods" class="panel-collapse collapse">
 			      <div class="panel-body">
 			      	<ul>
-			      		<li ng-repeat="relatedResource in details.sample[0].relatedResources.relatedResourceIdentifier">{{relatedResource.relatedIdentifierType}} {{relatedResource.relationType}} {{relatedResource.value}}</li>
+			      		<li><b>Collection Method:</b> {{details.collectionMethods.collectionMethod}}</li>
+			      	</ul>
+			      	<p ng-show="details.collectionMethods.alternateCollectionMethods"><b>Alternate Collection Method</b></p>
+			      	<ul>
+			      		<li ng-repeat="altMethod in details.collectionMethods.alternateCollectionMethods.alternateCollectionMethod"><b>Alternate Method:</b> {{altMethod}}</li>
 			      	</ul>
 			       </div>
 			     </div>
 			  </div>
-			  <div class="panel panel-info-gradient">
+			  <div ng-if="details.collectors.collector" class="panel panel-info-gradient">
 			    <div class="panel-heading">
 			      <h4 class="panel-title">
 			        <a data-toggle="collapse" data-parent="#accordion" data-target="#sampleCollector">
-			        Sample Collector</a>
+			         Collector</a>
 			      </h4>
 			    </div>
 			    <div id="sampleCollector" class="panel-collapse collapse">
 			      <div class="panel-body">
-			      	<ul>
-			      		<li ng-repeat="sampleCollector in details.sample[0].sampleCollectors.value.collector">{{sampleCollector.collectorIdentifier}} : {{sampleCollector.value}}</li>
-			      		<li ng-show="details.sample[0].sampleCollectors.nil == true">{{details.sample[0].sampleCollectors.value.nilReason}}</li>
+			      	<ul ng-repeat="collector in details.collectors.collector">
+			      		<li><b>Name:</b> {{collector.name}}<span ng-if="collector.identifier.value"> - {{collector.identifier.value}}({{collector.identifier.type}})</span></li>			      		
+			      		<li ng-if="collector.affiliation.name"><b>Affiliation:</b> {{collector.affiliation.name}} - {{collector.affiliation.identifier}}({{collector.affiliation.identifier.type}})</li>
+			      		<hr>
 			      	</ul>
 			      </div>
 			    </div>
 			  </div>
-			 
-			   <div ng-show="details.sample[0].purpose != null" class="panel panel-info-gradient">
+			   <div class="panel panel-info-gradient">
 			    <div class="panel-heading">
 			      <h4 class="panel-title">
-			        <a data-toggle="collapse" data-parent="#accordion" data-target="#purpose">
-			        Purpose</a>
+			        <a data-toggle="collapse" data-parent="#accordion" data-target="#contributor">
+			         Contributor</a>
 			      </h4>
 			    </div>
-			    <div id="purpose" class="panel-collapse collapse">
+			    <div id="contributor" class="panel-collapse collapse">
 			      <div class="panel-body">
-		      		<ul>
-			      		<li>{{details.sample[0].purpose}}</li>			      		
-			      	</ul>			      	
-			      </div>
-			    </div>
-			  </div>
-			  <div ng-show="details.sample[0].samplingCampaign != null" class="panel panel-info-gradient">
-			    <div class="panel-heading">
-			      <h4 class="panel-title">
-			        <a data-toggle="collapse" data-parent="#accordion" data-target="#samplingCampaign">
-			        Sampling Campaign</a>
-			      </h4>
-			    </div>
-			    <div id="samplingCampaign" class="panel-collapse collapse">
-			      <div class="panel-body">
-		      		<ul>
-			      		<li>{{details.sample[0].samplingCampaign}}</li>			      		
-			      	</ul>			      	
-			      </div>
-			    </div>
-			  </div>
-			  
-			  <div ng-if="details.sample[0].classification.value && details.sample[0].classification.classificationIdentifier " class="panel panel-info-gradient">
-			    <div class="panel-heading">
-			      <h4 class="panel-title">
-			        <a data-toggle="collapse" data-parent="#accordion" data-target="#classification" >
-			        Classification</a>
-			      </h4>
-			    </div>
-			    <div id="classification" class="panel-collapse collapse">
-			      <div class="panel-body">
-			      	<ul>
-			      		<li ng-if="details.sample[0].classification.classificationIdentifier">Identifier: {{details.sample[0].classification.classificationIdentifier}}</li>
-			      		<li ng-if="details.sample[0].classification.value">Classification: {{details.sample[0].classification.value}}</li>
-			      	</ul>
-			      </div>
-			    </div>
-			  </div>
-			  <div class="panel panel-info-gradient">
-			    <div class="panel-heading">
-			      <h4 class="panel-title">
-			        <a data-toggle="collapse" data-parent="#accordion" data-target="#sampleCuration" >
-			        Sample Curation</a>
-			      </h4>
-			    </div>
-			    <div id="sampleCuration" class="panel-collapse collapse">
-			      <div class="panel-body">
-			        <div ng-repeat="sampleCurator in details.sample[0].sampleCuration.curation">
-			        	<div>
-			        		<h4>Curator: {{sampleCurator.curator}}</h4>			        	
+			      	<div ng-repeat="contributor in details.contributors.contributor">
+				      	<p><b>{{contributor.name}}</b></p>
 				      	<ul>
-				      		<li>Curation Location: {{sampleCurator.curationLocation || 'Not Available'}}</li>
-				      		<li ng-if="sampleCurator.curationTime!=null && sampleCurator.curationTime.timeInstant == null">Curation Time: {{sampleCurator.curationTime.timePeriod.start}} - {{sampleCurator.curationTime.timePeriod.end}}</li>
-				      		<li ng-if="sampleCurator.curationTime!=null && sampleCurator.curationTime.timeInstant != null">Curation Time: {{sampleCurator.curationTime.timeInstant}}</li>
-			      		</ul>
-			      		</div>
-			      	</div>
-			      </div>
-			    </div>
-			  </div>
-			  <div class="panel panel-info-gradient">
-			    <div class="panel-heading">
-			      <h4 class="panel-title">
-			        <a data-toggle="collapse" data-parent="#accordion" data-target="#samplingMethod" >
-			        Sampling Method</a>
-			      </h4>
-			    </div>
-			    <div id="samplingMethod" class="panel-collapse collapse">
-			      <div class="panel-body">
-			      	<ul>
-			      		<li ng-if="details.sample[0].samplingMethod.nil==false">{{details.sample[0].samplingMethod.value.value}}</li>
-			      		<li ng-if="details.sample[0].samplingMethod.nil==true">{{details.sample[0].samplingMethod.value.nilReason}}</li>
-			      	</ul>
-			      </div>
-			    </div>
-			  </div>
-			  <div ng-show="details.sample[0].samplingFeatures != null" class="panel panel-info-gradient">
-			    <div class="panel-heading">
-			      <h4 class="panel-title">
-			        <a data-toggle="collapse" data-parent="#accordion" data-target="#samplingFeature" >
-			        Sampling Features</a>
-			      </h4>
-			    </div>
-			    <div id="samplingFeature" class="panel-collapse collapse">
-			      <div class="panel-body">
-			      	<div ng-repeat="samplingFeature in details.sample[0].samplingFeatures.samplingFeature">
-				        <h4>{{samplingFeature.samplingFeatureName.value}}</h4>
-				        <p>{{samplingFeature.samplingFeatureName.samplingFeatureType}}</p>
-				      	<ul>
-				      		<li>Locality: {{samplingFeature.samplingFeatureLocation.locality}}</li>
-				      		<li>Datum: {{samplingFeature.samplingFeatureLocation.elevation.datum}}</li>
-				      		<li>Units: {{samplingFeature.samplingFeatureLocation.elevation.units}}</li>
-				      		<li>Elevation: {{samplingFeature.samplingFeatureLocation.elevation.value}}</li>
-				      		<li>SRS: {{samplingFeature.samplingFeatureLocation.wkt.srs}}</li>
-				      		<li>Geometry: {{samplingFeature.samplingFeatureLocation.wkt.value}}</li>
+				      		<li><b>Type:</b> {{contributor.type}}</li>			      		
+				      		<li ng-if="contributor.identifier.value"><b>Identifier({{contributor.identifier.type}}):</b> {{contributor.identifier.value}}</li>
 				      	</ul>
-				      	<div ng-repeat="sampledFeature in samplingFeature.sampledFeatures.sampledFeature">
-					      	<h4>{{sampledFeature.value}}</h4>				        
-					      	<ul>
-					      		<li>Sampled Feature Type: {{sampledFeature.sampledFeatureType}}</li>				      	
-					      	</ul>
-				      	</div>
+				      	<hr>
 			      	</div>
 			      </div>
 			    </div>
 			  </div>
-			  <div class="panel panel-info-gradient">
+			   <div ng-if="details.relatedResources" class="panel panel-info-gradient">
+			    <div class="panel-heading">
+			      <h4 class="panel-title">
+			        <a data-toggle="collapse" data-parent="#accordion" data-target="#relatedResources">
+			         Related Resources</a>
+			      </h4>
+			    </div>
+			    <div id="relatedResources" class="panel-collapse collapse">
+			      <div class="panel-body">
+			      	<div ng-repeat="relatedResource in details.relatedResources.relatedResource">
+				      	<p><b>{{relatedResource.value}}</b></p>
+				      	<ul>
+				      		<li><b>Type:</b>{{relatedResource.type}})</li>			      		
+				      		<li><b>Relation:</b> {{relatedResource.relationType}}</li>
+				      	</ul>
+				      	<hr>
+			      	</div>
+			      </div>
+			    </div>
+			  </div>
+			   <div ng-if="details.supplementalMetadata" class="panel panel-info-gradient">
+			    <div class="panel-heading">
+			      <h4 class="panel-title">
+			        <a data-toggle="collapse" data-parent="#accordion" data-target="#supplementalMetadata">
+			         Supplemental Metadata</a>
+			      </h4>
+			    </div>
+			    <div id="supplementalMetadata" class="panel-collapse collapse">
+			      <div class="panel-body">	
+			      	<ul>
+			      		<li><b>Metadata Title:</b> {{details.supplementalMetadata.metadata.metadataTitle}})</li>			      		
+			      		<li><b>Metadata URI:</b> {{details.supplementalMetadata.metadata.metadataURI}})</li>		
+			      	</ul>
+			      </div>
+			    </div>
+			  </div>
+			  <div ng-if="details.date.timeInstant || details.date.timePeriod" class="panel panel-info-gradient">
 			    <div class="panel-heading">
 			      <h4 class="panel-title">
 			        <a data-toggle="collapse" data-parent="#accordion" data-target="#samplingTime">
-			        Sampling Time</a>
+			        Date</a>
 			      </h4>
 			    </div>
 			    <div id="samplingTime" class="panel-collapse collapse">
 			      <div class="panel-body">
 			      	<ul>
-			      		<li ng-if="details.sample[0].samplingTime.value.timeInstant == null && details.sample[0].samplingTime.nil==false">Time Period: {{details.sample[0].samplingTime.value.timePeriod.start}} - {{details.sample[0].samplingTime.value.timePeriod.end}}</li>
-			      		<li ng-if="details.sample[0].samplingTime.value.timeInstant != null && details.sample[0].samplingTime.nil==false">Time Instant: {{details.sample[0].samplingTime.value.timeInstant}}</li>
-			      		<li ng-if="details.sample[0].samplingTime.nil==true">{{details.sample[0].samplingTime.value.nilReason}}</li>
+			      		<li ng-if="details.date.timeInstant == null && details.date.timePeriod">Time Period: {{details.date.timePeriod.start | date:'dd/MM/yyyy'}} - {{details.date.timePeriod.end | date:'dd/MM/yyyy'}}</li>
+			      		<li ng-if="details.date.timeInstant != null">Time Instant: {{details.date.timeInstant}}</li>			      		
 			      	</ul>
 			      </div>
 			    </div>

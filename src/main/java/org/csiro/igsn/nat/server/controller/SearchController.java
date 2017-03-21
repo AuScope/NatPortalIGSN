@@ -28,7 +28,7 @@ public class SearchController {
 	public SearchController(CSIROPanFMPSearchService csiroPanFMPSearchService){
 		services = new Hashtable<String,PanFMPSearchService>();
 		services.put("CSIRO", csiroPanFMPSearchService);
-		//services.put("TEST", csiroPanFMPSearchService);
+	
 	}
 	
 	/**
@@ -58,7 +58,7 @@ public class SearchController {
             @RequestParam(required = false, value ="searchText") String searchText,
             @RequestParam(required = false, value ="latitudeBound",defaultValue="") Double [] latitudeBound,
             @RequestParam(required = false, value ="longitudeBound",defaultValue="") Double [] longitudeBound,           
-            @RequestParam(required = true, value ="repository") String repository,
+            @RequestParam(required = false, value ="repository") String repository,
             @RequestParam(required = false, value ="pageNumber") Integer pageNumber, 
             @RequestParam(required = false, value ="pageSize") Integer pageSize, 
             Principal user,
@@ -68,7 +68,7 @@ public class SearchController {
     		MutableInt resultCount=new MutableInt() ;
     		List<SampleSummaryResponse> responses= new ArrayList<SampleSummaryResponse>();
     		
-    		services.get(repository).search(resourceType,material,searchText,latitudeBound,longitudeBound, pageNumber,pageSize,responses);
+    		services.get("CSIRO").search(resourceType,material,searchText,latitudeBound,longitudeBound,repository, pageNumber,pageSize,responses);
     	
     		
     		
@@ -83,13 +83,12 @@ public class SearchController {
 
 	@RequestMapping(value = "getDetailed.do")
     public ResponseEntity<Object> getDetailed(            
-            @RequestParam(required = true, value ="igsn") String igsn,
-            @RequestParam(required = true, value ="repository") String repository,
+            @RequestParam(required = true, value ="igsn") String igsn,          
             Principal user,
             HttpServletResponse response) {
     	
     	try{
-    		Resource samples = services.get(repository).search(igsn);
+    		Resource samples = services.get("CSIRO").search(igsn);
     		
 		    return  new ResponseEntity<Object>(samples,HttpStatus.OK);    		
 	    	
@@ -102,7 +101,7 @@ public class SearchController {
     public ResponseEntity<Object> getStats(  
     	   @RequestParam(required = false, value ="statsGroup") String statsGroup,
     	   @RequestParam(required = false, value ="displayName") String displayName,
-    	   @RequestParam(required = true, value ="repository") String repository,
+    	   //@RequestParam(required = true, value ="repository") String repository,
             Principal user,
             HttpServletResponse response) {
 		
@@ -110,14 +109,14 @@ public class SearchController {
     		if(statsGroup==null){
     			ArrayList<LuceneStats> result = new ArrayList<LuceneStats>();
     			
-    			services.get(repository).getAllStats(result);
+    			services.get("CSIRO").getAllStats(result);
     			
     			return  new ResponseEntity<Object>(result,HttpStatus.OK);
     		}else{
     			//VT: This is targeting a single stat group
     			LuceneStats result = new LuceneStats(statsGroup,displayName,"");
     			
-    			services.get(repository).populatedStat(result);
+    			services.get("CSIRO").populatedStat(result);
     			
     			return  new ResponseEntity<Object>(result,HttpStatus.OK);
     		}
