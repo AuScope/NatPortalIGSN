@@ -26,6 +26,22 @@ allControllers.controller('sampleDetailsCtrl', function ($scope, $uibModalInstan
 	}
 	getDetails(params.igsn);
 	
+	var panToWktCenter = function(wkt){
+		if(wkt.type.toLowerCase() !="point"){
+			var arr = [];
+	 		for(var i = 0; i<wkt.components[0].length;i++){
+	 			arr.push(L.latLng(wkt.components[0][i].y, wkt.components[0][i].x));
+	 		}
+	 		var polygon = L.polygon(arr);
+	 		$scope.center = {
+					lat: polygon.getBounds().getCenter().lat,
+			        lng: polygon.getBounds().getCenter().lng,
+			        zoom: 3	
+				}
+	 		
+		}
+	}
+	
 	angular.extend($scope, {
 	    center: {
 	    	lat: -28,
@@ -44,42 +60,33 @@ allControllers.controller('sampleDetailsCtrl', function ($scope, $uibModalInstan
 	});
 	
 	if((params.lat && params.lon) || params.wkt){
-		if(params.wkt){
-//			leafletData.getMap('map').then(function(mymap) {
-//	        	var wkt = new Wkt.Wkt();        	
-//	        	wkt.read(params.wkt);        	
-//	        	wkt.toObject();	        	
-//	        	var myLayer = L.geoJSON().addTo(mymap);
-//	        	myLayer.addData(wkt.toJson());
-//	        	if(wkt.type=="point"){
-//	        		mymap.panTo(L.latLng(wkt.components[0].y, wkt.components[0].x));
-//	        	}else if(wkt.components[0][0]){
-//	        		var arr = [];
-//	        		for(var i = 0; i<wkt.components[0].length;i++){
-//	        			arr.push(L.latLng(wkt.components[0][i].y, wkt.components[0][i].x));
-//	        		}
-//	        		var polygon = L.polygon(arr);
-//	        		mymap.panTo(polygon.getBounds().getCenter());
-//	        	}
-//	        });    
+		if(params.wkt){	
+			var wkt = new Wkt.Wkt();        	
+        	wkt.read(params.wkt);        	
+        	wkt.toObject();	
+        	 $scope.geojson = {
+        		data: wkt.toJson() 
+             };
+        	 panToWktCenter(wkt);
 		}else{
 			$scope.markers = {
-		            singleMarker: {
-		            	lat: params.lat,
-		    	        lng: params.lon,
-		                message: params.message,
-		                focus: true,
-		                draggable: false
-		            }
-		        };
+	            singleMarker: {
+	            	lat: params.lat,
+	    	        lng: params.lon,
+	                message: params.message,
+	                focus: true,
+	                draggable: false
+	            }
+		    };
+			$scope.center = {
+				lat: params.lat,
+		        lng: params.lon,
+		        zoom: 4
+			}
 		}
 		
 		
-		$scope.center = {
-			lat: params.lat,
-	        lng: params.lon,
-	        zoom: 4
-		}
+		
 	}
 	
 	leafletData.getMap("map").then(function (map) {

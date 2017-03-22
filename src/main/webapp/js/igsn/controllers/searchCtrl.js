@@ -178,6 +178,22 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
    	   }
 	}
 	
+	var panToWktCenter = function(wkt){
+		if(wkt.type.toLowerCase() !="point"){
+			var arr = [];
+	 		for(var i = 0; i<wkt.components[0].length;i++){
+	 			arr.push(L.latLng(wkt.components[0][i].y, wkt.components[0][i].x));
+	 		}
+	 		var polygon = L.polygon(arr);
+	 		$scope.center = {
+					lat: polygon.getBounds().getCenter().lat,
+			        lng: polygon.getBounds().getCenter().lng,
+			        zoom: 3	
+				}
+	 		
+		}
+	}
+	
 	$scope.filterSwitch=function(statsGroup,filter){
 		if(filter==false){			
 			$scope.checkboxClass[statsGroup] ="";			
@@ -232,6 +248,13 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
     
     $scope.setStats();
     
+    var resetMapLayer = function(){
+    	$scope.markers={};
+    	$scope.geojson = {
+    			data:[]	
+    		}
+    }
+    
     $scope.reset = function(){
     	$scope.stats =[];
         $scope.checkbox=[];
@@ -239,7 +262,7 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
         $scope.text=[];
     	FrontPageSearchParamService.reset();
     	$scope.samples=[];
-    	$scope.markers={};
+    	resetMapLayer();
     	$scope.totalItem=0;
     	$scope.browse = true;
     	$scope.setStats();
@@ -318,15 +341,12 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 			$scope.browse = true;
 		}else{
 			params = compileParam(page);
-			$scope.markers={};			
+			resetMapLayer();
 			$scope.browse = false;
 			if(!paging){//VT: if we are simply paging through the records, honor the user's request to show or hide the overlay
 				$scope.showMapOverlayListFunc(true);
 			}
-		}
-		
-		
-		
+		}		
 		
 		//VT: Actual results
 		$http.get('search.do',{
@@ -335,7 +355,7 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 	     .success(function(data) {
 	       $scope.samples = data;	       
 	   	   $scope.totalItem = data.length > 0?data[0].searchResultCount:0;
-	   	   $scope.markers={};
+	   	   resetMapLayer();
 	   	   
 	   	   if($scope.totalItem==0){
    		     modalService.showModal({}, {
@@ -354,11 +374,17 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 			    	        message: current.message,			    	        
 			    	        layer: 'samplecluster'			               
 			            }
+			   		 $scope.panToFirstMarker();
+		   		   }else if(current.wkt){
+			   			var wkt = new Wkt.Wkt();        	
+			        	wkt.read(current.wkt);        	
+			        	wkt.toObject();			        	
+		   			   	$scope.geojson.data.push(wkt.toJson());
+		   			   	panToWktCenter(wkt);
 		   		   }
 		   	   },$scope);
 	   	   }else{
-	   		 data.forEach(function(current,index,arr){
-		   		   
+	   		 data.forEach(function(current,index,arr){		   		   
 		   		   if(current.latitude && current.longitude){
 			   		   this.markers[index+'_markers'] =   {
 			   				lat: current.latitude,
@@ -371,6 +397,13 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 			                	iconSize:     [35, 35], // size of the icon
 			                }
 			            }
+			   		 $scope.panToFirstMarker();
+		   		   }else if(current.wkt){
+			   			var wkt = new Wkt.Wkt();        	
+			        	wkt.read(current.wkt);        	
+			        	wkt.toObject();			        	
+		   			   	$scope.geojson.data.push(wkt.toJson());
+		   			   	panToWktCenter(wkt);
 		   		   }
 		   	   },$scope); 
 	   	   }
@@ -379,7 +412,7 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 	   	   
 	   	
 	   	   
-	   	   $scope.panToFirstMarker();
+	   	  
 	   	   
 		
 	     })
@@ -392,13 +425,9 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 	     })
 	     
 	}
-    
-    
 
 	var setupControls = function(stats) {	
-		
-		
-		
+
 		if(FrontPageSearchParamService.getMaterialType()){
 			for (var i = 0; i < stats.length; i++) {
 				if(stats[i].statsGroup!='material'){
