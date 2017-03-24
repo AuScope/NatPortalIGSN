@@ -1,5 +1,5 @@
-allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSampleSummaryService','modalService','leafletData','FrontPageSearchParamService','leafletData','DropDownValueService',
-                                  function ($scope,$rootScope,$http,ViewSampleSummaryService,modalService,leafletData,FrontPageSearchParamService,leafletData,DropDownValueService) {
+allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSampleSummaryService','modalService','leafletData','FrontPageSearchParamService','leafletData','DropDownValueService','$sce',
+                                  function ($scope,$rootScope,$http,ViewSampleSummaryService,modalService,leafletData,FrontPageSearchParamService,leafletData,DropDownValueService,$sce) {
 
 	$scope.totalItem = 0;
 	$scope.currentPages = 1;
@@ -10,6 +10,7 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 		$scope.showMapOverlayList = show;
 	} 
 	
+	$scope.htmlResourceIdentifierPopover = $sce.trustAsHtml('<p>An example of a geosample code CSRWASC111. The first two characters must be [A-Z] and specify the code of an allocating agent. The CS code has been assigned to CSIRO. This is followed by 3 characters [A-Z] representing the project as designated by the allocating agent. The rest of the characters represent the local sample code specified by the project This can be a combination of characters, numbers and dash (-) and dot (.). See the xsd pattern constraint.</p>');
 	
 	$scope.states = DropDownValueService.getStates();
 	

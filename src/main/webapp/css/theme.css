@@ -875,3 +875,19 @@ button.map-overlay-panel-toggle {
   z-index: 50;
  
 }
+
+.hasEvent{
+	cursor: pointer; 
+}
+
+.popover-width-400 {
+   max-width: 400px;
+}
+
+.popover-width-500 {
+   max-width: 500px;
+}
+
+.popover-width-600 {
+   max-width: 600px;
+}

@@ -7,7 +7,7 @@
 		<div class="row padding-top">
 			<div class="col-md-10 col-md-offset-1 col-sm-12 text-center wow fadeInUp">
 				<div class="banner mid">
-				  <h1><a href="http://igsn.github.io/"><img src="img/igsn_logo.png" alt="igsn image" width="80" height="80"></a>&nbsp; Australia Geosample Portal</h1>				  
+				  <h1><a href="http://igsn.github.io/"><img src="img/igsn_logo.png" alt="igsn image" width="80" height="80"></a>&nbsp; AUSTRALIAN GEOSAMPLE PORTAL</h1>				  
 				</div>
 				<div class="pull-right small"><small><a href="https://www.flickr.com/photos/35378394@N03/4849806923/">World and time</a> by <a href="https://www.flickr.com/photos/35378394@N03/">CLUC</a> is licensed under <a href="http://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a></small></div>
 			</div>
@@ -19,23 +19,27 @@
 			<div class="col-lg-2 col-lg-offset-1 col-md-3 col-md-offset-1 col-sm-4 col-xs-12 wow fadeInUp padding-top-10">
 				<div>
 					<div  class="panel panel-primary" >
-					  <div class="panel-heading"><span class="fa fa-search"></span> <b>Search Parameter</b></div>
+					  <div class="panel-heading"><span class="fa fa-search"></span> <b>Search Parameter</b></div>					    
 					  <div class="panel-body" >	
-					  	<fieldset> 
-							<legend>Repository</legend>							
+					  	<fieldset>
+					  		
+							<legend><span popover-placement="right" uib-popover="List the repositories whose service endpoints are registered with the portal.">
+	                      			<i class="fa fa-question-circle hasEvent" aria-hidden="true"></i></span> Repository</legend>							
 							<select class="form-control input-sm" ng-model="combo['repository']" ng-options="repository as repository for repository in repositories">
 								 <option value="">-- No Filter --</option>
 							</select>
 					  	</fieldset>
 					  	<fieldset> 
-							<legend>Bounding Box</legend>
+							<legend><span popover-placement="right" uib-popover="Display the lat/lon coordinate of the bounding box filter if selected">
+	                      			<i class="fa fa-question-circle hasEvent" aria-hidden="true"></i></span> Bounding Box</legend>
 							<div><span class="label label-info">Min Latitude<span class="pull-right badge">{{bboxSearch.minlat | number:4}}</span></span></div>
 							<div><span class="label label-info">Max Latitude<span class="pull-right badge">{{bboxSearch.maxlat | number:4}}</span></span></div>
 							<div><span class="label label-success">Min Longitude<span class="pull-right badge">{{bboxSearch.minlon | number:4}}</span></span></div>
 							<div><span class="label label-success">Max Longitude<span class="pull-right badge">{{bboxSearch.maxlon | number:4}}</span></span></div>
 					  	</fieldset>					  	
 						<fieldset ng-repeat="stat in stats"> 
-							<legend>{{stat.displayName}}:</legend>
+							<legend><span  popover-placement="top" uib-popover-html="htmlResourceIdentifierPopover">
+	                      			<i class="fa fa-question-circle hasEvent" aria-hidden="true"></i></span> {{stat.displayName}}:</legend>	                      			
 							<div ng-if="stat.type=='Text'" class="form-group">						   	
 						    <input type="text"  class="form-control"  ng-model="text[stat.statsGroup]">
 						    <small> Wild card ?: single char<br>? cannot be the first char</small>
