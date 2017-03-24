@@ -10,7 +10,28 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 		$scope.showMapOverlayList = show;
 	} 
 	
-	$scope.htmlResourceIdentifierPopover = $sce.trustAsHtml('<p>An example of a geosample code CSRWASC111. The first two characters must be [A-Z] and specify the code of an allocating agent. The CS code has been assigned to CSIRO. This is followed by 3 characters [A-Z] representing the project as designated by the allocating agent. The rest of the characters represent the local sample code specified by the project This can be a combination of characters, numbers and dash (-) and dot (.). See the xsd pattern constraint.</p>');
+	var parseStatsToHtmlList = function(objectList){
+		  var result = "<ul class='small' style='padding-left:10px'>";
+		  for(var index in objectList){
+			  result += "<li><a target='_blank' href='"+objectList[index].value+"'>" + index + "</a></li>"
+		  }
+		  return result + "</ul>";
+	  };
+	
+	var getStatsTableFromStats = function(arr,statgroup){
+		for(var index in arr){
+			 if(arr[index].statsGroup == statgroup){
+				 return arr[index].statsTable;
+			 }
+		  }
+		return {};
+	}
+	
+	$scope.htmlPopover = {
+			material : $sce.trustAsHtml("<p>Type of material represented by the sample.</p>"),
+			resourceType : $sce.trustAsHtml("<p>Type of material represented by the sample.</p>"),
+			searchText : $sce.trustAsHtml('<p>Perform text search across title, identifier, alternateidentifier, contributor, supplemental metadata, description, related resource and collector</p>'),
+	}
 	
 	$scope.states = DropDownValueService.getStates();
 	
@@ -235,6 +256,11 @@ allControllers.controller('searchCtrl', ['$scope','$rootScope','$http','ViewSamp
 	     .success(function(data) {
 	    	 $scope.stats = data; 
 	    	 setupControls(data);
+	    	 $scope.htmlPopover = {
+				material : $sce.trustAsHtml("<p>Type of material represented by the sample. Click on the links below for more information</p>" + parseStatsToHtmlList(getStatsTableFromStats(data,'material'))),
+				resourceType : $sce.trustAsHtml("<p>Type of material represented by the sample. Click on the links below for more information</p>" +parseStatsToHtmlList(getStatsTableFromStats(data,'resourceType'))),
+				searchText : $sce.trustAsHtml('<p>Perform text search across title, identifier, alternateidentifier, contributor, supplemental metadata, description, related resource and collector</p>'),
+	    	 }
 	     })
 	     .error(function(data, status) {    	
 	    	 modalService.showModal({}, {    	            	           

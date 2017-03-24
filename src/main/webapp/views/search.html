@@ -23,14 +23,14 @@
 					  <div class="panel-body" >	
 					  	<fieldset>
 					  		
-							<legend><span popover-placement="right" uib-popover="List the repositories whose service endpoints are registered with the portal.">
+							<legend><span popover-trigger="'outsideClick'" popover-placement="right" uib-popover="List the repositories whose service endpoints are registered with the portal.">
 	                      			<i class="fa fa-question-circle hasEvent" aria-hidden="true"></i></span> Repository</legend>							
 							<select class="form-control input-sm" ng-model="combo['repository']" ng-options="repository as repository for repository in repositories">
 								 <option value="">-- No Filter --</option>
 							</select>
 					  	</fieldset>
 					  	<fieldset> 
-							<legend><span popover-placement="right" uib-popover="Display the lat/lon coordinate of the bounding box filter if selected">
+							<legend><span popover-trigger="'outsideClick'" popover-placement="right" uib-popover="Display the lat/lon coordinate of the bounding box filter if selected">
 	                      			<i class="fa fa-question-circle hasEvent" aria-hidden="true"></i></span> Bounding Box</legend>
 							<div><span class="label label-info">Min Latitude<span class="pull-right badge">{{bboxSearch.minlat | number:4}}</span></span></div>
 							<div><span class="label label-info">Max Latitude<span class="pull-right badge">{{bboxSearch.maxlat | number:4}}</span></span></div>
@@ -38,7 +38,7 @@
 							<div><span class="label label-success">Max Longitude<span class="pull-right badge">{{bboxSearch.maxlon | number:4}}</span></span></div>
 					  	</fieldset>					  	
 						<fieldset ng-repeat="stat in stats"> 
-							<legend><span  popover-placement="top" uib-popover-html="htmlResourceIdentifierPopover">
+							<legend><span  popover-trigger="'outsideClick'" popover-placement="top"  uib-popover-html="htmlPopover[stat.statsGroup]">
 	                      			<i class="fa fa-question-circle hasEvent" aria-hidden="true"></i></span> {{stat.displayName}}:</legend>	                      			
 							<div ng-if="stat.type=='Text'" class="form-group">						   	
 						    <input type="text"  class="form-control"  ng-model="text[stat.statsGroup]">
