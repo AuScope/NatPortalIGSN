@@ -65,9 +65,9 @@
 		-->
 		<cfg:fields>
 			<!--cfg:xml-field name="xml"/-->			
-			<cfg:field name="title" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:resourceTitle</cfg:field>
-			<cfg:field name="identifier" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">concat('http://hdl.handle.net/10273/',/igsn:resource/igsn:resourceIdentifier)</cfg:field>
-			<cfg:field name="identifierId" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:resourceIdentifier</cfg:field>
+			<cfg:field name="title" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:title</cfg:field>
+			<cfg:field name="identifier" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:identifier</cfg:field>
+			<cfg:field name="identifierId" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">substring-after(/igsn:resource/igsn:identifier,'http://hdl.handle.net/10273/')</cfg:field>
 			<cfg:field name="alternateidentifier" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:alternateIdentifiers/igsn:alternateIdentifier</cfg:field>
 			<cfg:field name="material" datatype="string" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:materials/igsn:material</cfg:field>
 			<cfg:field name="contributorIdentifier" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:contributors/igsn:contributor/igsn:identifier</cfg:field>
@@ -82,7 +82,7 @@
 			<cfg:field name="relatedResource" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:relatedResources/igsn:relatedResource</cfg:field>			
 			<cfg:field name="collector" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:collectors/igsn:collector/igsn:name</cfg:field>						
 			<cfg:field name="collectorAffiliation" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:collectors/igsn:collector/igsn:affiliation/igsn:name</cfg:field>	
-			<cfg:field name="repository" datatype="string" lucenestorage="true" luceneindexed="true">'test'</cfg:field>	
+			<cfg:field name="repository" datatype="string" lucenestorage="true" luceneindexed="true">'GA'</cfg:field>	
 						
 		</cfg:fields>
 		<!-- document boost may only be a XPath query that returns a "number". To generate it, we use a variable defined by a template and cast it here to "number". -->
@@ -127,12 +127,12 @@
 	<cfg:indexVersionCompatibility>LUCENE_24</cfg:indexVersionCompatibility>
 	<!-- Definition of Indexes to harvester and their properties -->
 	<cfg:indexes>
-		<cfg:index id="igsn30-csiro">
-			<cfg:displayName>IGSN30-CSIRO</cfg:displayName>
+		<cfg:index id="igsn30-ga">
+			<cfg:displayName>IGSN30-GA</cfg:displayName>
 			<cfg:indexDir>./lucene-store/igsn30-csiro</cfg:indexDir>
 			<cfg:harvesterClass>de.pangaea.metadataportal.harvester.OAIHarvester</cfg:harvesterClass>
 			<cfg:harvesterProperties>
-				<cfg:baseUrl>http://localhost:8080/igsn30/api/service/30/oai</cfg:baseUrl>			
+				<cfg:baseUrl>http://pid.geoscience.gov.au/samples/oai</cfg:baseUrl>			
 				<cfg:metadataPrefix>igsn</cfg:metadataPrefix>
 				<!--cfg:setSpec>CARBOOCEAN</cfg:setSpec-->
 				<cfg:autoOptimize>true</cfg:autoOptimize>
