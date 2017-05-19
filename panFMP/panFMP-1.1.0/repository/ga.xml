@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <cfg:config xmlns:cfg="urn:java:de.pangaea.metadataportal.config.Config" xmlns:ib="urn:java:de.pangaea.metadataportal.harvester.IndexBuilder">
 	<!-- Definition of the metadata schema and fileds for indexing: -->
-	<cfg:metadata xmlns:igsn="https://igsn.csiro.au/schemas/3.0" xmlns:date="http://exslt.org/dates-and-times" extension-element-prefixes="date">
+	<cfg:metadata xmlns:igsn="http://schema.igsn.org/description/1.0" xmlns:date="http://exslt.org/dates-and-times" extension-element-prefixes="date">
 		<!--
 			Variables are evaluated at beginning of indexing process and can be used in all filters, fields, field-templates.
 			The index builder also has some internal variables and functions in its namespace, that can be used:
@@ -11,7 +11,7 @@
 			- $ib:docDatestamp: the datestamp of the harvested document (if available), else ""
 		-->
 		<cfg:variables>
-			<cfg:variable name="wkt">/igsn:resource/igsn:location/igsn:geometry</cfg:variable>			
+			<cfg:variable name="wkt">substring-after(/igsn:resource/igsn:location/igsn:geometry,';')</cfg:variable>			
 		
 			<cfg:variable-template name="lng" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 				<xsl:choose>					
@@ -67,7 +67,7 @@
 			<!--cfg:xml-field name="xml"/-->			
 			<cfg:field name="title" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:title</cfg:field>
 			<cfg:field name="identifier" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:identifier</cfg:field>
-			<cfg:field name="identifierId" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">substring-after(/igsn:resource/igsn:identifier,'http://hdl.handle.net/10273/')</cfg:field>
+			<cfg:field name="identifierId" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">substring-after(/igsn:resource/igsn:identifier,'http://igsn.org/')</cfg:field>
 			<cfg:field name="alternateidentifier" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:alternateIdentifiers/igsn:alternateIdentifier</cfg:field>
 			<cfg:field name="material" datatype="string" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:materials/igsn:material</cfg:field>
 			<cfg:field name="contributorIdentifier" datatype="tokenizedText" lucenestorage="true" luceneindexed="true">/igsn:resource/igsn:contributors/igsn:contributor/igsn:identifier</cfg:field>
@@ -85,6 +85,7 @@
 			<cfg:field name="repository" datatype="string" lucenestorage="true" luceneindexed="true">'GA'</cfg:field>	
 						
 		</cfg:fields>
+		
 		<!-- document boost may only be a XPath query that returns a "number". To generate it, we use a variable defined by a template and cast it here to "number". -->
 		<!--cfg:documentBoost>number($boost)</cfg:documentBoost-->
 		<cfg:schema>
