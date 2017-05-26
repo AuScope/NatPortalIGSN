@@ -11,7 +11,7 @@
 			- $ib:docDatestamp: the datestamp of the harvested document (if available), else ""
 		-->
 		<cfg:variables>
-			<cfg:variable name="wkt">substring-after(/igsn:resource/igsn:location/igsn:geometry,';')</cfg:variable>			
+			<cfg:variable name="wkt">substring-after(/igsn:resource/igsn:locations/igsn:geometry,';')</cfg:variable>			
 		
 			<cfg:variable-template name="lng" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 				<xsl:choose>					
@@ -134,7 +134,7 @@
 			<cfg:harvesterClass>de.pangaea.metadataportal.harvester.OAIHarvester</cfg:harvesterClass>
 			<cfg:harvesterProperties>
 				<cfg:baseUrl>http://pid.geoscience.gov.au/samples/oai</cfg:baseUrl>			
-				<cfg:metadataPrefix>igsn</cfg:metadataPrefix>
+				<cfg:metadataPrefix>igsn-dev</cfg:metadataPrefix>
 				<!--cfg:setSpec>CARBOOCEAN</cfg:setSpec-->
 				<cfg:autoOptimize>true</cfg:autoOptimize>
 				<cfg:validate>true</cfg:validate>
