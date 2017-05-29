@@ -109,7 +109,7 @@ app.service('FrontPageSearchParamService', function() {
 
 app.service('DropDownValueService', ['$q','$http',function($q,$http) {
 	this.getRepositories = function(){
-		return['CSIRO','test'];
+		return['CSIRO','GA'];
 	}
 
     this.getStates = function() {

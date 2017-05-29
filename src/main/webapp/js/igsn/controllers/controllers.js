@@ -1,7 +1,7 @@
 var allControllers = angular.module('allControllers', []);
 
 //SERVICE LEVEL CONTROLLERS
-allControllers.controller('sampleDetailsCtrl', function ($scope, $uibModalInstance, params, modalService,$http,leafletData,$timeout) {
+allControllers.controller('sampleDetailsCtrl', function ($scope, $uibModalInstance, params, modalService,$http,leafletData,$timeout,WktUtilityService) {
 	
 	$scope.details={};
 	$scope.title = params.igsn;
@@ -61,8 +61,8 @@ allControllers.controller('sampleDetailsCtrl', function ($scope, $uibModalInstan
 	
 	if((params.lat && params.lon) || params.wkt){
 		if(params.wkt){	
-			var wkt = new Wkt.Wkt();        	
-        	wkt.read(params.wkt);        	
+			var wkt = new Wkt.Wkt();  			
+        	wkt.read(WktUtilityService.flattenTo2D(params.wkt));          	
         	wkt.toObject();	
         	 $scope.geojson = {
         		data: wkt.toJson() 

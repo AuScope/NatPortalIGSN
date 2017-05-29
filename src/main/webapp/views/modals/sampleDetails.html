@@ -10,7 +10,8 @@
 		<div class="row summary-panel">
 			<div class="col-md-6">
 			 <h2>Resource IGSN</h2>
-			 <p><a href="http://igsn.org/{{details.identifier.value.replace('http://hdl.handle.net/10273/','')}}"><b>{{details.identifier.type}}:</b>{{details.identifier.value.replace('http://hdl.handle.net/10273/','')}}</a></p>
+			 <p ng-if="details.identifier.value.includes('http://hdl.handle.net/10273')"><a ng-href="http://igsn.org/{{details.identifier.value.replace('http://hdl.handle.net/10273/','')}}"><b>{{details.identifier.type}}:</b>{{details.identifier.value.replace('http://hdl.handle.net/10273/','')}}</a></p>
+			 <p ng-if="details.identifier.value.includes('igsn.org')"><a ng-href="{{details.identifier.value}}"><b>{{details.identifier.type}}:</b>{{details.identifier.value.replace('http://hdl.handle.net/10273/','')}}</a></p>
 			 <p ng-show="details.alternateIdentifiers.alternateIdentifier"><b>Alternate Identifiers</b>			 	
 			 	<ul>
 		      		<li ng-repeat="alternateIdentifier in details.alternateIdentifiers.alternateIdentifier"><b ng-show="alternateIdentifier.type">{{alternateIdentifier.type}}:</b>{{alternateIdentifier.value}}</li>
