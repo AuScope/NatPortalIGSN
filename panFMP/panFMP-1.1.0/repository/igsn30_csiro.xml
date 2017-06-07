@@ -87,7 +87,7 @@
 		<!-- document boost may only be a XPath query that returns a "number". To generate it, we use a variable defined by a template and cast it here to "number". -->
 		<!--cfg:documentBoost>number($boost)</cfg:documentBoost-->
 		<cfg:schema>
-			<cfg:url>https://raw.githubusercontent.com/IGSN/metadata/dev/description/resource.xsd</cfg:url>
+			<cfg:url>https://raw.githubusercontent.com/IGSN/metadata/r1/description/resource.xsd</cfg:url>
 			<cfg:haltOnError>true</cfg:haltOnError>
 			<!-- if the validator augments the source document (e.g., adds default attributes), use this as basis for indexing? -->
 			<cfg:augmentation>false</cfg:augmentation>

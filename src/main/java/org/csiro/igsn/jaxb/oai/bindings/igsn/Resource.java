@@ -423,7 +423,7 @@ public class Resource {
 //    String xmlns = "http://schema.igsn.org/description/1.0"; 
     
     @XmlAttribute(name="xsi:schemaLocation")
-    String xmlns_schemaLocation = "http://schema.igsn.org/description/1.0 https://raw.githubusercontent.com/IGSN/metadata/dev/description/resource.xsd";
+    String xmlns_schemaLocation = "http://schema.igsn.org/description/1.0 https://raw.githubusercontent.com/IGSN/metadata/r1/description/resource.xsd";
 
     
     @XmlElement(required = true)
