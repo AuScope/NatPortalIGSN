@@ -134,7 +134,7 @@
 			<cfg:harvesterClass>de.pangaea.metadataportal.harvester.OAIHarvester</cfg:harvesterClass>
 			<cfg:harvesterProperties>
 				<cfg:baseUrl>http://pid.geoscience.gov.au/samples/oai</cfg:baseUrl>			
-				<cfg:metadataPrefix>igsn-dev</cfg:metadataPrefix>
+				<cfg:metadataPrefix>igsn-r1</cfg:metadataPrefix>
 				<!--cfg:setSpec>CARBOOCEAN</cfg:setSpec-->
 				<cfg:autoOptimize>true</cfg:autoOptimize>
 				<cfg:validate>true</cfg:validate>
