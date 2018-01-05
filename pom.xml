@@ -182,7 +182,7 @@
         </repository>
          <repository>
 		    <id>igsn</id>
-		    <url>https://cgsrv8.arrc.csiro.au/nexus/content/repositories/igsn</url>
+		    <url>https://cgsrv8.arrc.csiro.au/nexus/repository/igsn/</url>
 		  </repository>
     </repositories>
     <!-- Dependencies -->
